@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/sign.css">
+</head>
+<body>
+	
+	<header class="main-header">
+    <h1 class="name"><a href="./">Stock Arena</a></h1>
+    <h3 class="time_remain">時間剩下: 15:00 </h3>
+		<ul class="main-nav">
+			<li><a href="./choice.html">投資選擇</a></li>
+			<li><a href="./stocknews.html">公司新聞</a></li>
+			<li><a href="./report.html">公司財報</a></li>
+			<li><a href="./allnews.html">國際財經</a></li>
+			<li><a href="./rank.html">排行榜</a></li>
+			<img src="imgs/member.png" onclick = "sign()"/>
+		</ul>
+		<!-- <div class="item member">
+			
+    </div> -->
+
+  </header>
+
+  <div class="banner">
+  </div>  
+  
+  <main>
+
+
+
+ 
+  <script> //fb
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '249384742955352',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v7.0'
+      });
+      FB.AppEvents.logPageView();   
+    };
+  
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+    
+    function checkLoginState() {    
+      FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+      });
+    }
+    // This is called with the results from from FB.getLoginStatus().
+    function statusChangeCallback(response) {
+   
+      console.log(response);  
+      // The response object is returned with a status field that lets the
+      // app know the current login status of the person.
+      // Full docs on the response object can be found in the documentation
+      // for FB.getLoginStatus().
+      if (response.status === 'connected') {
+        // Logged into your app and Facebook.
+        fbSignIn(response.authResponse.accessToken);
+        testAPI();
+
+      } else if (response.status === 'not_authorized') {
+        // The person is logged into Facebook, but not your app.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into this app.';
+      } else {
+        // The person is not logged into Facebook, so we're not sure if
+        // they are logged into this app or not.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into Facebook.';
+      }
+    }
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    function testAPI() {
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me',"GET", {fields: 'email,name,picture' },function(response) {
+        console.log(response);
+        console.log('Successful login for: ' + response.name);
+        document.getElementById('status').innerHTML =
+          'Thanks for logging in, ' + response.name + '!';
+      });
+
+    }
+    
+  </script>
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" 
+    src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=249384742955352&autoLogAppEvents=1"></script>
+        
+
+
+    <div class="signin">
+      <h2>Sign in if you have account</h2>
+   <!-- <form class="sign in" action="/signIn" method="post"> -->
+    
+      <!-- <input type="name" name="nameIn" placeholder="please enter name" required>    -->
+      Email: <input type="email" name="emailIn" placeholder="please enter email" required><br/>
+      Password:<input type="password" name="passwordIn" placeholder="please enter password" required><br/>
+      <input type="submit" id = 'button' name="" value="Sign in" onclick=signIn() >
+      or 
+      <div class="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="rounded" 
+      data-auto-logout-link="true" data-use-continue-as="false" data-width="" scope="public_profile,email"
+      onlogin="checkLoginState()">
+      </div>
+      <div id="status"></div>
+      <p id="ajaxIn"></p>
+    </div>
+   
+    <br>
+    <br>
+    <div class="signup">
+      <h2>Sign up if you don't have account</h2>
+    
+      Name:<input type="name" name="nameUp" placeholder="please enter name" required><br/>   
+      Email:<input type="email" name="emailUp" placeholder="please enter email" required><br/>
+      Password:<input type="password" name="passwordUp" placeholder="please enter password" required><br/>
+      <input type="submit" id = 'button' name="" value="Sign up" onclick=signUp()> <br/>
+      <p id="ajaxUp"></p>
+    </div>
+
+    <!-- send message back in ajax-->
+    <script>
+    // fb 
+        function fbSignIn(accessToken){
+          let data = {};
+          data.provider = "facebook";
+          data.access_token = accessToken
+          fetch('/api/1.0/user/signin',{
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}
+            headers:{
+              'Content-Type': 'application/json'}
+          }).then((res) => {
+            return(res.json())
+           }).then((value) => {
+            console.log(value);
+            if (value.status !== 403) {
+              let token = value.data.access_token;
+              let name = value.data.user.name; 
+              localStorage.setItem('token', token);
+              localStorage.setItem('name', name);
+              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
+              window.location.href = './profile.html';
+            } else {
+              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
+            }
+
+          }).catch(error => {
+            //console.error('Error:', error);
+            document.getElementById('ajaxIn').innerHTML = error;
+          })          
+        }
+
+
+
+    //  native
+        function signUp(){
+          let data = {};
+          data.provider = "native";
+          data.name = document.querySelector('[name="nameUp"]').value;
+          data.email = document.querySelector('[name="emailUp"]').value;
+          data.password = document.querySelector('[name="passwordUp"]').value;
+          data.picture = "111";
+          fetch('/api/1.0/user/signup',{
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}
+            headers:{
+              'Content-Type': 'application/json'}
+          }).then((res) => {
+            return(res.json())
+           }).then((value) => {
+            if (value.status !== 403) {
+              let token = value.data.access_token;
+              let name = value.data.user.name; 
+              localStorage.setItem('token', token);
+              localStorage.setItem('name', name);
+              document.getElementById('ajaxUp').innerHTML = JSON.stringify(value);
+              window.location.href = './profile.html';
+            } else {
+              document.getElementById('ajaxUp').innerHTML = JSON.stringify(value);
+            }
+
+          }).catch(error => {
+            //console.error('Error:', error);
+            // document.getElementById('ajaxUp').innerHTML = error;
+          })
+        }
+        function signIn(){
+          let data = {};
+          
+          data.provider = "native";
+    
+          // data.name = document.querySelector('[name="nameIn"]').value;
+          data.email = document.querySelector('[name="emailIn"]').value;
+          data.password = document.querySelector('[name="passwordIn"]').value;
+          fetch('api/1.0/user/signin',{
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}
+            headers:{
+              'Content-Type': 'application/json'}
+          }).then((res) => {
+            return(res.json())
+           }).then((value) => {
+            if (value.status !== 403) {
+              let token = value.data.access_token;
+              let name = value.data.user.name; 
+              localStorage.setItem('token', token);
+              localStorage.setItem('name', name);
+              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
+              window.location.href = './profile.html';
+            } else {
+              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
+            }
+
+          }).catch(error => {
+            //console.error('Error:', error);
+            document.getElementById('ajaxIn').innerHTML = error;
+          })
+        }
+
+
+        </script>
+  </main>
+  <footer class="main-footer">
+		<p>&copy; 2020. All rights reserved.</p>
+		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
+	</footer>
+</body>
+</html>

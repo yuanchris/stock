@@ -5,8 +5,8 @@ const iconv = require('iconv-lite');
 const cheerio = require('cheerio');
 const { promisify } = require('util');
 
-const mysql = require('./util/mysql_con.js');
-const util = require('./util/util.js');
+const mysql = require('../util/mysql_con.js');
+const util = require('../util/util.js');
 const db = mysql.db;
 const dbquery = promisify(db.query).bind(db);
 
@@ -14,6 +14,7 @@ main();
 async function main() {
   const allStock = await dbquery(`SELECT id FROM stock_info`);
   for (let i = 0; i < allStock.length; i++) {
+    console.log(allStock[i].id);
     crawl(allStock[i].id);
 
     await sleep(1000);
@@ -29,18 +30,28 @@ async function crawl(stockNum) {
     if (!error) {
       const data = JSON.parse(body);
       // 篩選有興趣的資料
-      for (let n = 0; n < data.data.t.length; n++) {
+      for (let n = 0; n < data.data.t.length - 1; n++) {
         let date = data.data.t[n];
         date = util.getDate(date);
+        const open = data.data.o[n];
+        const high = data.data.h[n];
+        const low = data.data.l[n];
         const price = data.data.c[n];
+        const diff = data.data.c[n] - data.data.c[n + 1];
+        let diff_percent = (diff / data.data.c[n + 1]) * 100;
+        diff_percent = diff_percent.toFixed(2);
         const volume = Math.round(data.data.v[n]);
-        stockArr.push([stockNum, date, price, volume]);
+        stockArr.push([stockNum, date, open, high, low,
+          price, diff, diff_percent, volume]);
       }
     } else {
       console.log(`擷取錯誤：${error}`);
     }
     // await dbquery('DELETE FROM stock');
-    let sql = await dbquery(`INSERT INTO stock (stock, time, price, volume) VALUES ?`, [stockArr]);
+    // console.log(stockArr);
+    let sql = await dbquery(`INSERT INTO stock_price 
+      (stock, time, open, high, low, price, diff, 
+        diff_percent, volume) VALUES ?`, [stockArr]);
     // console.log(sql);
   });
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Result</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/result.css">
+	<script src="https://d3js.org/d3.v5.js"></script> 
+	<script src="http://techanjs.org/techan.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+	<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+</head>
+<body>
+	
+	<header class="main-header">
+		<!-- <div class="name"><a href="./"><img src="imgs/logo.jpg" /></a>
+			<h1>Stock Arena</h1>
+		</div> -->
+    <h1 class="name"><a href="./">Stock Arena</a></h1>
+    <h3 class="time_remain">時間到， 結算 </h3>
+		<ul class="main-nav">
+			<li><a href="./result.html">最終結果</a></li>
+			<li><a href="./rank.html">排行榜</a></li>
+			<li><a href="#">最新新聞</a></li>
+			<li><a href="#">最新財報</a></li>
+			<img src="imgs/member.png" onclick = "sign()"/>
+		</ul>
+		<!-- <div class="item member">
+			
+		</div> -->
+  </header>
+  <div class="banner"></div>  
+	<main>
+		<div id = "wait">please wait for the information...(5 seconds)</div>
+    <div id = "nowDate"></div>
+		<div id = "total"></div>
+		<div id = "investRatio"></div>
+    <div id = "totalRatio"></div>
+
+    <div class="list" id= "stock-list"></div>
+  </main>
+	<footer class="main-footer">
+		<p>&copy; 2020. All rights reserved.</p>
+		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
+	</footer>
+  <script src="js/result.js"></script>
+</body>
+</html>

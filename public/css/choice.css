@@ -1,0 +1,179 @@
+@import "index.css";
+main{
+  max-width:1200px;
+  margin:0px auto;
+}
+
+#wait {
+  text-align: center ;
+
+}
+
+#invest_total,
+#left_money
+{
+  display: block;
+  text-align: center ;
+  color: #412e0e;
+  font-size: 1.1em;
+}
+
+
+.details {
+  /* max-width: 980px; */
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: left;
+  align-items: flex-start;
+}
+
+.curve0,.curve1,.curve2,.curve3,.curve4
+{
+  max-width: 960px;
+}
+
+.item {
+  margin-top: 80px;
+}
+
+.select {
+  margin-top: 30px;
+}
+
+.price{
+  margin-top: 30px;
+
+}
+
+input[type=number] {
+  padding: 5px 7px;
+  border: solid 1px #ddd;
+  color: #999;
+  display: block;
+  margin-top: 7px;
+  background: #FFF9D3;
+  border-radius: 0;
+  width: 100px;
+}
+
+#button {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+
+}
+
+#submit {
+  font-size: 18px;
+  font-family: "微軟正黑體";
+  color: #fff;
+  letter-spacing: 5px;
+  background-color: #e8ae2b;
+  padding: 6px 25px 6px 30px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #e8ae2b;
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.3);
+
+  /* width: 160px;
+  max-width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  color: #ffffff;
+  background-color: #000000;
+  border: 1px solid #979797;
+  letter-spacing: 4px;
+  font-size: inherit;
+  cursor: pointer; */
+}
+
+
+
+/* plot curve */
+#nowDate {
+
+  text-align: center ;
+}
+.row h3 {
+
+  text-align: center ;
+}
+
+.row {
+  border: 1px black solid;
+  margin: 20px;
+}
+
+text {
+  fill: #000;
+}
+
+path.candle {
+  stroke: #000000;
+}
+
+path.candle.body {
+  stroke-width: 0;
+}
+
+path.candle.up {
+  fill: #FF0000;
+  stroke: #FF0000;
+}
+
+path.candle.down {
+  fill: #00AA00;
+  stroke: #00AA00;
+}
+
+.volumeBar {
+  opacity: 0.8;
+  fill: #00AA00;
+}
+
+path.volume.up {
+  fill: #FF0000;
+}
+
+path.volume.down {
+  fill: #00AA00;
+}
+
+path.volume.equal {
+  fill: #FF0000;
+}
+
+
+.x.axis line {
+  fill: none;
+  stroke: rgba(0,0,0,0.1);
+}
+
+.y.axis line {
+  fill: none;
+  stroke: rgba(0,0,0,0.1);
+}
+
+.crosshair {
+  cursor: crosshair;
+}
+
+.crosshair path.wire {
+  
+  stroke: #797979;
+  stroke-dasharray: 1, 1;
+}
+
+.crosshair .axisannotation path {
+  fill: #DDDDDD;
+}
+
+
+rect.pane {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+

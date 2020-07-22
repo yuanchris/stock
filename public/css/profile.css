@@ -1,0 +1,20 @@
+@import "index.css";
+main
+{
+  display: block;
+	text-align: center ;
+}
+
+.logOutBtn{
+  font-size: 14px;
+  color: #fff;
+  letter-spacing: 2px;
+  background-color: #e8ae2b;
+  /* padding: 6px 25px 6px 30px; */
+  margin: 10px 0;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #e8ae2b;
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.3);
+}

@@ -1,4 +1,4 @@
-require('dotenv').config('/');
+require('dotenv').config();
 
 const host = process.env.HOST;
 const user = process.env.MYUSER;

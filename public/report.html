@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Result</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/report.css">
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ 
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <!-- <script src="https://d3js.org/d3.v5.js"></script> 
+  <script src="http://techanjs.org/techan.min.js"></script> -->
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+</head>
+<body>
+	
+	<header class="main-header">
+		<!-- <div class="name"><a href="./"><img src="imgs/logo.jpg" /></a>
+			<h1>Stock Arena</h1>
+		</div> -->
+    <h1 class="name"><a href="./">Stock Arena</a></h1>
+    <h3 class="time_remain">時間剩下: 15:00 </h3>
+		<ul class="main-nav">
+			<li><a href="./choice.html">投資選擇</a></li>
+			<li><a href="./stocknews.html">公司新聞</a></li>
+			<li><a href="./report.html">公司財報</a></li>
+			<li><a href="./allnews.html">國際財經</a></li>
+			<li><a href="./rank.html">排行榜</a></li>
+			<img src="imgs/member.png" onclick = "sign()"/>
+		</ul>
+		<!-- <div class="item member">
+			
+		</div> -->
+  </header>
+  <div class="banner"></div>  
+	<main>
+		<!-- <div id = "wait">please wait for the information...(5 seconds)</div> -->
+    <div id = "nowDate"></div>
+    <div class = "all">
+      <div class = "stock">
+        <ul class="stockUl"></ul>
+      </div>
+      <!-- <div class = "interval">查詢日期：<input type="text" id="from"> ~ 
+        <input type="text" id="to"><br>
+        <p>（預設查詢為近 1 年，最早可查到 2011 年 1 月 1 日）</p>
+        <input class="boxInput" onclick="search()" value="查詢" type="button">
+      </div>  -->
+      <div id= "stock_select"></div>
+      <div class="list" id= "report">
+        <div class="list" id= "revenue">
+          <div class = "hichart">
+            <figure class="highcharts-figure">
+              <div id="container"></div>
+              <p class="highcharts-description">
+                <!-- Chart showing a combination of a column and a line chart, using multiple
+                y-axes. Using multiple axes allows for data within different ranges to
+                be visualized together. -->
+              </p>
+            </figure>
+
+            <figure class="highcharts-figure">
+              <div id="container2"></div>
+              <p class="highcharts-description">
+                <!-- Chart showing a combination of a column and a line chart, using multiple
+                y-axes. Using multiple axes allows for data within different ranges to
+                be visualized together. -->
+              </p>
+            </figure>
+          </div>
+
+          <table class = 'revenue_table' style="display: none">
+            <thead>
+              <tr align="center" bgcolor="#d7e6f4" height="23px">  
+                <td rowspan="3"><nobr>月別</nobr></td>  
+                <td colspan="5"><nobr>當月股價</nobr></td>  
+
+                <td colspan="5"><nobr>合併營業收入</nobr></td>
+              </tr>
+              <tr align="center" bgcolor="#d7e6f4" height="23px">  
+                <td rowspan="2"><nobr>收盤</nobr></td>  
+                <td rowspan="2"><nobr>最高</nobr></td>  
+                <td rowspan="2"><nobr>最低</nobr></td>  
+                <td rowspan="2"><nobr>漲跌<br>(元)</nobr></td>  
+                <td rowspan="2"><nobr>漲跌<br>(%)</nobr></td>  
+                <td colspan="3"><nobr>單月</nobr></td>  
+                <td colspan="2"><nobr>累計</nobr></td>
+              </tr>
+              <tr align="center" bgcolor="#d7e6f4">  
+                <td><nobr>營收<br>(億)</nobr></td>  
+                <td><nobr>月增<br>(%)</nobr></td>  
+                <td><nobr>年增<br>(%)</nobr></td>  
+                <td><nobr>營收<br>(億)</nobr></td>  
+                <td><nobr>年增<br>(%)</nobr></td></tr>
+            </thead>
+          </table>
+        </div>
+      
+
+        <div class="list" id= "per">
+          <div class = "hichart">
+            <figure class="highcharts-figure">
+              <div id="container3"></div>
+              <p class="highcharts-description">
+                <!-- Chart showing a combination of a column and a line chart, using multiple
+                y-axes. Using multiple axes allows for data within different ranges to
+                be visualized together. -->
+              </p>
+            </figure>
+
+            <figure class="highcharts-figure">
+              <div id="container4"></div>
+              <p class="highcharts-description">
+                <!-- Chart showing a combination of a column and a line chart, using multiple
+                y-axes. Using multiple axes allows for data within different ranges to
+                be visualized together. -->
+              </p>
+            </figure>
+          </div>
+
+          <table class = 'per_table' style="display: none">
+            <thead>
+              <tr align="center" bgcolor="#d7e6f4" height="23px">  
+                <td rowspan="2"><nobr>週別</nobr></td>  
+                <td rowspan="2"><nobr>收盤價</nobr></td>  
+                <td rowspan="2"><nobr>漲跌價</nobr></td>
+                <td rowspan="2"><nobr>漲跌幅<br>(%)</nobr></td>
+                <td rowspan="2"><nobr>河流圖<br>EPS (元)</nobr></td>
+                <td rowspan="2"><nobr>目前<br>PER (倍)</nobr></td>
+                <td colspan="6"><nobr>本益比換算價格</nobr></td>
+              </tr>
+              <tr align="center" bgcolor="#d7e6f4" height="23px">  
+                <td><nobr>4X</nobr></td>  
+                <td><nobr>8X</nobr></td>  
+                <td><nobr>12X</nobr></td>  
+                <td><nobr>16X</nobr></td> 
+                <td><nobr>20X</nobr></td> 
+                <td><nobr>24X</nobr></td> 
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+	<footer class="main-footer">
+		<p>&copy; 2020. All rights reserved.</p>
+		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
+  </footer>
+
+  <script src="js/report.js"></script>
+</body>
+</html>

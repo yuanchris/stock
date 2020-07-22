@@ -1,0 +1,40 @@
+@import "index.css";
+main{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center ;
+
+}
+textarea {
+  width:400px;height:100px;padding:5px; margin: 5px;
+}
+input {
+  width:200px;padding:5px; margin: 5px;
+}
+
+.signin,
+.signup
+{
+  display: block;
+  width: 400px;
+  text-align: center ;
+	color: rgb(0, 0, 0);	  
+	border: 1.4px black solid;
+	border-radius: 15px;
+}
+
+#button {
+  font-size: 14px;
+  color: #fff;
+  letter-spacing: 2px;
+  background-color: #e8ae2b;
+  /* padding: 6px 25px 6px 30px; */
+  margin: 10px 0;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #e8ae2b;
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.3);
+
+}

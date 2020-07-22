@@ -1,0 +1,157 @@
+@import "index.css";
+main{
+  max-width:1200px;
+  margin:0px auto;
+}
+#total,
+#investRatio,
+#totalRatio
+{
+  display: block;
+  text-align: center ;
+  color: #412e0e;
+  font-size: 1.1em;
+}
+
+
+.details {
+  /* max-width: 980px; */
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: left;
+  align-items: flex-start;
+}
+
+.curve0,.curve1,.curve2,.curve3,.curve4
+{
+  max-width: 960px;
+}
+
+.item {
+  margin-top: 80px;
+}
+
+.select {
+  margin-top: 30px;
+}
+
+.ratio{
+  margin-top: 30px;
+
+}
+
+.qty{
+  margin-top: 30px;
+
+}
+
+#button {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+
+}
+
+#submit {
+
+
+  width: 160px;
+  max-width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  color: #ffffff;
+  background-color: #000000;
+  border: 1px solid #979797;
+  letter-spacing: 4px;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+
+
+/* plot curve */
+#nowDate {
+
+  text-align: center ;
+}
+.row h3 {
+
+  text-align: center ;
+}
+
+.row {
+  border: 1px black solid;
+  margin: 20px;
+}
+
+text {
+  fill: #000;
+}
+
+path.candle {
+  stroke: #000000;
+}
+
+path.candle.body {
+  stroke-width: 0;
+}
+
+path.candle.up {
+  fill: #FF0000;
+  stroke: #FF0000;
+}
+
+path.candle.down {
+  fill: #00AA00;
+  stroke: #00AA00;
+}
+
+.volumeBar {
+  opacity: 0.8;
+  fill: #00AA00;
+}
+
+path.volume.up {
+  fill: #FF0000;
+}
+
+path.volume.down {
+  fill: #00AA00;
+}
+
+path.volume.equal {
+  fill: #FF0000;
+}
+
+
+.x.axis line {
+  fill: none;
+  stroke: rgba(0,0,0,0.1);
+}
+
+.y.axis line {
+  fill: none;
+  stroke: rgba(0,0,0,0.1);
+}
+
+.crosshair {
+  cursor: crosshair;
+}
+
+.crosshair path.wire {
+  
+  stroke: #797979;
+  stroke-dasharray: 1, 1;
+}
+
+.crosshair .axisannotation path {
+  fill: #DDDDDD;
+}
+
+
+rect.pane {
+  cursor: move;
+  fill: none;
+  pointer-events: all;
+}
+
