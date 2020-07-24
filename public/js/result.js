@@ -1,192 +1,230 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-await-in-loop */
 const list = document.querySelector('#stock-list');
-const playDate = localStorage.getItem('playDate');
-const playStock = JSON.parse(localStorage.getItem('playStock'));
+let playDate = localStorage.getItem('playDate');
+let playStock = JSON.parse(localStorage.getItem('playStock'));
 const name = localStorage.getItem('name');
-const portfolio = JSON.parse(localStorage.getItem('portfolio'));
+let portfolio = JSON.parse(localStorage.getItem('portfolio'));
+let final_result = JSON.parse(localStorage.getItem('final_result'));
+const finishDate = localStorage.getItem('finishDate');
 
 main();
 async function main() {
-  if (playDate && playStock) {
-    const before_date = new Date(playDate);
-    const mill = before_date.getTime();
-    const new_date = getDate(mill + 90 * 1000 * 60 * 60 * 24);
-    const post = { playDate: new_date, playStock };
+  if (playDate && playStock && portfolio && finishDate && name) {
+    const validate = await fetch(`api/1.0/stock/validate?playdate=${playDate}
+      &playstock=${JSON.stringify(playStock)}
+      &name=${name}&finishdate=${finishDate}`, {
+      method: 'GET',
+    }).then((res) => res.json());
+    if (validate.length == 0) {
+      await swal('Your play data is wrong! Restart your game');
+      localStorage.removeItem('playDate');
+      localStorage.removeItem('playStock');
+      localStorage.removeItem('portfolio');
+      localStorage.removeItem('finishDate');
+      window.location.href = './';
+      return;
+    }
+    show(playDate, playStock, portfolio, true);
+    const final_result_obj = {
+      name, playStock, playDate, portfolio,
+    };
+    localStorage.setItem('final_result', JSON.stringify(final_result_obj));
+    localStorage.removeItem('playDate');
+    localStorage.removeItem('playStock');
+    localStorage.removeItem('portfolio');
+    localStorage.removeItem('finishDate');
+  } else if (final_result) {
+    playDate = final_result.playDate;
+    playStock = final_result.playStock;
+    portfolio = final_result.portfolio;
+    show(playDate, playStock, portfolio, false);
+  } else {
+    swal('You did not play the game');
+    localStorage.removeItem('playDate');
+    localStorage.removeItem('playStock');
+    localStorage.removeItem('finishDate');
+  }
+}
 
-    const stockPrice = await fetch('api/1.0/stock/price', {
-      method: 'POST',
-      body: JSON.stringify(post),
-      headers: { 'Content-Type': 'application/json' },
-    }).then((res) => (res.json()));
-    const stockPriceGroup = _.groupBy(stockPrice, 'stock');
-    console.log(stockPriceGroup);
-    const wait = document.querySelector('#wait');
-    wait.innerHTML = '';
-    const nowDate = document.querySelector('#nowDate');
-    nowDate.innerHTML = `<h3>當時：${playDate} -> 現在： ${new_date}</h3>`;
-    const earnArr = [];
 
-    for (let i = 0; i < playStock.length; i++) {
-      const row = document.createElement('div');
-      row.setAttribute('class', 'row');
-      row.innerHTML = `<h3>${playStock[i].id} ${playStock[i].stock}
-      (${playStock[i].industry})</h3>`;
-      const price_curve = document.createElement('div');
+async function show(playDate, playStock, portfolio, insertboolean) {
+  const before_date = new Date(playDate);
+  const mill = before_date.getTime();
+  const new_date = getDate(mill + 90 * 1000 * 60 * 60 * 24);
+  const post = { playDate: new_date, playStock };
 
-      const details = document.createElement('div');
-      details.setAttribute('class', 'details');
 
-      // curve
-      price_curve.setAttribute('class', `curve${i}`);
-      details.appendChild(price_curve);
+  const stockPrice = await fetch('api/1.0/stock/price', {
+    method: 'POST',
+    body: JSON.stringify(post),
+    headers: { 'Content-Type': 'application/json' },
+  }).then((res) => (res.json()));
+  const stockPriceGroup = _.groupBy(stockPrice, 'stock');
+  // console.log(stockPriceGroup);
+  const wait = document.querySelector('#wait');
+  wait.innerHTML = '';
+  const nowDate = document.querySelector('#nowDate');
+  nowDate.innerHTML = `<h3>當時：${playDate} -> 現在： ${new_date}</h3>`;
+  const earnArr = [];
 
-      // item
-      const item = document.createElement('div');
-      item.setAttribute('class', 'item');
+  for (let i = 0; i < playStock.length; i++) {
+    const row = document.createElement('div');
+    row.setAttribute('class', 'row');
+    row.innerHTML = `<h3>${playStock[i].id} ${playStock[i].stock}
+    (${playStock[i].industry})</h3>`;
+    const price_curve = document.createElement('div');
 
-      const before_price = document.createElement('div');
-      before_price.setAttribute('class', 'before_price');
+    const details = document.createElement('div');
+    details.setAttribute('class', 'details');
 
-      let before_price_value = stockPriceGroup[playStock[i].id]
-        .find((x) => x.time == playDate);
-      let count = 0;
-      let try_date = new Date(playDate);
-      while (!before_price_value) {
-        if (count > 30) { break; }
-        try_date = new Date(try_date);
-        try_date = try_date.getTime();
-        try_date = getDate(try_date - 1 * 1000 * 60 * 60 * 24);
-        before_price_value = stockPriceGroup[playStock[i].id]
-          .find((x) => x.time == try_date);
-        count += 1;
+    // curve
+    price_curve.setAttribute('class', `curve${i}`);
+    details.appendChild(price_curve);
+
+    // item
+    const item = document.createElement('div');
+    item.setAttribute('class', 'item');
+
+    const before_price = document.createElement('div');
+    before_price.setAttribute('class', 'before_price');
+
+    let before_price_value = stockPriceGroup[playStock[i].id]
+      .find((x) => x.time == playDate);
+    let count = 0;
+    let try_date = new Date(playDate);
+    while (!before_price_value) {
+      if (count > 30) { break; }
+      try_date = new Date(try_date);
+      try_date = try_date.getTime();
+      try_date = getDate(try_date - 1 * 1000 * 60 * 60 * 24);
+      before_price_value = stockPriceGroup[playStock[i].id]
+        .find((x) => x.time == try_date);
+      count += 1;
+    }
+    before_price_value = before_price_value.price;
+    before_price.innerHTML = `當時股價： 
+      ${before_price_value}`;
+
+    const now_price = document.createElement('div');
+    now_price.setAttribute('class', 'now_price');
+    let now_price_value = 0;
+    for (let j = 0; j < 7; j++) {
+      now_price_value += stockPriceGroup[playStock[i].id][j].price;
+    }
+    now_price_value /= 7;
+    now_price_value = now_price_value.toFixed(2) * 100 / 100;
+    now_price.innerHTML = `現在股價： 
+      ${now_price_value}`;
+    item.appendChild(before_price);
+    item.appendChild(now_price);
+
+
+    const qty = document.createElement('div');
+    qty.setAttribute('class', 'qty');
+    const qty_label = document.createElement('label');
+    qty_label.setAttribute('for', `qty${i}`);
+
+    const storage = portfolio.list.find((x) => {
+      if (x.stock_id == playStock[i].id) {
+        return x;
       }
-      before_price_value = before_price_value.price;
-      before_price.innerHTML = `當時股價： 
-        ${before_price_value}`;
-
-      const now_price = document.createElement('div');
-      now_price.setAttribute('class', 'now_price');
-      let now_price_value = 0;
-      for (let j = 0; j < 7; j++) {
-        now_price_value += stockPriceGroup[playStock[i].id][j].price;
-      }
-      now_price_value /= 7;
-      now_price_value = now_price_value.toFixed(2) * 100 / 100;
-      now_price.innerHTML = `現在股價： 
-        ${now_price_value}`;
-      item.appendChild(before_price);
-      item.appendChild(now_price);
-      
-
-      const qty = document.createElement('div');
-      qty.setAttribute('class', 'qty');
-      const qty_label = document.createElement('label');
-      qty_label.setAttribute('for', `qty${i}`);
-
-      const storage = portfolio.list.find((x) => {
-        if (x.stock_id == playStock[i].id) {
-          return x;
-        }
-      });
-      if (storage) {
-        if (storage.buyShort_value == 'buy') {
-          qty_label.innerHTML = `<nobr style= "color:purple;">
-            買進 </nobr> ${storage.qty} 張<br>
-            成本 ${(storage.total_price / 10).toFixed(3) * 1000 / 1000} 萬`;
-        } else {
-          qty_label.innerHTML = `<nobr style= "color:purple;">
-            放空 </nobr> ${storage.qty} 張<br>
-            成本 ${(storage.total_price / 10).toFixed(3) * 1000 / 1000} 萬`;
-        }
+    });
+    if (storage) {
+      if (storage.buyShort_value == 'buy') {
+        qty_label.innerHTML = `<nobr style= "color:purple;">
+          買進 </nobr> ${storage.qty} 張<br>
+          成本 ${(storage.total_price / 10).toFixed(3) * 1000 / 1000} 萬`;
       } else {
-        qty_label.innerHTML = '0 張<br>成本 0 萬';
+        qty_label.innerHTML = `<nobr style= "color:purple;">
+          放空 </nobr> ${storage.qty} 張<br>
+          成本 ${(storage.total_price / 10).toFixed(3) * 1000 / 1000} 萬`;
       }
-      qty.appendChild(qty_label);
-      item.appendChild(qty);
+    } else {
+      qty_label.innerHTML = '0 張<br>成本 0 萬';
+    }
+    qty.appendChild(qty_label);
+    item.appendChild(qty);
 
-      const ratio = document.createElement('div');
-      ratio.setAttribute('class', 'ratio');
+    const ratio = document.createElement('div');
+    ratio.setAttribute('class', 'ratio');
 
-      if (storage) {
-        if (storage.buyShort_value == 'buy') {
-          ratio.innerHTML = `報酬率： 
-          ${((now_price_value
-            - before_price_value) / before_price_value * 100).toFixed(2)
-            * 100 / 100} %`;
-        } else {
-          ratio.innerHTML = `報酬率： 
-          ${((now_price_value
-            - before_price_value) / before_price_value * 100).toFixed(2)
-            * 100 / 100 * (-1)} %`;
-        }
-        storage.now_price_value = now_price_value;
-      } else {
+    if (storage) {
+      if (storage.buyShort_value == 'buy') {
         ratio.innerHTML = `報酬率： 
         ${((now_price_value
           - before_price_value) / before_price_value * 100).toFixed(2)
           * 100 / 100} %`;
-      }
-      item.appendChild(ratio);
-
-      const price = document.createElement('div');
-      price.setAttribute('class', 'price');
-      if (storage) {
-        const earn = (storage.total_price / 10
-          * ((now_price_value
-          - before_price_value)
-          / before_price_value)).toFixed(2) * 100 / 100;
-        if (storage.buyShort_value == 'buy') {
-          earnArr[i] = earn;
-          price.innerHTML = `獲利(TWD)： ${earn} 萬`;
-        } else {
-          earnArr[i] = -1 * earn;
-          price.innerHTML = `獲利(TWD)： ${(-1) * earn} 萬`;
-        }
       } else {
-        price.innerHTML = '獲利(TWD)： 0 萬';
+        ratio.innerHTML = `報酬率： 
+        ${((now_price_value
+          - before_price_value) / before_price_value * 100).toFixed(2)
+          * 100 / 100 * (-1)} %`;
       }
-      localStorage.setItem('portfolio', JSON.stringify(portfolio));
-      item.appendChild(price);
-      details.appendChild(item);
-      row.appendChild(details);
-      list.appendChild(row);
-      plot2(stockPriceGroup[playStock[i].id], `curve${i}`);
+      storage.now_price_value = now_price_value;
+    } else {
+      ratio.innerHTML = `報酬率： 
+      ${((now_price_value
+        - before_price_value) / before_price_value * 100).toFixed(2)
+        * 100 / 100} %`;
     }
-    const total_money = document.querySelector('#total');
-    let total_money_value = 2000;
-    for (let i = 0; i < earnArr.length; i++) {
-      // console.log(earnArr[i]);
-      if (earnArr[i]) {
-        total_money_value += earnArr[i];
-      }
-    }
-    total_money_value = total_money_value.toFixed(3) * 1000 / 1000;
-    total_money.innerHTML = `資產總計(TWD)：${total_money_value} 萬`;
+    item.appendChild(ratio);
 
-    const invest_ratio = document.querySelector('#investRatio');
-    let invest_ratio_value = 0;
-    for (let i = 0; i < earnArr.length; i++) {
-      if (earnArr[i]) {
-        invest_ratio_value += earnArr[i];
+    const price = document.createElement('div');
+    price.setAttribute('class', 'price');
+    if (storage) {
+      const earn = (storage.total_price / 10
+        * ((now_price_value
+        - before_price_value)
+        / before_price_value)).toFixed(2) * 100 / 100;
+      if (storage.buyShort_value == 'buy') {
+        earnArr[i] = earn;
+        price.innerHTML = `獲利(TWD)： ${earn} 萬`;
+      } else {
+        earnArr[i] = -1 * earn;
+        price.innerHTML = `獲利(TWD)： ${(-1) * earn} 萬`;
       }
+    } else {
+      price.innerHTML = '獲利(TWD)： 0 萬';
     }
-    invest_ratio_value = invest_ratio_value / (portfolio.total / 10) * 100;
-    invest_ratio_value = invest_ratio_value.toFixed(2) * 100 / 100;
-    invest_ratio.innerHTML = `投資報酬率： ${invest_ratio_value} %`;
+    item.appendChild(price);
+    details.appendChild(item);
+    row.appendChild(details);
+    list.appendChild(row);
+    plot2(stockPriceGroup[playStock[i].id], `curve${i}`);
+  }
+  const total_money = document.querySelector('#total');
+  let total_money_value = 2000;
+  for (let i = 0; i < earnArr.length; i++) {
+    // console.log(earnArr[i]);
+    if (earnArr[i]) {
+      total_money_value += earnArr[i];
+    }
+  }
+  total_money_value = total_money_value.toFixed(3) * 1000 / 1000;
+  total_money.innerHTML = `資產總計(TWD)：${total_money_value} 萬`;
 
-    const total_ratio = document.querySelector('#totalRatio');
-    const total_ratio_value = ((total_money_value - 2000) / 2000 * 100).toFixed(2) * 100 / 100;
-    total_ratio.innerHTML = `總報酬率：${total_ratio_value} %`;
+  const invest_ratio = document.querySelector('#investRatio');
+  let invest_ratio_value = 0;
+  for (let i = 0; i < earnArr.length; i++) {
+    if (earnArr[i]) {
+      invest_ratio_value += earnArr[i];
+    }
+  }
+  invest_ratio_value = invest_ratio_value / (portfolio.total / 10) * 100;
+  invest_ratio_value = invest_ratio_value.toFixed(2) * 100 / 100;
+  invest_ratio.innerHTML = `投資報酬率： ${invest_ratio_value} %`;
+  const total_ratio = document.querySelector('#totalRatio');
+  const total_ratio_value = ((total_money_value - 2000) / 2000 * 100).toFixed(2) * 100 / 100;
+  total_ratio.innerHTML = `總報酬率：${total_ratio_value} %`;
+  if (insertboolean) {
     insertResult(name, total_money_value, invest_ratio_value, total_ratio_value,
       JSON.stringify(portfolio), JSON.stringify(playStock), playDate);
-
-
   }
 }
+
 async function insertResult(name, total_money_value,
   invest_ratio_value, total_ratio_value, portfolio, playStock, playDate) {
-  const today = getDate(Date.now());
   const post = {
     name,
     total_money_value,
@@ -195,15 +233,13 @@ async function insertResult(name, total_money_value,
     portfolio,
     playStock,
     playDate,
-    today,
+    finishDate
   };
   const result = await fetch('api/1.0/stock/result', {
     method: 'POST',
     body: JSON.stringify(post),
     headers: { 'Content-Type': 'application/json' },
   }).then((res) => (res.json()));
-  
-
 }
 
 

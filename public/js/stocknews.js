@@ -1,11 +1,12 @@
 
 const playDate = localStorage.getItem('playDate');
 const playStock = JSON.parse(localStorage.getItem('playStock'));
-
+const finishDate = parseInt(localStorage.getItem('finishDate'));
 
 main();
 async function main() {
   if (playDate && playStock) {
+    setInterval(countdown, 1000);
     const nowDate = document.querySelector('#nowDate');
     nowDate.innerHTML = `<h3>Your start date is: ${playDate}</h3>`;
     const stockUl = document.querySelector('.stockUl');
@@ -37,7 +38,7 @@ async function get_news(id, stock, start, end) {
   const news = await fetch(`api/1.0/stock/news?stock=${id}&start=${start}&end=${end}`, {
     method: 'GET',
   }).then((res) => res.json());
-  console.log(news);
+  // console.log(news);
 
   const newslist = document.querySelector('#newslist');
   if (newslist.childElementCount !== 0) {
@@ -56,7 +57,8 @@ async function get_news(id, stock, start, end) {
   for (let i = 0; i < news.length; i++) {
     const row = document.createElement('li');
     row.setAttribute('class', 'newsli');
-    row.setAttribute('onclick', `readMore('${news[i].href}')`);
+    row.setAttribute('id', `news${i}`);
+    row.setAttribute('onclick', `readMore(this.id, '${news[i].href}', '${stock}')`);
     const title = document.createElement('div');
     title.setAttribute('class', 'title');
     title.innerHTML = news[i].title;
@@ -81,22 +83,53 @@ async function search() {
     from.value, to.value);
 }
 
-async function readMore(href) {
-  window.open(href);
+async function readMore(id, href, stock) {
+  const selector = document.getElementById(id);
+  const brief = selector.querySelector('.brief');
+  let text = selector.querySelector('.text');
+  if (!text) {
+    let result = await fetch(`api/1.0/stock/news?href=${href}`, {
+      method: 'GET',
+    }).then((res) => res.json());
+    result = JSON.parse(result);
+    // console.log(id);
+    // console.log(text);
+    text = document.createElement('div');
+    text.setAttribute('class', 'text');
+
+    brief.setAttribute('style', 'display:none');
+    for (let i = 0; i < result.length; i++) {
+      text.innerHTML += result[i];
+      text.innerHTML += '<br><br>';
+    }
+    selector.appendChild(text);
+    highlightKeyword(stock);
+  } else if (brief.getAttribute('style') == 'display:none') {
+    brief.setAttribute('style', '');
+    text.setAttribute('style', 'display:none');
+  } else if (text.getAttribute('style') == 'display:none') {
+    brief.setAttribute('style', 'display:none');
+    text.setAttribute('style', '');
+  }
+
+
+  // window.open(href);
 }
 
 // 搜索关键字高亮
-const highlightKeyword = function (keyword) {
+function highlightKeyword(keyword) {
   // 1.获取要高亮显示的行
   const rowNode = $('.newsli');
   // 2.获取搜索的内容
   // 3.遍历整行内容，添加高亮颜色
   rowNode.each(function () {
     let newHtml = $(this).html();
-    newHtml = newHtml.replace(keyword, `<span style="color:#ff6700;">${keyword}</span>`);
+    let re = new RegExp(keyword, 'g');
+    newHtml = newHtml.replace(re, `<span style="color:#ff6700">${keyword}</span>`);
     $(this).html(newHtml);
   });
-};
+
+}
 
 
 // datepicker
@@ -117,14 +150,6 @@ $(() => {
   });
 });
 
-function getDate(date) {
-  const fullDate = new Date(date);
-  const yy = fullDate.getFullYear();
-  const mm = fullDate.getMonth() + 1 <= 9 ? `0${fullDate.getMonth() + 1}` : fullDate.getMonth() + 1;
-  const dd = fullDate.getDate() < 10 ? (`0${fullDate.getDate()}`) : fullDate.getDate();
-  const today = `${yy}-${mm}-${dd}`;
-  return today;
-}
 
 function sign() {
   const token = localStorage.getItem('token');

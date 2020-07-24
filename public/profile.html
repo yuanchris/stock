@@ -5,7 +5,7 @@
 	<title>Profile</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/profile.css">
-  <script src="js/profile.js"></script>
+
 </head>
 <body>
 	
@@ -14,7 +14,7 @@
 			<h1>Stock Arena</h1>
 		</div> -->
     <h1 class="name"><a href="./">Stock Arena</a></h1>
-    <h3 class="time_remain">時間剩下: 15:00 </h3>
+    <h3 class="time_remain">時間剩下</h3>
 		<ul class="main-nav">
 			<li><a href="./choice.html">投資選擇</a></li>
 			<li><a href="./stocknews.html">公司新聞</a></li>
@@ -34,13 +34,31 @@
     <div id="username" class="username"></div>
     <div id="email" class="email"></div>
     <button class="logOutBtn" onclick="logOut()">Log Out</button>
+		<div class="list" id= "">
+			<table class = 'rank_table'>
+				<thead>
+					<tr align="center" bgcolor="#d7e6f4" height="23px">  
+						<td rowspan="2"><nobr>名次</nobr></td>  
+						<td rowspan="2"><nobr>玩家</nobr></td>  
+						<td rowspan="2"><nobr>市值 (萬)</nobr></td>
+						<td rowspan="2"><nobr>投資報酬率<br>(%)</nobr></td>
+						<td rowspan="2"><nobr>總報酬率<br>(%)</nobr></td>
+						<td rowspan="2"><nobr>投資選擇</nobr></td>
+						<td rowspan="2"><nobr>當時股票</nobr></td>
+						<td rowspan="2"><nobr>當時日期</nobr></td>
+						<td rowspan="2"><nobr>完成日期</nobr></td>
+					</tr>
+				</thead>
+			</table>
 
+		</div>
 
   </main>
 	<footer class="main-footer">
 		<p>&copy; 2020. All rights reserved.</p>
 		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
 	</footer>
-
+	<script src="./js/util.js"></script>
+	<script src="js/profile.js"></script>
 </body>
 </html>

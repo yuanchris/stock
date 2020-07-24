@@ -10,6 +10,18 @@ const stockInfo = async (req, res) => {
   res.status(200).send(result);
 };
 
+const stockStart = async (req, res) => {
+  const { query } = req;
+  const result = await Stock.start(query.name);
+  if (result.error) {
+    res.status(403).send({ error: result.error });
+    return;
+  }
+  res.status(200).send(result);
+};
+
+
+
 const stockPrice = async (req, res) => {
   const { body } = req;
   // console.log(body);
@@ -29,7 +41,13 @@ const stockPrice = async (req, res) => {
 const stockNews = async (req, res) => {
   const { query } = req;
   // console.log(query);
-  const result = await Stock.news(query.stock, query.start, query.end);
+  let result;
+  if (query.href) {
+    result = await Stock.crawlText(query.href);
+  } else {
+    result = await Stock.news(query.stock, query.start, query.end);
+  }
+
   if (result.error) {
     res.status(403).send({ error: result.error });
     return;
@@ -61,11 +79,11 @@ const stockPer = async (req, res) => {
 
 const stockResult = async (req, res) => {
   const { body } = req;
-  console.log(body);
+  // console.log(body);
   const result = await Stock.result(body.name, body.total_money_value,
     body.invest_ratio_value,
     body.total_ratio_value, body.portfolio, body.playStock,
-    body.playDate, body.today);
+    body.playDate, body.finishDate);
 
   if (result.error) {
     res.status(403).send({ error: result.error });
@@ -85,12 +103,28 @@ const stockRank = async (req, res) => {
   res.status(200).send(result);
 };
 
+const stockValidate = async (req, res) => {
+  const { query } = req;
+  // console.log(query);
+  const result = await Stock.validate(query.playdate, query.name,
+    query.finishdate, query.playstock);
+  if (result.error) {
+    res.status(403).send({ error: result.error });
+    return;
+  }
+  res.status(200).send(result);
+};
+
+
+
 module.exports = {
   stockInfo,
+  stockStart,
   stockPrice,
   stockNews,
   stockRevenue,
   stockPer,
   stockResult,
   stockRank,
+  stockValidate,
 };

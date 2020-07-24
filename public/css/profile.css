@@ -1,8 +1,12 @@
 @import "index.css";
 main
 {
-  display: block;
-	text-align: center ;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center ;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .logOutBtn{
@@ -18,3 +22,29 @@ main
   border: 1px solid #e8ae2b;
   box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.3);
 }
+
+.list {
+  margin: 5px 10px;
+
+}
+table{
+  display: table;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border-collapse: collapse;
+  border: 1px solid black;
+  text-align: center;
+}
+
+thead td{
+  font-size: 12pt;
+}
+td {
+  white-space:nowrap; 
+  font-size: 11pt;
+  min-width: 80px;
+}
+/* tbody tr:nth-child(even) {background-color: #f2f2f2;} */

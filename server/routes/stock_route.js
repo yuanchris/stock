@@ -9,6 +9,8 @@ const {
   stockPer,
   stockResult,
   stockRank,
+  stockStart,
+  stockValidate,
 } = require('../controllers/stock_controller');
 
 // router.route('/user/signup')
@@ -19,6 +21,9 @@ const {
 
 router.route('/stock/info')
   .get(wrapAsync(stockInfo));
+
+router.route('/stock/start')
+  .get(wrapAsync(stockStart));
 
 router.route('/stock/news')
   .get(wrapAsync(stockNews));
@@ -35,5 +40,9 @@ router.route('/stock/price')
 router.route('/stock/result')
   .post(wrapAsync(stockResult))
   .get(wrapAsync(stockRank));
+
+
+  router.route('/stock/validate')
+  .get(wrapAsync(stockValidate));
 
 module.exports = router;

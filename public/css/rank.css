@@ -32,4 +32,4 @@ td {
   font-size: 11pt;
   min-width: 80px;
 }
-tbody tr:nth-child(even) {background-color: #f2f2f2;}
+/* tbody tr:nth-child(even) {background-color: #f2f2f2;} */

@@ -4,6 +4,7 @@ const list = document.querySelector('#stock-list');
 const playDate = localStorage.getItem('playDate');
 const playStock = JSON.parse(localStorage.getItem('playStock'));
 let portfolio = JSON.parse(localStorage.getItem('portfolio'));
+let finishDate = parseInt(localStorage.getItem('finishDate'));
 // console.log(portfolio);
 if (!portfolio) {
   portfolio = {};
@@ -18,6 +19,7 @@ async function main() {
     wait.innerHTML = '<h2>Your game is not started yet!</h2>';
     swal('Your game is not started yet!');
   } else {
+    setInterval(countdown, 1000);
     const post = { playDate, playStock };
     // console.log(post);
     const stockPrice = await fetch('api/1.0/stock/price', {

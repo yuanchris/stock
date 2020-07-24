@@ -6,6 +6,7 @@ let playStock = JSON.parse(localStorage.getItem('playStock'));
 let token = localStorage.getItem('token');
 let name = localStorage.getItem('name');
 const pickstock = document.querySelector('div.pickstock');
+let finishDate = parseInt(localStorage.getItem('finishDate'));
 
 if (playDate && playStock) {
   pickstock.innerHTML = `<h3>Your start date is :</h3><p>${playDate}</p> <br>\
@@ -15,53 +16,42 @@ if (playDate && playStock) {
   + `${playStock[i].industry}</p>`;
   }
   pickstock.innerHTML += '<h3>Have a Good Time!</h3>';
+  setInterval(countdown, 1000);
 }
+
+
 
 
 
 pickstock.addEventListener('click', async () => {
   playDate = localStorage.getItem('playDate');
   playStock = JSON.parse(localStorage.getItem('playStock'));
-  if (!(token || name)) {
+  finishDate = parseInt(localStorage.getItem('finishDate'));
+  if (!(token && name)) {
     swal('please login in first!', '請點擊登入');
     return;
   }
   if (playDate && playStock) {
     swal('遊戲已經開始', '請往上點擊投資組合');
   } else {
-    const stock = await fetch('api/1.0/stock/info')
-      .then((res) => res.json());
-    let randomStock = new Set([Math.floor(Math.random() * 140), Math.floor(Math.random() * 140),
-      Math.floor(Math.random() * 140), Math.floor(Math.random() * 140),
-      Math.floor(Math.random() * 140)]);
-    randomStock = [...randomStock];
-    while (randomStock.length !== 5) {
-      randomStock = new Set([Math.floor(Math.random() * 140), Math.floor(Math.random() * 140),
-        Math.floor(Math.random() * 140), Math.floor(Math.random() * 140),
-        Math.floor(Math.random() * 140)]);
-      randomStock = [...randomStock];
-    }
-    randomStock.sort((a, b) => a - b);
-    const randomPlayDate = formatDate(randomDate());
-    const randomPlayStock = [];
-    for (let i = 0; i < 5; i++) {
-      randomPlayStock[i] = {};
-      randomPlayStock[i].id = stock[randomStock[i]].id;
-      randomPlayStock[i].stock = stock[randomStock[i]].stock;
-      randomPlayStock[i].industry = stock[randomStock[i]].industry;
-    }
-    pickstock.innerHTML = `<h3>Your start date is :</h3><p>${randomPlayDate}</p> <br>\
-  <h3>Your stocks is :</h3>`;
+    const start = await fetch(`api/1.0/stock/start?name=${name}`, {
+      method: 'GET',
+    }).then((res) => res.json());
+    start.playstock = JSON.parse(start.playstock);
+    pickstock.innerHTML = `<h3>Your start date is :</h3><p>${start.playdate}</p> <br>\
+      <h3>Your stocks is :</h3>`;
 
     for (let i = 0; i < 5; i++) {
-      pickstock.innerHTML += `<p>${randomPlayStock[i].id} ` + `${randomPlayStock[i].stock} `
-    + `${randomPlayStock[i].industry}</p>`;
+      pickstock.innerHTML += `<p>${start.playstock[i].id} ` + `${start.playstock[i].stock} `
+    + `${start.playstock[i].industry}</p>`;
     }
     pickstock.innerHTML += '<h3>Have a Good Time!</h3>';
-
-    localStorage.setItem('playDate', randomPlayDate);
-    localStorage.setItem('playStock', JSON.stringify(randomPlayStock));
-    // window.location.reload();
+    localStorage.setItem('playDate', start.playdate);
+    localStorage.setItem('playStock', JSON.stringify(start.playstock));
+    localStorage.setItem('finishDate', start.finishdate);
+    localStorage.removeItem('final_result');
+    finishDate = parseInt(localStorage.getItem('finishDate'));
+    setInterval(countdown, 1000);
   }
 });
 

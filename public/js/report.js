@@ -1,10 +1,12 @@
 /* eslint-disable camelcase */
 const playDate = localStorage.getItem('playDate');
 const playStock = JSON.parse(localStorage.getItem('playStock'));
+let finishDate = parseInt(localStorage.getItem('finishDate'));
 
 main();
 async function main() {
   if (playDate && playStock) {
+    setInterval(countdown, 1000);
     const nowDate = document.querySelector('#nowDate');
     nowDate.innerHTML = `<h3>Your start date is: ${playDate}</h3>`;
     const stockUl = document.querySelector('.stockUl');
@@ -24,7 +26,7 @@ async function main() {
 
 async function get_report(id, stock) {
   const stock_select = document.querySelector('#stock_select');
-  stock_select.innerHTML = `<h3>${id} ${stock}</h3>`;
+  stock_select.innerHTML = `<h1>${id} ${stock}</h1>`;
 
   //get data from sql
   const revenue = await fetch(`api/1.0/stock/revenue?stock=${id}&date=${playDate}`, {
@@ -43,6 +45,7 @@ async function get_report(id, stock) {
     revenue_table.innerHTML = ''; // delete old data
   }
   let revenue_tbody;
+  document.querySelector('#revenue h2').innerHTML = '每月營收';
   for (let i = 0; i < revenue.length; i++) {
     if (i == 0) {
       revenue_table.appendChild(clone);
@@ -55,7 +58,7 @@ async function get_report(id, stock) {
       revenue_tbody = document.createElement('tbody');
       revenue_table.appendChild(revenue_tbody);
     }
-
+    
     const row = document.createElement('tr');
     row.setAttribute('class', `row${i}`);
 
@@ -106,6 +109,7 @@ async function get_report(id, stock) {
     per_table.innerHTML = ''; // delete old data
   }
   let per_tbody;
+  document.querySelector('#per h2').innerHTML = '本益比河流圖';
   for (let i = 0; i < per.length; i++) {
     if (i == 0) {
       per_table.appendChild(clone3);

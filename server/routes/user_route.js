@@ -51,11 +51,11 @@ router.post('/user/signup', (req, res) => {
                   const access_token = jwt.sign({
                     id, provider, name, email, picture,
                   },
-                  secretKey, { expiresIn: '3600s' });
+                  secretKey, { expiresIn: '86400s' });
                   const data = {
                     data: {
                       access_token,
-                      access_expired: 3600,
+                      access_expired: 86400,
                       user: {
                         id, provider, name, email, picture,
                       },
@@ -110,11 +110,11 @@ router.post('/user/signin', async (req, res) => {
             const access_token = jwt.sign({
               id, provider, name, email, picture,
             },
-            secretKey, { expiresIn: '3600s' });
+            secretKey, { expiresIn: '86400s' });
             const data = {
               data: {
                 access_token,
-                access_expired: 3600,
+                access_expired: 86400,
                 user: {
                   id, provider, name, email, picture,
                 },
@@ -132,11 +132,11 @@ router.post('/user/signin', async (req, res) => {
               const access_token = jwt.sign({
                 id, provider, name, email, picture,
               },
-              secretKey, { expiresIn: '3600s' });
+              secretKey, { expiresIn: '86400s' });
               const data = {
                 data: {
                   access_token,
-                  access_expired: 3600,
+                  access_expired: 86400,
                   user: {
                     id, provider, name, email, picture,
                   },
@@ -162,11 +162,11 @@ router.post('/user/signin', async (req, res) => {
               const access_token = jwt.sign({
                 id, provider, name, email, picture,
               },
-              secretKey, { expiresIn: '3600s' });
+              secretKey, { expiresIn: '86400s' });
               const data = {
                 data: {
                   access_token,
-                  access_expired: 3600,
+                  access_expired: 86400,
                   user: {
                     id, provider, name, email, picture,
                   },
