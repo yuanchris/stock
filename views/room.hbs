@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{roomID}}</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/room.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+  	
+	<header class="main-header">
+		<!-- <div class="name"><a href="./"><img src="imgs/logo.jpg" /></a>
+			<h1>Stock Arena</h1>
+		</div> -->
+    <h1 class="name"><a href="/">Stock Arena</a></h1>
+    <h3 class="time_remain">時間剩下</h3>
+		<ul class="main-nav">
+			<li><a href="/choice.html">投資選擇</a></li>
+			<li><a href="/stocknews.html">公司新聞</a></li>
+			<li><a href="/report.html">公司財報</a></li>
+			<li><a href="/allnews.html">國際財經</a></li>
+			<li><a href="/rank.html">排行榜</a></li>
+			<li><a href="/match.html">連線對戰</a></li>
+			<img src="/imgs/member.png" onclick = "sign()"/>
+		</ul>
+		<!-- <div class="item member">
+			
+		</div> -->
+  </header>
+  <div class="banner"></div>  
+  <main>
+    <div class = 'chat'>
+      ID: <span id="userName"></span> <br/>
+      房間: {{roomID}} <br/>
+      當前人數: <span id="count">{{users.length}}</span> <br/>
+      用戶:  <div id="users">{{users}}</div>
+
+      <div id="msglog"></div>
+      <textarea name="message" id="messageInput"></textarea>
+      <br/>
+      按Enter鍵發送訊息
+      {{!-- <button id="joinOrLeave">退出房間</button> --}}
+      <button id="beginPK">加入對戰</button>
+    </div>
+  </main>
+  <footer class="main-footer">
+		<p>&copy; 2020. All rights reserved.</p>
+		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
+	</footer>
+
+  <script>
+    const name = localStorage.getItem('name');
+    $(function () {
+            // ---------创建连接-----------
+      var socket = io();
+      // ----------设置昵称-------------
+      var userName = name;
+      $('#userName').text(name);
+      // 加入房间
+      socket.on('connect', function () {
+        socket.emit('join', userName);
+      });
+      //暱稱重複
+      socket.on('loginFail', function () {
+        alert('重複登入聊天室');
+        window.close();
+      });
+      // 监听消息
+      socket.on('msg', function (userName, msg) {
+        var message = '' +
+            '<div class="message">' +
+            '  <span class="user">' + userName + ': </span>' +
+            '  <span class="msg">' + msg + '</span>' +
+            '</div>';
+        $('#msglog').append(message);
+        // 滚动条保持最下方
+        $('#msglog').scrollTop($('#msglog')[0].scrollHeight);  
+      });
+
+      // 监听系统消息
+      socket.on('sys', function (sysMsg, users) {
+        var message = '<div class="sysMsg">' + sysMsg + '</div>';
+        $('#msglog').append(message);
+
+        $('#count').text(users.length);
+        $('#users').text(users);
+      });
+      // 接收對戰data
+      socket.on('PKdata', function (playdate, playstock, finishdate) {
+        var message = '<div class="sysMsg">' + `當時日期：${playdate}` + '</div>';
+        $('#msglog').append(message);
+        let printStock = JSON.stringify(playstock);
+        message = '<div class="sysMsg">' + `當時股票：${printStock}` + '</div>';
+        $('#msglog').append(message);
+        message = '<div class="sysMsg">' + '請至首頁開始遊戲' + '</div>';
+        $('#msglog').append(message);
+        localStorage.setItem('playDate', playdate);
+        localStorage.setItem('playStock', printStock);
+        localStorage.setItem('finishDate', finishdate);
+        localStorage.removeItem('final_result');
+
+      });
+
+      // 发送消息
+      $('#messageInput').keydown(function (e) {
+        if (e.which === 13) {
+          e.preventDefault();
+          var msg = $(this).val();
+          $(this).val('');
+
+          socket.send(msg);  // use message to receive
+        }
+      });
+
+      // 退出房间
+      $('#joinOrLeave').click(function () {
+        if ($(this).text() === '退出房間') {
+          $(this).text('進入房間');
+          socket.emit('leave');
+          var msg = '你已經退出了房間,重新加入請點擊進入房間';
+          $('#msglog').append('<div class="sysMsg">'+msg+'</div>');
+        } else {
+          $(this).text('退出房間');
+          socket.emit('join', userName);
+        }
+      });
+
+      //發起對戰
+      $('#beginPK').click(function () {
+        $(this).text('已發起對戰');
+        socket.send(`${userName} begin a battle`);
+        socket.emit('beginPK', userName);
+      });
+
+
+    });
+  </script>
+</body>
+</html>

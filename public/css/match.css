@@ -1,0 +1,32 @@
+@import "index.css";
+.socket {
+  text-align: center ;
+
+}
+main{
+  min-height: calc(100vh - 315px); /* 這個200px是header和footer的高度 */
+  }
+h2 {
+  margin-bottom: 50px;
+}
+
+.socket li {
+  margin: 20px;
+
+}
+
+
+.socket li a{
+  font-size: 1.2em;
+	color: rgb(0, 0, 0);	
+	padding: 7px 14px;
+}
+.socket a:hover
+{
+	color: #3788bb;
+}
+
+footer{
+  height: 110px;
+  margin-top: auto;
+  }

@@ -12,8 +12,8 @@ async function main() {
     console.log(main_nav);
     main_nav.innerHTML = `<li><a href="./result.html">最終結果</a></li>
       <li><a href="./rank.html">排行榜</a></li>
-      <li><a href="#">最新新聞</a></li>
-      <li><a href="#">最新財報</a></li>
+      <li><a href="./resultnews.html">最新新聞</a></li>
+      <li><a href="./resultreport.html">最新財報</a></li>
       <img src="imgs/member.png" onclick = "sign()"/>`;
   }
   // get data from sql
@@ -73,7 +73,7 @@ async function main() {
     const playstock_json = JSON.parse(rank[i].playstock);
     for (let j = 0; j < playstock_json.length; j++) {
       playstock.innerHTML += `${playstock_json[j].id} 
-      ${playstock_json[j].stock} <br>(${playstock_json[j].industry})<br>`;
+      ${playstock_json[j].stock} <br>`;
     }
 
     const playdate = document.createElement('td');

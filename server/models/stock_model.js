@@ -62,6 +62,50 @@ const start = async (name) => {
     return { error };
   }
 };
+
+const pk = async (IdArray) => {
+  try {
+    const stock = await dbquery('SELECT * FROM stock_info_select');
+    if (stock.length == 0) {
+      return { error: 'no stock in database' };
+    }
+    let randomStock = new Set([Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
+      Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
+      Math.floor(Math.random() * 139)]);
+    randomStock = [...randomStock];
+    while (randomStock.length !== 5) {
+      randomStock = new Set([Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
+        Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
+        Math.floor(Math.random() * 139)]);
+      randomStock = [...randomStock];
+    }
+    randomStock.sort((a, b) => a - b);
+    const randomPlayDate = formatDate(randomDate());
+    const randomPlayStock = [];
+    for (let i = 0; i < 5; i++) {
+      randomPlayStock[i] = {};
+      randomPlayStock[i].id = stock[randomStock[i]].id;
+      randomPlayStock[i].stock = stock[randomStock[i]].stock;
+      randomPlayStock[i].industry = stock[randomStock[i]].industry;
+    }
+    const recordDate = Date.now();
+    const post = [
+      [IdArray[0], randomPlayDate, JSON.stringify(randomPlayStock), recordDate, IdArray[1]],
+      [IdArray[1], randomPlayDate, JSON.stringify(randomPlayStock), recordDate, IdArray[0]],
+    ];
+    const input = await dbquery('INSERT INTO user_playlist (name, playdate, playstock, finishdate, opponent) VALUES ?', [post]);
+    return {
+      playdate: randomPlayDate,
+      playstock: JSON.stringify(randomPlayStock),
+      finishdate: recordDate,
+    };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  }
+};
+
+
 function randomDate() {
   const startDate = new Date(2014, 0, 1).getTime();
   const endDate = new Date(2020, 1, 1).getTime();
@@ -152,8 +196,8 @@ const revenue = async (stock, date) => {
   try {
     const dateInput = date.replace('-', '/');
     const result = await dbquery(`SELECT *
-      FROM stock_revenue WHERE stock = ${stock} AND month between 
-      '2011/01' AND '${dateInput}' `);
+      FROM stock_revenue WHERE stock = ${stock} AND month >=
+      '2011/01' AND month < '${dateInput}' `);
     if (result.length === 0) {
       return { error: 'No news in database' };
     }
@@ -170,8 +214,8 @@ const per = async (stock, date) => {
     const dateInput = getYearWeek(date);
     // console.log(dateInput);
     const result = await dbquery(`SELECT *
-      FROM stock_per WHERE stock = ${stock} AND week BETWEEN
-       '1101' AND '${dateInput}'`);
+      FROM stock_per WHERE stock = ${stock} AND week >=
+       '1101' AND week < '${dateInput}'`);
     if (result.length === 0) {
       return { error: 'No news in database' };
     }
@@ -252,6 +296,7 @@ function getYearWeek(date) {
 module.exports = {
   info,
   start,
+  pk,
   price,
   news,
   crawlText,

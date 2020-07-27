@@ -31,7 +31,9 @@ img {
 	max-width: 80%;
 }
 /*=================     */
-
+main{
+  min-height: calc(100vh - 290px); /* 這個200px是header和footer的高度 */
+  }
 .main-header,
 .main-nav
 {
@@ -117,12 +119,14 @@ img {
 	text-align: center;
 	padding: 0.5em 0;
 	margin-top: 30px;
-
+	height: 110px;
+  margin-top: auto;
 }
 
 
 .directions {
-	margin: 20px 50px;
+	width: 1000px;
+	margin: 20px auto;
 }
 
 .col ul{

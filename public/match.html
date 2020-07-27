@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Stock</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/match.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- <script src="/socket.io/socket.io.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+	
+	<header class="main-header">
+		<!-- <div class="name"><a href="./"><img src="imgs/logo.jpg" /></a>
+			<h1>Stock Arena</h1>
+		</div> -->
+    <h1 class="name"><a href="./">Stock Arena</a></h1>
+    <h3 class="time_remain">時間剩下</h3>
+		<ul class="main-nav">
+			<li><a href="./choice.html">投資選擇</a></li>
+			<li><a href="./stocknews.html">公司新聞</a></li>
+			<li><a href="./report.html">公司財報</a></li>
+			<li><a href="./allnews.html">國際財經</a></li>
+			<li><a href="./rank.html">排行榜</a></li>
+			<li><a href="./match.html">連線對戰</a></li>
+			<img src="imgs/member.png" onclick = "sign()"/>
+		</ul>
+		<!-- <div class="item member">
+			
+		</div> -->
+  </header>
+  <div class="banner"></div>  
+	<main>
+
+  <div class = 'socket'>
+    <div>
+      <h2>房間列表</h2>
+      <ul>
+        <li id="room_1"><a href="/room/room_1" target="_blank">1號房間</a></li>
+        <li id="room_2"><a href="/room/room_2" target="_blank">2號房間</a></li>
+        <li id="room_3"><a href="/room/room_3" target="_blank">3號房間</a></li>
+        <li id="room_4"><a href="/room/room_4" target="_blank">4號房間</a></li>
+        <li id="room_5"><a href="/room/room_5" target="_blank">5號房間</a></li>
+        <li id="room_1"><a href="/room/room_6" target="_blank">6號房間</a></li>
+        <li id="room_2"><a href="/room/room_7" target="_blank">7號房間</a></li>
+        <li id="room_3"><a href="/room/room_8" target="_blank">8號房間</a></li>
+        <li id="room_4"><a href="/room/room_9" target="_blank">9號房間</a></li>
+        <li id="room_5"><a href="/room/room_10" target="_blank">10號房間</a></li>
+      </ul>
+    </div>
+    <div id="messages"></div>
+    <!-- <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form> -->
+  </div>
+
+
+  </main>
+	<footer class="main-footer">
+		<p>&copy; 2020. All rights reserved.</p>
+		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
+	</footer>
+	<script src="./js/util.js"></script>
+  <script src="./js/match.js"></script>
+
+
+</body>
+</html>

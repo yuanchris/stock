@@ -1,14 +1,18 @@
 /* eslint-disable camelcase */
-const playDate = localStorage.getItem('playDate');
-const playStock = JSON.parse(localStorage.getItem('playStock'));
-let finishDate = parseInt(localStorage.getItem('finishDate'));
+const final_result = JSON.parse(localStorage.getItem('final_result'));
+const playDate = final_result.playDate;
+const playStock = final_result.playStock;
+const portfolio = final_result.portfolio;
 
+const before_date = new Date(playDate);
+const mill = before_date.getTime();
+const new_date = getDate(mill + 90 * 1000 * 60 * 60 * 24);
+  
 main();
 async function main() {
   if (playDate && playStock) {
-    setInterval(countdown, 1000);
     const nowDate = document.querySelector('#nowDate');
-    nowDate.innerHTML = `<h3>Your start date is: ${playDate}</h3>`;
+    nowDate.innerHTML = `<h3>當時：${playDate} -> 現在： ${new_date}</h3>`;
     const stockUl = document.querySelector('.stockUl');
     for (let i = 0; i < playStock.length; i++) {
       const stock_li = document.createElement('li');
@@ -27,14 +31,14 @@ async function main() {
 async function get_report(id, stock) {
   const stock_select = document.querySelector('#stock_select');
   stock_select.innerHTML = `<h1>${id} ${stock}</h1>`;
-  const fake_date = new Date(playDate);
-  const mill = fake_date.getTime();
-  const new_fake = getDate(mill - 30 * 1000 * 60 * 60 * 24);
+  const fake_date = new Date(new_date);
+  const mill_fake = fake_date.getTime();
+  const new_fake = getDate(mill_fake - 30 * 1000 * 60 * 60 * 24);
   //get data from sql
   const revenue = await fetch(`api/1.0/stock/revenue?stock=${id}&date=${new_fake}`, {
     method: 'GET',
   }).then((res) => res.json());
-  const per = await fetch(`api/1.0/stock/per?stock=${id}&date=${playDate}`, {
+  const per = await fetch(`api/1.0/stock/per?stock=${id}&date=${new_date}`, {
     method: 'GET',
   }).then((res) => res.json());
   // console.log(per);
@@ -285,23 +289,6 @@ async function plot_per(weekArr, price_perArr, epsArr, perArr,
   });
 }
 
-// datepicker
-$(() => {
-  $('#from').datepicker({
-    changeMonth: true,
-    changeYear: true,
-    dateFormat: 'yy-mm-dd',
-    minDate: '2011-01-01',
-    maxDate: playDate,
-  });
-  $('#to').datepicker({
-    changeMonth: true,
-    changeYear: true,
-    dateFormat: 'yy-mm-dd',
-    minDate: '2011-01-01',
-    maxDate: playDate,
-  });
-});
 
 function change_color(td) {
   if (td.innerHTML > 0) {

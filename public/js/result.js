@@ -35,6 +35,10 @@ async function main() {
     localStorage.removeItem('portfolio');
     localStorage.removeItem('finishDate');
   } else if (final_result) {
+    localStorage.removeItem('playDate');
+    localStorage.removeItem('playStock');
+    localStorage.removeItem('portfolio');
+    localStorage.removeItem('finishDate');
     playDate = final_result.playDate;
     playStock = final_result.playStock;
     portfolio = final_result.portfolio;

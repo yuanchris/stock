@@ -33,22 +33,14 @@
 	<main>
     <div id="username" class="username"></div>
     <div id="email" class="email"></div>
-    <button class="logOutBtn" onclick="logOut()">Log Out</button>
+		<button class="logOutBtn" onclick="logOut()">Log Out</button>
+		<div class = 'button_col'>
+      <p class=""><a onclick = 'get_rank()'>個人排名紀錄</a></p>
+      <p class=""><a onclick = 'get_pk()'>連線PK紀錄</a></p>
+    </div>
+
 		<div class="list" id= "">
 			<table class = 'rank_table'>
-				<thead>
-					<tr align="center" bgcolor="#d7e6f4" height="23px">  
-						<td rowspan="2"><nobr>名次</nobr></td>  
-						<td rowspan="2"><nobr>玩家</nobr></td>  
-						<td rowspan="2"><nobr>市值 (萬)</nobr></td>
-						<td rowspan="2"><nobr>投資報酬率<br>(%)</nobr></td>
-						<td rowspan="2"><nobr>總報酬率<br>(%)</nobr></td>
-						<td rowspan="2"><nobr>投資選擇</nobr></td>
-						<td rowspan="2"><nobr>當時股票</nobr></td>
-						<td rowspan="2"><nobr>當時日期</nobr></td>
-						<td rowspan="2"><nobr>完成日期</nobr></td>
-					</tr>
-				</thead>
 			</table>
 
 		</div>

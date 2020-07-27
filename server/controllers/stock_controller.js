@@ -20,6 +20,16 @@ const stockStart = async (req, res) => {
   res.status(200).send(result);
 };
 
+const stockPk = async (req, res) => {
+  const { body } = req;
+  console.log(body);
+  const result = await Stock.pk(body);
+  if (result.error) {
+    res.status(403).send({ error: result.error });
+    return;
+  }
+  res.status(200).send(result);
+};
 
 
 const stockPrice = async (req, res) => {
@@ -120,6 +130,7 @@ const stockValidate = async (req, res) => {
 module.exports = {
   stockInfo,
   stockStart,
+  stockPk,
   stockPrice,
   stockNews,
   stockRevenue,

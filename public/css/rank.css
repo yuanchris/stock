@@ -7,7 +7,29 @@ main{
   max-width: 1400px;
   margin: 0 auto;
 }
+.button_col
+{
+	display: flex;
+  align-items:center;
+  justify-content: space-around;
+  margin-top: 30px;
+}
 
+
+.button_col a
+{
+	font-size: 1.5em;
+	padding: 7px 14px;
+  cursor: pointer;
+  border: 1px solid #eaeaef;
+  background: #e33e33;
+  color: #fff;
+  margin: 0 50px;
+}	
+.button_col a:hover
+{
+	color: #ffe600;
+}
 .list {
   margin: 5px 10px;
 

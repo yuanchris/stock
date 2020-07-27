@@ -10,6 +10,7 @@ const {
   stockResult,
   stockRank,
   stockStart,
+  stockPk,
   stockValidate,
 } = require('../controllers/stock_controller');
 
@@ -24,6 +25,9 @@ router.route('/stock/info')
 
 router.route('/stock/start')
   .get(wrapAsync(stockStart));
+
+router.route('/stock/pk')
+  .post(wrapAsync(stockPk));
 
 router.route('/stock/news')
   .get(wrapAsync(stockNews));
