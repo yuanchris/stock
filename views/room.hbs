@@ -54,6 +54,15 @@
 
   <script>
     const name = localStorage.getItem('name');
+
+    function sign() {
+      const token = localStorage.getItem('token');
+      if (token) {
+        window.location.href = 'profile.html';
+      } else {
+        window.location.href = 'sign.html';
+      }
+    }
     $(function () {
             // ---------创建连接-----------
       var socket = io();
@@ -85,23 +94,30 @@
       socket.on('sys', function (sysMsg, users) {
         var message = '<div class="sysMsg">' + sysMsg + '</div>';
         $('#msglog').append(message);
+        if (users) {
+          $('#count').text(users.length);
+          $('#users').text(users);
+        }
 
-        $('#count').text(users.length);
-        $('#users').text(users);
       });
       // 接收對戰data
-      socket.on('PKdata', function (playdate, playstock, finishdate) {
-        var message = '<div class="sysMsg">' + `當時日期：${playdate}` + '</div>';
+      socket.on('PKdata', function (playdate, playstock, finishdate, playIds) {
+        var message = '<div class="sysMsg" style="color:grey">' + `當時日期：${playdate}` + '</div>';
         $('#msglog').append(message);
         let printStock = JSON.stringify(playstock);
-        message = '<div class="sysMsg">' + `當時股票：${printStock}` + '</div>';
+        message = '<div class="sysMsg" style="color:grey">' + `當時股票：${printStock}` + '</div>';
         $('#msglog').append(message);
-        message = '<div class="sysMsg">' + '請至首頁開始遊戲' + '</div>';
+        message = '<div class="sysMsg">' + `請${playIds[0]}, ${playIds[1]}離開聊天室並開始遊戲` + '</div>';
         $('#msglog').append(message);
-        localStorage.setItem('playDate', playdate);
-        localStorage.setItem('playStock', printStock);
-        localStorage.setItem('finishDate', finishdate);
-        localStorage.removeItem('final_result');
+ 
+
+        if (playIds.indexOf(userName) !== -1) {
+          localStorage.setItem('playDate', playdate);
+          localStorage.setItem('playStock', printStock);
+          localStorage.setItem('finishDate', finishdate);
+          localStorage.removeItem('final_result');
+        }
+
 
       });
 
@@ -117,6 +133,7 @@
       });
 
       // 退出房间
+      /*
       $('#joinOrLeave').click(function () {
         if ($(this).text() === '退出房間') {
           $(this).text('進入房間');
@@ -128,6 +145,7 @@
           socket.emit('join', userName);
         }
       });
+      */
 
       //發起對戰
       $('#beginPK').click(function () {

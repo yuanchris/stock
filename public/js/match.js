@@ -1,4 +1,12 @@
 const name = localStorage.getItem('name');
+main();
+async function main() {
+  if (!name) {
+    await swal('請先登入');
+    window.location.href = 'sign.html';
+  }
+
+}
 
 // const socket = io();
 // socket.on('connectToRoom', (data) => {

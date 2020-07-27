@@ -16,9 +16,11 @@ main{
   font-size: 14px;
 }
 #messageInput {
+  font-size: 14px;
   height: 80px;
 }
 .message {
+  font-size: 16px;
   line-height: 22px;
 }
 .message .user {
@@ -30,7 +32,7 @@ main{
   color: #0909f0;
   padding-right: 5px;
   padding-left: 5px;
-  font-size: 12px;
+  font-size: 16px;
 }
 #users {
   width: 490px;

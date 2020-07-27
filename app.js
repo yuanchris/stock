@@ -78,8 +78,9 @@ io.on('connection', (socket) => {
       return false;
     }
     roomPlay[roomID].push(user_play);
+    // 發送目前等待的人
+    io.to(roomID).emit('sys', `房間內欲對戰的人：${roomPlay[roomID]}`);
     if (roomPlay[roomID].length == 2) {
-      console.log('start to play');
       io.to(roomID).emit('sys', `${roomPlay[roomID]}即將開始遊戲`, roomInfo[roomID]);
       const start = await fetch(`${IP}/api/1.0/stock/pk`, {
         method: 'POST',
@@ -88,10 +89,9 @@ io.on('connection', (socket) => {
       }).then((res) => res.json());
       start.playstock = JSON.parse(start.playstock);
 
-      const playStock = '2330 台積電';
-
-      io.to(roomID).emit('PKdata', start.playdate, start.playstock, start.finishdate);
+      io.to(roomID).emit('PKdata', start.playdate, start.playstock, start.finishdate, roomPlay[roomID]);
       roomPlay[roomID] = [];
+      io.to(roomID).emit('sys', `房間內欲對戰的人：${roomPlay[roomID]}`);
       // socket.on('say to someone', (id, msg) => {
       //   socket.to(id).emit('my message', msg);
       // });
