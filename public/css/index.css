@@ -39,7 +39,7 @@ main{
 {
 	display: flex;
 	align-items:center;
-	margin: 0px 40px;
+	margin: 0px 20px;
 }
 
 .name a{
@@ -64,7 +64,7 @@ main{
 
 .main-nav a
 {
-	font-size: 1.2em;
+	font-size: 1.15em;
 	color: rgb(0, 0, 0);	
 	padding: 7px 14px;
 	border: 1.4px black solid;

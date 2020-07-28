@@ -7,7 +7,6 @@ async function main() {
   }
 
 }
-
 // const socket = io();
 // socket.on('connectToRoom', (data) => {
 //   document.querySelector('#messages').innerHTML += `Hi, ${name} <br> `;
