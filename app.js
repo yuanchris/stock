@@ -60,7 +60,8 @@ io.on('connection', (socket) => {
     if (roomPlay[roomID]) {
       io.to(roomID).emit('sys', `房間內欲對戰的人：${roomPlay[roomID]}`);
     }
-
+    // 通知房間列表
+    
     console.log(`${user}加入了${roomID}`);
     console.log(roomInfo);
   });
