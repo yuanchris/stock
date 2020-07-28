@@ -57,7 +57,12 @@ io.on('connection', (socket) => {
     socket.join(roomID); // 加入房间
     // 通知房间内人员
     io.to(roomID).emit('sys', `${user}加入了房間`, roomInfo[roomID]);
+    if (roomPlay[roomID]) {
+      io.to(roomID).emit('sys', `房間內欲對戰的人：${roomPlay[roomID]}`);
+    }
+
     console.log(`${user}加入了${roomID}`);
+    console.log(roomInfo);
   });
 
 
@@ -103,7 +108,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
   // 从房间名单中移除
-    console.log(roomInfo);
+    
     const index = roomInfo[roomID].indexOf(user);
     if (roomPlay[roomID]) {
       const indexPlay = roomPlay[roomID].indexOf(user);
@@ -119,6 +124,7 @@ io.on('connection', (socket) => {
     socket.leave(roomID); // 退出房间
     io.to(roomID).emit('sys', `${user}退出了房間`, roomInfo[roomID]);
     console.log(`${user}退出了${roomID}`);
+    console.log(roomInfo);
   });
 });
 
