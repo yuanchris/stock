@@ -2,10 +2,11 @@
 main{ 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center ;
   max-width: 1000px;
   margin: 0 auto;
+  padding-top: 120px; 
 }
 #nowDate{
   margin-top: 0px;
@@ -17,7 +18,7 @@ main{
 	display: flex;
   align-items:center;
   justify-content: space-around;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .stockUl li{

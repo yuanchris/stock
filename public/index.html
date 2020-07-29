@@ -5,7 +5,8 @@
 	<title>Stock</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/index.css">
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
 	
@@ -14,25 +15,27 @@
 			<h1>Stock Arena</h1>
 		</div> -->
     <h1 class="name"><a href="./">Stock Arena</a></h1>
-    <h3 class="time_remain">時間剩下</h3>
+    <h3 class="time_remain"></h3>
 		<ul class="main-nav">
+			<li id="start"><a onclick= "start()">開始遊戲</a></li>
 			<li><a href="./choice.html">投資選擇</a></li>
 			<li><a href="./stocknews.html">公司新聞</a></li>
 			<li><a href="./report.html">公司財報</a></li>
-			<li><a href="./allnews.html">國際財經</a></li>
+			<!-- <li><a href="./allnews.html">國際財經</a></li> -->
 			<li><a href="./rank.html">排行榜</a></li>
-			<li><a href="./match.html">連線對戰</a></li>
+
 			<img src="imgs/member.png" onclick = "sign()"/>
 		</ul>
 		<!-- <div class="item member">
 			
 		</div> -->
 	</header>
+
 	<main>
-	<div class="banner">
-		<img class="arena" src="imgs/arena.jpg" alt="arena">
-		<h1 class="headline">In 15 mins, decide your stocks portfolio!</h1>
-	</div>  
+		<div class="banner">
+			<img class="arena" src="imgs/arena.jpg" alt="arena">
+			<h1 class="headline">In 15 mins, decide your stocks portfolio!</h1>
+		</div>  
 
 	<div class="second-title">
 		<h1 class="name">歡迎挑戰者！請閱讀下列須知：</h1>
@@ -43,6 +46,7 @@
     <div class="primary col">
       <h2>遊戲目的</h2>
       <ul>
+				<li>人人都想要投資致富、但常常因為害怕賠錢不敢投資股票，希望有個模擬的方式練習投資</li>
         <li>由於人生時間寶貴，要求玩家短時間內查看、收集重要投資資訊，判斷股票價值，決定是否要投資</li>
         <li>經由此遊戲，培養投資感覺，增強投資信心，或是永遠不碰股票(?</li>
       </ul>
@@ -54,7 +58,7 @@
       <h2>遊戲規則</h2>
       <ul>
         <li>2000萬資金，隨機時間點(例如 2016/6/30)，隨機5支股票</li>
-        <li>可看到當下(2016/6/30以前)的股市新聞、全球局勢新聞、公司財報、股價圖</li>
+        <li>可看到當下(2016/6/30以前)的股市新聞、公司財報、股價圖</li>
         <li>需在<strong>15分鐘</strong>內決定你的投資組合(可放空)，時間跳轉到<strong>&nbsp3個月後</strong>，計算你的投資報酬率</li>
 				<li>結算股價：跳轉到&nbsp3個月後，最後 7 交易日內平均</li>
 				<li>可跟所有玩過的玩家比較最後資產，亦可兩人同時連線，即時PK(日期、股票會一樣)</li>
@@ -64,18 +68,21 @@
 		<div class="third col">
       <h2>遊戲方式</h2>
       <ul>
+				<li> 請先登入，點擊「開始遊戲」，選擇「單人遊戲」或是 「連線對戰」匹配對手</li>
         <li>「投資組合」，決定你要投資的股票</li>
-				<li>「公司新聞、國際財經、公司財報」讀取投資所需資訊</li>
+				<li>「公司新聞、公司財報」讀取投資所需資訊</li>
+				<li>「排行榜」查看所有玩家的市值排名</li>
+				<li> 登入後，「個人頁面」可查看自己的歷史紀錄與連線對戰紀錄</li>
 				<li> 注意剩下時間</li>
-				<li> 準備好了嗎？點擊下圖開始遊戲 (請先登入) 或者點擊右上「連線對戰」尋找對手</li>
+
 
       </ul>
     </div>
 
 		<div class="pickstock">
 			<img class="arena" src="imgs/ready.png" alt="arena">
-			<h3>Click image to get your random stocks!</h3>
-			<!-- <span class="tagline">Click to get your random stocks.</span> -->
+			<!-- <h3>Click image to get your random stocks!</h3> -->
+
 		</div>  
 	</div>
 	

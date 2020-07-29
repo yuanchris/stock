@@ -17,7 +17,7 @@ async function main() {
   if (!(playDate && playStock)) {
     const wait = document.querySelector('#wait');
     wait.innerHTML = '<h2>Your game is not started yet!</h2>';
-    swal('Your game is not started yet!');
+    Swal.fire('Your game is not started yet!');
   } else {
     setInterval(countdown, 1000);
     const post = { playDate, playStock };
@@ -151,7 +151,7 @@ function changeQty(id) {
   const selector = document.getElementById(id);
   let qty = document.getElementById(id).value;
   if (qty < 0) {
-    swal('張數不能小於0');
+    Swal.fire('張數不能小於0');
     qty = 0;
     return;
   }
@@ -221,24 +221,24 @@ function updateTotal() {
     left_money.innerHTML = `剩餘金額(TWD)：${2000} 萬`;
   }
   if (portfolio.total / 10 > 2000) {
-    swal('投資金額大於上限(2000萬)', '請修改投資組合');
+    Swal.fire('投資金額大於上限(2000萬)', '請修改投資組合');
     
   }
 }
 
 function result() {
   if (portfolio.total / 10 > 2000) {
-    swal('投資金額大於上限(2000萬)', '請修改投資組合');
+    Swal.fire('投資金額大於上限(2000萬)', '請修改投資組合');
     return;
   }
   // let yes =
-  swal({
+  Swal.fire({
     title: '你確定要提早交卷嗎？',
     text: '不能更改了哦',
     icon: 'warning',
-    buttons: true,
+    showCancelButton: true,
   }).then((value) => {
-    if (value) {
+    if (value.value) {
       window.location.href="/result.html";
     }
   });

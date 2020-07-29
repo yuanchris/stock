@@ -10,6 +10,7 @@ body {
 	line-height: 1.6;
 	color: #3a3a3a;
 	margin: 0px 0px;
+
 }
 a {
 	text-decoration: none;
@@ -31,10 +32,37 @@ img {
 	max-width: 80%;
 }
 /*=================     */
+
+
+
+.main-header {
+	display: flex;
+	align-items:center;
+	justify-content: space-between;
+	padding-bottom: .5em;
+	position: fixed;
+	z-index: 10;
+	width: 100%;
+
+	height: 80px;
+	background: white;
+	padding: 20px 20px;
+	box-shadow:0 1px 6px 0 rgba(32, 33, 36, 0.28);
+}
 main{
-  min-height: calc(100vh - 290px); /* 這個200px是header和footer的高度 */
-  }
-.main-header,
+	min-height: calc(100vh - 110px);
+	padding-top: 80px;
+	padding-bottom: 40px; 
+}
+.main-footer {
+	background: #d9e4ea;
+	text-align: center;
+	padding: 0.5em 0;
+
+	position: relative;
+	height: 110px;
+
+}
 .main-nav
 {
 	display: flex;
@@ -42,10 +70,11 @@ main{
 	margin: 0px 20px;
 }
 
+
 .name a{
 	color: #0874b8;
 	font-family: "Comic Sans MS";
-	font-size: 1em;
+	font-size: 0.9em;
 	margin: 0;
 }
 
@@ -64,11 +93,12 @@ main{
 
 .main-nav a
 {
-	font-size: 1.15em;
+	font-size: 1em;
 	color: rgb(0, 0, 0);	
 	padding: 7px 14px;
 	border: 1.4px black solid;
 	border-radius: 15px;
+	cursor:pointer;
 }	
 
 .main-nav img
@@ -83,10 +113,7 @@ main{
 	color: #3788bb;
 }
 
-.main-header {
-	justify-content: space-between;
-	padding-bottom: .5em;
-}
+
 
 
 .banner {
@@ -94,6 +121,7 @@ main{
 	/* background: rgb(5, 5, 95); */
 	background: rgb(11, 2, 58);
 	padding: 0.8em 0;
+
 	margin-bottom: 48px;
 	text-align: center;
 }
@@ -114,14 +142,7 @@ main{
 }
 
 
-.main-footer {
-	background: #d9e4ea;
-	text-align: center;
-	padding: 0.5em 0;
-	margin-top: 30px;
-	height: 110px;
-  margin-top: auto;
-}
+
 
 
 .directions {

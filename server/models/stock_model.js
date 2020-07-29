@@ -29,14 +29,14 @@ const start = async (name) => {
     if (stock.length == 0) {
       return { error: 'no stock in database' };
     }
-    let randomStock = new Set([Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
-      Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
-      Math.floor(Math.random() * 139)]);
+    let randomStock = new Set([Math.floor(Math.random() * 138), Math.floor(Math.random() * 138),
+      Math.floor(Math.random() * 138), Math.floor(Math.random() * 138),
+      Math.floor(Math.random() * 138)]);
     randomStock = [...randomStock];
     while (randomStock.length !== 5) {
-      randomStock = new Set([Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
-        Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
-        Math.floor(Math.random() * 139)]);
+      randomStock = new Set([Math.floor(Math.random() * 138), Math.floor(Math.random() * 138),
+        Math.floor(Math.random() * 138), Math.floor(Math.random() * 138),
+        Math.floor(Math.random() * 138)]);
       randomStock = [...randomStock];
     }
     randomStock.sort((a, b) => a - b);
@@ -69,14 +69,14 @@ const pk = async (IdArray) => {
     if (stock.length == 0) {
       return { error: 'no stock in database' };
     }
-    let randomStock = new Set([Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
-      Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
-      Math.floor(Math.random() * 139)]);
+    let randomStock = new Set([Math.floor(Math.random() * 137), Math.floor(Math.random() * 137),
+      Math.floor(Math.random() * 137), Math.floor(Math.random() * 137),
+      Math.floor(Math.random() * 137)]);
     randomStock = [...randomStock];
     while (randomStock.length !== 5) {
-      randomStock = new Set([Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
-        Math.floor(Math.random() * 139), Math.floor(Math.random() * 139),
-        Math.floor(Math.random() * 139)]);
+      randomStock = new Set([Math.floor(Math.random() * 137), Math.floor(Math.random() * 137),
+        Math.floor(Math.random() * 137), Math.floor(Math.random() * 137),
+        Math.floor(Math.random() * 137)]);
       randomStock = [...randomStock];
     }
     randomStock.sort((a, b) => a - b);

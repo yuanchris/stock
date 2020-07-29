@@ -1,11 +1,14 @@
 @import "index.css";
+main{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 120px; 
+}
 .socket {
   text-align: center ;
 
 }
-main{
-  min-height: calc(100vh - 315px); /* 這個200px是header和footer的高度 */
-  }
+
 h2 {
   margin-bottom: 50px;
 }
@@ -26,7 +29,3 @@ h2 {
 	color: #3788bb;
 }
 
-footer{
-  height: 110px;
-  margin-top: auto;
-  }

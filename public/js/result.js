@@ -5,8 +5,8 @@ let playDate = localStorage.getItem('playDate');
 let playStock = JSON.parse(localStorage.getItem('playStock'));
 const name = localStorage.getItem('name');
 let portfolio = JSON.parse(localStorage.getItem('portfolio'));
-let final_result = JSON.parse(localStorage.getItem('final_result'));
-const finishDate = localStorage.getItem('finishDate');
+const final_result = JSON.parse(localStorage.getItem('final_result'));
+const finishDate = parseInt(localStorage.getItem('finishDate'));
 
 main();
 async function main() {
@@ -17,7 +17,7 @@ async function main() {
       method: 'GET',
     }).then((res) => res.json());
     if (validate.length == 0) {
-      await swal('Your play data is wrong! Restart your game');
+      await Swal.fire('Your play data is wrong! Restart your game');
       localStorage.removeItem('playDate');
       localStorage.removeItem('playStock');
       localStorage.removeItem('portfolio');
@@ -44,10 +44,19 @@ async function main() {
     portfolio = final_result.portfolio;
     show(playDate, playStock, portfolio, false);
   } else {
-    swal('You did not play the game');
-    localStorage.removeItem('playDate');
-    localStorage.removeItem('playStock');
-    localStorage.removeItem('finishDate');
+    const now = Date.now();
+    const time_remain_value = finishDate + 15 * 60 * 1000 - now;
+    let min = Math.floor(time_remain_value / 1000 / 60);
+    if (parseInt(min) < 0) {
+      Swal.fire('時間到，但你沒有投資', '將刪除遊戲資料');
+      localStorage.removeItem('playDate');
+      localStorage.removeItem('playStock');
+      localStorage.removeItem('finishDate');
+      window.location.href = './index.html';
+    } else {
+      Swal.fire('你沒有選擇任何股票', '將跳轉回投資選擇')
+      .then((value) => { window.location.href = './choice.html'; });
+    }
   }
 }
 
@@ -215,12 +224,18 @@ async function show(playDate, playStock, portfolio, insertboolean) {
       invest_ratio_value += earnArr[i];
     }
   }
+  const total_ratio = document.querySelector('#totalRatio');
+  const total_ratio_value = ((total_money_value - 2000) / 2000 * 100).toFixed(2) * 100 / 100;
+  total_ratio.innerHTML = `總報酬率：${total_ratio_value} %<br><br>`;
+
+  const invest_Total = document.querySelector('#investTotal');
+  invest_Total.vaue = portfolio.total;
+  invest_Total.innerHTML = `投資總金額： ${(portfolio.total / 10).toFixed(3) * 1000 / 1000} 萬`;
+
   invest_ratio_value = invest_ratio_value / (portfolio.total / 10) * 100;
   invest_ratio_value = invest_ratio_value.toFixed(2) * 100 / 100;
   invest_ratio.innerHTML = `投資報酬率： ${invest_ratio_value} %`;
-  const total_ratio = document.querySelector('#totalRatio');
-  const total_ratio_value = ((total_money_value - 2000) / 2000 * 100).toFixed(2) * 100 / 100;
-  total_ratio.innerHTML = `總報酬率：${total_ratio_value} %`;
+
   if (insertboolean) {
     insertResult(name, total_money_value, invest_ratio_value, total_ratio_value,
       JSON.stringify(portfolio), JSON.stringify(playStock), playDate);
@@ -237,7 +252,7 @@ async function insertResult(name, total_money_value,
     portfolio,
     playStock,
     playDate,
-    finishDate
+    finishDate,
   };
   const result = await fetch('api/1.0/stock/result', {
     method: 'POST',

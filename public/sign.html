@@ -10,12 +10,12 @@
 	
 	<header class="main-header">
     <h1 class="name"><a href="./">Stock Arena</a></h1>
-    <h3 class="time_remain">時間剩下</h3>
+    <h3 class="time_remain"></h3>
 		<ul class="main-nav">
 			<li><a href="./choice.html">投資選擇</a></li>
 			<li><a href="./stocknews.html">公司新聞</a></li>
 			<li><a href="./report.html">公司財報</a></li>
-			<li><a href="./allnews.html">國際財經</a></li>
+			<!-- <li><a href="./allnews.html">國際財經</a></li> -->
 			<li><a href="./rank.html">排行榜</a></li>
 			<img src="imgs/member.png" onclick = "sign()"/>
 		</ul>
@@ -24,10 +24,6 @@
     </div> -->
 
   </header>
-
-  <div class="banner">
-  </div>  
-  
   <main>
 
 
@@ -103,7 +99,7 @@
 
 
     <div class="signin">
-      <h2>Sign in if you have account</h2>
+      <h2>Sign in</h2>
    <!-- <form class="sign in" action="/signIn" method="post"> -->
     
       <!-- <input type="name" name="nameIn" placeholder="please enter name" required>    -->
@@ -122,7 +118,7 @@
     <br>
     <br>
     <div class="signup">
-      <h2>Sign up if you don't have account</h2>
+      <h2>Sign up</h2>
     
       Name:<input type="name" name="nameUp" placeholder="please enter name" required><br/>   
       Email:<input type="email" name="emailUp" placeholder="please enter email" required><br/>
@@ -152,10 +148,10 @@
               let name = value.data.user.name; 
               localStorage.setItem('token', token);
               localStorage.setItem('name', name);
-              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
-              window.location.href = './profile.html';
+              // document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
+              window.location.href = './index.html';
             } else {
-              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
+              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value.error);
             }
 
           }).catch(error => {
@@ -187,10 +183,10 @@
               let name = value.data.user.name; 
               localStorage.setItem('token', token);
               localStorage.setItem('name', name);
-              document.getElementById('ajaxUp').innerHTML = JSON.stringify(value);
-              window.location.href = './profile.html';
+              // document.getElementById('ajaxUp').innerHTML = JSON.stringify(value);
+              window.location.href = './index.html';
             } else {
-              document.getElementById('ajaxUp').innerHTML = JSON.stringify(value);
+              document.getElementById('ajaxUp').innerHTML = JSON.stringify(value.error);
             }
 
           }).catch(error => {
@@ -219,10 +215,10 @@
               let name = value.data.user.name; 
               localStorage.setItem('token', token);
               localStorage.setItem('name', name);
-              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
-              window.location.href = './profile.html';
+              // document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
+              window.location.href = './index.html';
             } else {
-              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
+              document.getElementById('ajaxIn').innerHTML = JSON.stringify(value.error);
             }
 
           }).catch(error => {

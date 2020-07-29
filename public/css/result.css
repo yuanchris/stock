@@ -1,11 +1,18 @@
 @import "index.css";
 main{
   max-width:1200px;
-  margin:0px auto;
+  padding-top: 120px;
+  margin: auto auto;
+}
+#wait {
+  margin-top:40px;
+  text-align: center ;
+
 }
 #total,
-#investRatio,
-#totalRatio
+#totalRatio,
+#investTotal,
+#investRatio
 {
   display: block;
   text-align: center ;

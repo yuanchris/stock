@@ -2,10 +2,11 @@
 main{ 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center ;
-  max-width: 1400px;
+  max-width: 1000px;
   margin: 0 auto;
+  padding-top: 120px; 
 }
 .button_col
 {

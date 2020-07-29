@@ -6,7 +6,7 @@
   <title>{{roomID}}</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/room.css">
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
@@ -17,14 +17,14 @@
 			<h1>Stock Arena</h1>
 		</div> -->
     <h1 class="name"><a href="/">Stock Arena</a></h1>
-    <h3 class="time_remain">時間剩下</h3>
+    <h3 class="time_remain"></h3>
 		<ul class="main-nav">
 			<li><a href="/choice.html">投資選擇</a></li>
 			<li><a href="/stocknews.html">公司新聞</a></li>
 			<li><a href="/report.html">公司財報</a></li>
-			<li><a href="/allnews.html">國際財經</a></li>
+			{{!-- <li><a href="/allnews.html">國際財經</a></li> --}}
 			<li><a href="/rank.html">排行榜</a></li>
-			<li><a href="/match.html">連線對戰</a></li>
+			{{!-- <li><a href="/match.html">連線對戰</a></li> --}}
 			<img src="/imgs/member.png" onclick = "sign()"/>
 		</ul>
 		<!-- <div class="item member">
@@ -54,16 +54,17 @@
 
   <script>
     const name = localStorage.getItem('name');
-
     function sign() {
       const token = localStorage.getItem('token');
       if (token) {
-        window.location.href = 'profile.html';
+        window.location.href = '/profile.html';
       } else {
-        window.location.href = 'sign.html';
+        window.location.href = '/sign.html';
       }
     }
+
     $(function () {
+
             // ---------创建连接-----------
       var socket = io();
       // ----------设置昵称-------------
@@ -112,10 +113,27 @@
  
 
         if (playIds.indexOf(userName) !== -1) {
-          localStorage.setItem('playDate', playdate);
-          localStorage.setItem('playStock', printStock);
-          localStorage.setItem('finishDate', finishdate);
-          localStorage.removeItem('final_result');
+          Swal.fire({
+          title: '遊戲開始',
+          html: `Your start date is : ${playdate} <br><br>
+            Your stocks are :
+            <p>${playstock[0].id} ${playstock[0].stock} ${playstock[0].industry}</p>
+            <p>${playstock[1].id} ${playstock[1].stock} ${playstock[1].industry}</p>
+            <p>${playstock[2].id} ${playstock[2].stock} ${playstock[2].industry}</p>
+            <p>${playstock[3].id} ${playstock[3].stock} ${playstock[3].industry}</p>
+            <p>${playstock[4].id} ${playstock[4].stock} ${playstock[4].industry}</p>
+            <br><br>
+            將跳轉到「投資組合」開始遊戲！`,
+          }).then((result) => {
+            localStorage.setItem('playDate', playdate);
+            localStorage.setItem('playStock', printStock);
+            localStorage.setItem('finishDate', finishdate);
+            localStorage.removeItem('final_result');
+            
+            window.location.href = '/choice.html';
+
+          })
+
         }
 
 
@@ -156,6 +174,8 @@
 
 
     });
+
+
   </script>
 </body>
 </html>

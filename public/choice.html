@@ -6,10 +6,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/choice.css">
 	<script src="https://d3js.org/d3.v5.js"></script> 
-	<script src="//techanjs.org/techan.min.js"></script>
+	<script src="./js/techan.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
 	<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 <body>
 	
@@ -18,12 +18,12 @@
 			<h1>Stock Arena</h1>
 		</div> -->
     <h1 class="name"><a href="./">Stock Arena</a></h1>
-    <h3 class="time_remain">時間剩下</h3>
+    <h3 class="time_remain"></h3>
 		<ul class="main-nav">
 			<li><a href="./choice.html">投資選擇</a></li>
 			<li><a href="./stocknews.html">公司新聞</a></li>
 			<li><a href="./report.html">公司財報</a></li>
-			<li><a href="./allnews.html">國際財經</a></li>
+			<!-- <li><a href="./allnews.html">國際財經</a></li> -->
 			<li><a href="./rank.html">排行榜</a></li>
 			<img src="imgs/member.png" onclick = "sign()"/>
 		</ul>
@@ -31,9 +31,9 @@
 			
 		</div> -->
   </header>
-  <div class="banner"></div>  
 	<main>
-		<div id = "wait">please wait for the information...(5 seconds)</div>
+		<div id = "wait">please wait for the information...(3 seconds)</div>
+		<div id = "title"></div>
 		<div id = "nowDate"></div>
 		<div id = "invest_total"></div>
 		<div id = "left_money"></div>

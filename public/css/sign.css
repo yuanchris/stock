@@ -4,7 +4,9 @@ main{
   flex-direction: column;
   justify-content: center;
   align-items: center ;
-
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 120px; 
 }
 textarea {
   width:400px;height:100px;padding:5px; margin: 5px;
@@ -22,6 +24,12 @@ input {
 	color: rgb(0, 0, 0);	  
 	border: 1.4px black solid;
 	border-radius: 15px;
+}
+
+#ajaxIn,
+#ajaxUp{
+  color: red;
+
 }
 
 #button {
