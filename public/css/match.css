@@ -9,20 +9,26 @@ main{
 
 }
 
-h2 {
-  margin-bottom: 50px;
-}
+.socket ul {
+  margin-top: 60px;
 
+}
 .socket li {
-  margin: 20px;
+  margin: 40px;
 
 }
 
 
 .socket li a{
   font-size: 1.2em;
-	color: rgb(0, 0, 0);	
-	padding: 7px 14px;
+	/* color: rgb(0, 0, 0);	 */
+  padding: 7px 14px;
+  color: #fff;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
 }
 .socket a:hover
 {

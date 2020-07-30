@@ -9,6 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <link rel="shortcut icon" href="./imgs/favicon.ico">
 </head>
 <body>
   	
@@ -34,11 +35,12 @@
   <div class="banner"></div>  
   <main>
     <div class = 'chat'>
-      ID: <span id="userName"></span> <br/>
-      房間: {{roomID}} <br/>
-      當前人數: <span id="count">{{users.length}}</span> <br/>
-      用戶:  <div id="users">{{users}}</div>
-
+      <div id = 'roomName'><h3> 房間：{{roomID}} </h3></div>
+      <div class = 'info'>你的名字： <span id="userName"></span> <br/>
+      
+      房間人數： <span id="count">{{users.length}}</span> <br/>
+      在線玩家： <span id="users">{{users}}</span></div>
+      <br>如欲參加對戰請點擊「加入對戰」
       <div id="msglog"></div>
       <textarea name="message" id="messageInput"></textarea>
       <br/>

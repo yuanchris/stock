@@ -2,25 +2,40 @@
 main{
   display: flex;
   justify-content: space-between;
+  padding-top: 30px;
 }
 .chat {
-  font-size: 1.2em;
-    width: 1000px;
-    margin: 20px auto;
+  font-size: 1em;
+  width: 520px;
+  margin: 20px auto;
+  border: 1.4px black solid;
+  border-radius: 15px;
+  padding: 10px 10px;
+  background-color: rgb(253, 253, 253);
+}
+
+#roomName h3{
+  color: purple;
+  text-align: center;
+}
+
+.info {
+  font-size: 1em;
+  color:rgb(51, 115, 117);
 }
 #msglog, #messageInput {
-  border: 1px solid #ccc;
+  border: 1px solid rgb(153, 152, 152);
   width: 500px;
   height: 350px;
   overflow-y: auto;
   font-size: 14px;
 }
 #messageInput {
-  font-size: 14px;
+  font-size: 1em;
   height: 80px;
 }
 .message {
-  font-size: 16px;
+  font-size: 1em;
   line-height: 22px;
 }
 .message .user {
@@ -34,7 +49,23 @@ main{
   padding-left: 5px;
   font-size: 16px;
 }
-#users {
+
+button {
+  font-size: 18px;
+  font-family: "微軟正黑體";
+  color: #fff;
+  /* letter-spacing: 5px; */
+  background-color: #e8ae2b;
+ 
+  margin: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #e8ae2b;
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.3);
+
+}
+/* #users {
   width: 490px;
   padding: 0 5px 5px;
-}
+} */

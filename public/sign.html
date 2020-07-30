@@ -4,7 +4,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Sign</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/sign.css">
+  <link rel="stylesheet" href="css/sign.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <link rel="shortcut icon" href="./imgs/favicon.ico">
 </head>
 <body>
 	
@@ -149,7 +151,13 @@
               localStorage.setItem('token', token);
               localStorage.setItem('name', name);
               // document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
-              window.location.href = './index.html';
+              Swal.fire(
+                '登入成功',
+                '將跳轉到首頁',
+                'success'
+              ).then(async (result) => {
+                window.location.href = './index.html';
+              })
             } else {
               document.getElementById('ajaxIn').innerHTML = JSON.stringify(value.error);
             }
@@ -184,7 +192,13 @@
               localStorage.setItem('token', token);
               localStorage.setItem('name', name);
               // document.getElementById('ajaxUp').innerHTML = JSON.stringify(value);
-              window.location.href = './index.html';
+              Swal.fire(
+                '登入成功',
+                '將跳轉到首頁',
+                'success'
+              ).then(async (result) => {
+                window.location.href = './index.html';
+              })
             } else {
               document.getElementById('ajaxUp').innerHTML = JSON.stringify(value.error);
             }
@@ -216,7 +230,14 @@
               localStorage.setItem('token', token);
               localStorage.setItem('name', name);
               // document.getElementById('ajaxIn').innerHTML = JSON.stringify(value);
-              window.location.href = './index.html';
+              Swal.fire(
+                '登入成功',
+                '將跳轉到首頁',
+                'success'
+              ).then(async (result) => {
+                window.location.href = './index.html';
+              })
+              
             } else {
               document.getElementById('ajaxIn').innerHTML = JSON.stringify(value.error);
             }

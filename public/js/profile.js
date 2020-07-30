@@ -337,7 +337,7 @@ function logOut() {
   localStorage.removeItem('playStock');
   localStorage.removeItem('finishDate');
   localStorage.removeItem('final_result');
-  window.location.href = './';
+  window.location.href = './sign.html';
 }
 function sign() {
   const token = localStorage.getItem('token');

@@ -162,5 +162,26 @@ strong{
 	color: rgb(248, 0, 0);
 
 }
+
+.ml9 {
+  position: relative;
+  /* font-weight: 200; */
+	font-size: 3em;
+	margin: 5px;
+}
+
+.ml9 .text-wrapper {
+  position: relative;
+  display: inline-block;
+
+  padding-bottom: 0em;
+  overflow: hidden;
+}
+
+.ml9 .letter {
+  transform-origin: 50% 100%;
+  display: inline-block;
+  line-height: 1em;
+}
 /* ================================= 
   Media Queries
