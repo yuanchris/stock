@@ -17,21 +17,28 @@ main{
   margin: 40px;
 
 }
-
+#roomIntro{
+  font-size: 1.1em;
+}
 
 .socket li a{
   font-size: 1.2em;
 	/* color: rgb(0, 0, 0);	 */
   padding: 7px 14px;
   color: #fff;
-  background-color: #17a2b8;
+  background-color:  #17a2b8;
   border-color: #17a2b8;
   border: 1px solid transparent;
   border-radius: .25rem;
 }
+
+.socket li span {
+  margin-left: 10px;
+
 }
-.socket a:hover
+
+/* .socket a:hover
 {
 	color: #3788bb;
-}
+} */
 

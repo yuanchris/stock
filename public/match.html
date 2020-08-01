@@ -24,6 +24,7 @@
 			<li><a href="./report.html">公司財報</a></li>
 			<!-- <li><a href="./allnews.html">國際財經</a></li> -->
 			<li><a href="./rank.html">排行榜</a></li>
+			<li id="member_name"></li>
 			<img src="imgs/member.png" onclick = "sign()"/>
 		</ul>
 		<!-- <div class="item member">
@@ -35,13 +36,13 @@
   <div class = 'socket'>
     <div>
 			<h2>房間列表</h2>
-			<p>進入房間，尋找對手做兩人對戰</p>
+			<p id='roomIntro'>進入房間，尋找對手做兩人對戰</p>
       <ul>
-        <li id="room_1"><a href="/room/room_1">1號 華倫巴菲特</a></li>
-        <li id="room_2"><a href="/room/room_2">2號 喬治索羅斯</a></li>
-        <li id="room_3"><a href="/room/room_3">3號 羅斯柴爾德</a></li>
-        <li id="room_4"><a href="/room/room_4">4號 伊隆馬斯克</a></li>
-        <li id="room_5"><a href="/room/room_5">5號 傑夫貝佐斯</a></li>
+        <li id="room_1"><a href="/room/room_1">1號 華倫巴菲特</a> <span>房內人數：0</span></li>
+        <li id="room_2"><a href="/room/room_2">2號 喬治索羅斯</a> <span>房內人數：0</span></li>
+        <li id="room_3"><a href="/room/room_3">3號 羅斯柴爾德</a> <span>房內人數：0</span></li>
+        <li id="room_4"><a href="/room/room_4">4號 伊隆馬斯克</a> <span>房內人數：0</span></li>
+        <li id="room_5"><a href="/room/room_5">5號 傑夫貝佐斯</a> <span>房內人數：0</span></li>
       </ul>
     </div>
     <div id="messages"></div>
@@ -54,7 +55,7 @@
   </main>
 	<footer class="main-footer">
 		<p>&copy; 2020. All rights reserved.</p>
-		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
+		<p>Edited by <a href="mailto:yuan_chris@livemail.tw">Chris</a></p>
 	</footer>
 	<script src="./js/util.js"></script>
   <script src="./js/match.js"></script>

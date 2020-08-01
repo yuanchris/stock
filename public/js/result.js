@@ -3,7 +3,6 @@
 const list = document.querySelector('#stock-list');
 let playDate = localStorage.getItem('playDate');
 let playStock = JSON.parse(localStorage.getItem('playStock'));
-const name = localStorage.getItem('name');
 let portfolio = JSON.parse(localStorage.getItem('portfolio'));
 const final_result = JSON.parse(localStorage.getItem('final_result'));
 const finishDate = parseInt(localStorage.getItem('finishDate'));

@@ -22,6 +22,7 @@
 			<li><a href="./report.html">公司財報</a></li>
 			<!-- <li><a href="./allnews.html">國際財經</a></li> -->
 			<li><a href="./rank.html">排行榜</a></li>
+			<li id="member_name"></li>
 			<img src="imgs/member.png" onclick = "sign()"/>
 		</ul>
 		<!-- <div class="item member">
@@ -29,12 +30,17 @@
 		</div> -->
   </header>
 
-
-	</div>  
+ 
 	<main>
-    <div id="username" class="username"></div>
-    <div id="email" class="email"></div>
-		<button class="logOutBtn" onclick="logOut()">Log Out</button>
+		<div class = 'information'>
+			<div class='infor_head'>
+				<h2>個人資料</h2>
+				<button class="logOutBtn" onclick="logOut()">登出</button>
+			</div>
+			<div id="username" class="username"></div>
+			<div id="email" class="email"></div>
+			
+		</div>
 		<div class = 'button_col'>
       <p class=""><a onclick = 'get_rank()'>個人排名紀錄</a></p>
       <p class=""><a onclick = 'get_pk()'>連線PK紀錄</a></p>
@@ -49,7 +55,7 @@
   </main>
 	<footer class="main-footer">
 		<p>&copy; 2020. All rights reserved.</p>
-		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
+		<p>Edited by <a href="mailto:yuan_chris@livemail.tw">Chris</a></p>
 	</footer>
 	<script src="./js/util.js"></script>
 	<script src="js/profile.js"></script>

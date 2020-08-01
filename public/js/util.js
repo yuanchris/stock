@@ -1,3 +1,13 @@
+const name = localStorage.getItem('name');
+if (name) {
+  const member_name = document.querySelector('#member_name');
+  member_name.innerHTML = name;
+}
+
+function leave() {
+  localStorage.removeItem('final_result');
+  window.location.href = 'index.html';
+}
 
 function sign() {
   const token = localStorage.getItem('token');
@@ -37,7 +47,7 @@ async function countdown() {
 
   let min = Math.floor(time_remain_value / 1000 / 60);
   if (parseInt(min) < 0) {
-    time_remain.innerHTML = `時間到， 結算`;
+    time_remain.innerHTML = '時間到， 結算';
     window.location.href = 'result.html';
   } else {
     min = min < 10 ? (`0${min}`) : min;

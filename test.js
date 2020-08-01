@@ -16,63 +16,34 @@ const utility = require('./util/util.js');
 const { db } = mysql;
 const dbquery = promisify(db.query).bind(db);
 
-async function main() {
-  // linked list
-  class Node {
-    constructor(value) {
-      this.value = value;
-      this.next = null;
-    }
-  }
-  class LinkedList {
-    constructor() {
-      this.length = 0;
-      this.head = null;
-    }
-
-    append(item) {
-      const node = new Node(item);
-      if (!this.head) {
-        this.head = node;
-      } else {
-        let tail = this.head;
-        while (tail.next !== null) {
-          tail = tail.next;
-        }
-        tail.next = node;
-      }
-      this.length += 1;
-    }
-
-    insert(index, value) {
-      if (index < 0 || index > this.length) { return false; }
-      const node = new Node(value);
-      let pointer = this.head;
-      for (let i = 1; i < index; i++) {
-        pointer = pointer.next;
-        
-      }
-      node.next = pointer.next;
-      pointer.next = node;
-      this.length += 1;
-    }
-  }
-
-
-  const list = new LinkedList();
-  list.append('c');
-  list.append('h');
-  list.append('r');
-  list.append('s');
-  list.insert(3, 'i');
-  console.log(list);
-  let now_point = list.head;
-  console.log(list.head);
-  for (let i = 1; i < list.length; i++) {
-    now_point = now_point.next;
-    console.log(now_point);
-    
-  }
-  
-}
 main();
+async function main() {
+  const randomArr = [];
+  for (let i = 0; i < 100; i++) {
+    randomArr[i] = formatDate(randomDate());
+  }
+
+  randomArr.sort();
+  console.log(randomArr);
+}
+
+function randomDate() {
+  let timestamp = 0;
+  do {
+    const startDate = new Date(2014, 0, 1).getTime();
+    const endDate = new Date(2019, 9, 1).getTime();
+    const spaces = (endDate - startDate);
+    timestamp = Math.floor(Math.random() * spaces);
+    timestamp += startDate;
+    timestamp = new Date(timestamp);
+  }
+  while ((timestamp.getMonth() + 1) >= 3 && (timestamp.getMonth() + 1) <= 9);
+  return new Date(timestamp);
+}
+function formatDate(date) {
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  month = month < 10 ? `0${month}` : month;
+  day = day < 10 ? `0${day}` : day;
+  return `${String(date.getFullYear())}-${month}-${day}`;
+}

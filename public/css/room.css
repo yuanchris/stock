@@ -15,13 +15,16 @@ main{
 }
 
 #roomName h3{
-  color: purple;
+  color: #075c69;
   text-align: center;
+  font-size: 1.2em;
 }
 
 .info {
   font-size: 1em;
-  color:rgb(51, 115, 117);
+
+  /* color:rgb(51, 115, 117); */
+  color:  #075c69;
 }
 #msglog, #messageInput {
   border: 1px solid rgb(153, 152, 152);
@@ -37,6 +40,7 @@ main{
 .message {
   font-size: 1em;
   line-height: 22px;
+  margin:10px;
 }
 .message .user {
   padding-right: 5px;
@@ -44,10 +48,16 @@ main{
   color: brown;
 }
 .sysMsg {
+  margin: 10px auto;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: rgba(158, 157, 157, 0.1);
+  /* min-width: 10%; */
+  max-width: 60%;
   color: #0909f0;
-  padding-right: 5px;
-  padding-left: 5px;
   font-size: 16px;
+  text-align: center;
 }
 
 button {

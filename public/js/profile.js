@@ -21,7 +21,13 @@ async function main() {
         <li><a href="./rank.html">排行榜</a></li>
         <li><a href="./resultnews.html">最新新聞</a></li>
         <li><a href="./resultreport.html">最新財報</a></li>
+        <li id='leave'><a onclick= "leave()">結束遊戲</a></li>
+        <li id="member_name"></li>
         <img src="imgs/member.png" onclick = "sign()"/>`;
+      if (user_name) {
+        const member_name = document.querySelector('#member_name');
+        member_name.innerHTML = user_name;
+      }
     }
 
     const bearer = `Bearer ${localStorage.getItem('token')}`;
@@ -38,12 +44,12 @@ async function main() {
           localStorage.removeItem('token');
           // window.location.href = './sign.html';
         } else {
-          const hello = document.createElement('h3');
-          hello.innerHTML = `Hello, ${result.data.name}`;
-          const name = document.querySelector('.username');
-          name.appendChild(hello);
-          const userEmail = document.createElement('h3');
-          userEmail.innerHTML = `Your Email: ${result.data.email}`;
+          const hello = document.createElement('p');
+          hello.innerHTML = `名稱：${result.data.name}`;
+          const username = document.querySelector('.username');
+          username.appendChild(hello);
+          const userEmail = document.createElement('p');
+          userEmail.innerHTML = `電子信箱: ${result.data.email}`;
           const email = document.querySelector('.email');
           email.appendChild(userEmail);
         }
@@ -95,8 +101,8 @@ async function get_rank() {
 
       const rank_number = document.createElement('td');
       rank_number.innerHTML = i + 1;
-      const name = document.createElement('td');
-      name.innerHTML = rank[i].name;
+      const username = document.createElement('td');
+      username.innerHTML = rank[i].name;
       const totalmoney = document.createElement('td');
       totalmoney.innerHTML = rank[i].totalmoney;
       const total_ratio = document.createElement('td');
@@ -146,7 +152,7 @@ async function get_rank() {
       const opponent = document.createElement('td');
       opponent.innerHTML = rank[i].opponent;
 
-      row.append(rank_number, name, totalmoney, total_ratio, invest_total, invest_ratio,
+      row.append(rank_number, username, totalmoney, total_ratio, invest_total, invest_ratio,
         portfolio, playstock, playdate, finishdate, opponent);
       rank_tbody.appendChild(row);
     }
@@ -195,8 +201,8 @@ async function get_pk() {
       const row = document.createElement('tr');
       row.setAttribute('class', 'row');
 
-      const name = document.createElement('td');
-      name.innerHTML = rank[i].name;
+      const username = document.createElement('td');
+      username.innerHTML = rank[i].name;
       const totalmoney = document.createElement('td');
       totalmoney.innerHTML = rank[i].totalmoney;
       const total_ratio = document.createElement('td');
@@ -245,7 +251,7 @@ async function get_pk() {
       const opponent = document.createElement('td');
       opponent.innerHTML = rank[i].opponent;
 
-      row.append(name, totalmoney, total_ratio, invest_total, invest_ratio,
+      row.append(username, totalmoney, total_ratio, invest_total, invest_ratio,
         portfolio, playstock, playdate, finishdate, opponent);
       rank_tbody.appendChild(row);
       // search opponent's data
@@ -275,8 +281,8 @@ function addOpponent(k, rank, rank_tbody) {
   row.setAttribute('class', 'row');
   const portfolio_json = JSON.parse(rank[k].portfolio);
 
-  const name = document.createElement('td');
-  name.innerHTML = rank[k].name;
+  const username = document.createElement('td');
+  username.innerHTML = rank[k].name;
   const totalmoney = document.createElement('td');
   totalmoney.innerHTML = rank[k].totalmoney;
   const total_ratio = document.createElement('td');
@@ -324,7 +330,7 @@ function addOpponent(k, rank, rank_tbody) {
   const opponent = document.createElement('td');
   opponent.innerHTML = rank[k].opponent;
 
-  row.append( name, totalmoney, total_ratio, invest_total, invest_ratio,
+  row.append(username, totalmoney, total_ratio, invest_total, invest_ratio,
     portfolio, playstock, playdate, finishdate, opponent);
   rank_tbody.appendChild(row);
 }

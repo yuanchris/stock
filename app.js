@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
       io.to(roomID).emit('sys', `房間內欲對戰的人：${roomPlay[roomID]}`);
     }
     // 通知房間列表
-    
+    io.to('match.html').emit('list', `${user}加入了房間`, roomInfo);
     console.log(`${user}加入了${roomID}`);
     console.log(roomInfo);
   });
@@ -87,7 +87,7 @@ io.on('connection', (socket) => {
     // 發送目前等待的人
     io.to(roomID).emit('sys', `房間內欲對戰的人：${roomPlay[roomID]}`);
     if (roomPlay[roomID].length == 2) {
-      io.to(roomID).emit('sys', `${roomPlay[roomID]}即將開始遊戲`, roomInfo[roomID]);
+      // io.to(roomID).emit('sys', `${roomPlay[roomID]}即將開始遊戲`, roomInfo[roomID]);
       const start = await fetch(`${IP}/api/1.0/stock/pk`, {
         method: 'POST',
         body: JSON.stringify(roomPlay[roomID]),

@@ -1,6 +1,4 @@
 
-
-
 function getDate(date) {
   const fullDate = new Date(date * 1000);
   const yy = fullDate.getFullYear();

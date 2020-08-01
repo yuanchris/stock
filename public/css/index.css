@@ -112,7 +112,11 @@ main{
 {
 	color: #3788bb;
 }
-
+#member_name{
+	margin-left: 20px;
+	font-size: 1.1em;
+	white-space: nowrap;
+}
 
 
 

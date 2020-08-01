@@ -25,18 +25,19 @@ const info = async () => {
 
 const start = async (name) => {
   try {
+    let stock_total = 137;
     const stock = await dbquery('SELECT * FROM stock_info_select');
     if (stock.length == 0) {
       return { error: 'no stock in database' };
     }
-    let randomStock = new Set([Math.floor(Math.random() * 138), Math.floor(Math.random() * 138),
-      Math.floor(Math.random() * 138), Math.floor(Math.random() * 138),
-      Math.floor(Math.random() * 138)]);
+    let randomStock = new Set([Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
+      Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
+      Math.floor(Math.random() * stock_total)]);
     randomStock = [...randomStock];
     while (randomStock.length !== 5) {
-      randomStock = new Set([Math.floor(Math.random() * 138), Math.floor(Math.random() * 138),
-        Math.floor(Math.random() * 138), Math.floor(Math.random() * 138),
-        Math.floor(Math.random() * 138)]);
+      randomStock = new Set([Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
+        Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
+        Math.floor(Math.random() * stock_total)]);
       randomStock = [...randomStock];
     }
     randomStock.sort((a, b) => a - b);
@@ -65,18 +66,19 @@ const start = async (name) => {
 
 const pk = async (IdArray) => {
   try {
+    let stock_total = 137;
     const stock = await dbquery('SELECT * FROM stock_info_select');
     if (stock.length == 0) {
       return { error: 'no stock in database' };
     }
-    let randomStock = new Set([Math.floor(Math.random() * 137), Math.floor(Math.random() * 137),
-      Math.floor(Math.random() * 137), Math.floor(Math.random() * 137),
-      Math.floor(Math.random() * 137)]);
+    let randomStock = new Set([Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
+      Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
+      Math.floor(Math.random() * stock_total)]);
     randomStock = [...randomStock];
     while (randomStock.length !== 5) {
-      randomStock = new Set([Math.floor(Math.random() * 137), Math.floor(Math.random() * 137),
-        Math.floor(Math.random() * 137), Math.floor(Math.random() * 137),
-        Math.floor(Math.random() * 137)]);
+      randomStock = new Set([Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
+        Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
+        Math.floor(Math.random() * stock_total)]);
       randomStock = [...randomStock];
     }
     randomStock.sort((a, b) => a - b);
@@ -107,16 +109,21 @@ const pk = async (IdArray) => {
 
 
 function randomDate() {
-  const startDate = new Date(2014, 0, 1).getTime();
-  const endDate = new Date(2020, 1, 1).getTime();
-  const spaces = (endDate - startDate);
-  let timestamp = Math.round(Math.random() * spaces);
-  timestamp += startDate;
+  let timestamp = 0;
+  do {
+    const startDate = new Date(2014, 0, 1).getTime();
+    const endDate = new Date(2019, 9, 1).getTime();
+    const spaces = (endDate - startDate);
+    timestamp = Math.floor(Math.random() * spaces);
+    timestamp += startDate;
+    timestamp = new Date(timestamp);
+  }
+  while ((timestamp.getMonth() + 1) >= 3 && (timestamp.getMonth() + 1) <= 9);
   return new Date(timestamp);
 }
 function formatDate(date) {
-  let month = randomDate().getMonth() + 1;
-  let day = randomDate().getDate();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
   month = month < 10 ? `0${month}` : month;
   day = day < 10 ? `0${day}` : day;
   return `${String(date.getFullYear())}-${month}-${day}`;

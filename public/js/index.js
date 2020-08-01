@@ -4,7 +4,6 @@ random stock
 let playDate = localStorage.getItem('playDate');
 let playStock = JSON.parse(localStorage.getItem('playStock'));
 const token = localStorage.getItem('token');
-const name = localStorage.getItem('name');
 const pickstock = document.querySelector('div.pickstock');
 const nav_start = document.querySelector('#start');
 let finishDate = parseInt(localStorage.getItem('finishDate'));
@@ -43,7 +42,8 @@ async function start() {
       playStock = JSON.parse(localStorage.getItem('playStock'));
       finishDate = parseInt(localStorage.getItem('finishDate'));
       if (!(token && name)) {
-        Swal.fire('please login in first!', '請點擊登入');
+        Swal.fire('please login in first!', '請點擊登入')
+          .then((res) => { window.location.href = './sign.html';});
         return;
       }
       if (playDate && playStock) {
@@ -138,32 +138,6 @@ async function start() {
 // function
 
 
-function randomDate() {
-  const startDate = new Date(2014, 0, 1).getTime();
-  const endDate = new Date(2019, 9, 1).getTime();
-  const spaces = (endDate - startDate);
-  let timestamp = Math.round(Math.random() * spaces);
-  timestamp += startDate;
-  return new Date(timestamp);
-}
-function formatDate(date) {
-  let month = randomDate().getMonth() + 1;
-  let day = randomDate().getDate();
-  month = month < 10 ? `0${month}` : month;
-  day = day < 10 ? `0${day}` : day;
-  return `${String(date.getFullYear())}-${month}-${day}`;
-}
-
-function sign() {
-  const token = localStorage.getItem('token');
-  if (token) {
-    window.location.href = 'profile.html';
-  } else {
-    window.location.href = 'sign.html';
-  }
-}
-
-
 // Wrap every letter in a span
 var textWrapper = document.querySelector('.ml9 .letters');
 textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
@@ -182,14 +156,3 @@ anime.timeline({loop: true})
     easing: "easeOutExpo",
     delay: 1000
   });
-/* =================================
- hidden content
-==================================== */
-
-// const hiddenContent = document.querySelectorAll('.below');
-// const show = document.querySelector('.show');
-
-// show.addEventListener('click', () => {
-//     for (let i = 0; i< hiddenContent.length; i++)
-//     hiddenContent[i].style.display = "flex";
-//   });

@@ -9,7 +9,8 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <link rel="shortcut icon" href="./imgs/favicon.ico">
+  <link rel="shortcut icon" href="/imgs/favicon.ico">
+
 </head>
 <body>
   	
@@ -25,7 +26,7 @@
 			<li><a href="/report.html">公司財報</a></li>
 			{{!-- <li><a href="/allnews.html">國際財經</a></li> --}}
 			<li><a href="/rank.html">排行榜</a></li>
-			{{!-- <li><a href="/match.html">連線對戰</a></li> --}}
+      <li id="member_name"></li>
 			<img src="/imgs/member.png" onclick = "sign()"/>
 		</ul>
 		<!-- <div class="item member">
@@ -47,15 +48,19 @@
       按Enter鍵發送訊息
       {{!-- <button id="joinOrLeave">退出房間</button> --}}
       <button id="beginPK">加入對戰</button>
+      <button id="back" onclick = "back()">回到房間列表</button>
     </div>
   </main>
   <footer class="main-footer">
 		<p>&copy; 2020. All rights reserved.</p>
-		<p>Edited by <a href="mailto:nba@example.com">Chris</a></p>
+		<p>Edited by <a href="mailto:yuan_chris@livemail.tw">Chris</a></p>
 	</footer>
 
+  <script src="/js/util.js"></script>
   <script>
-    const name = localStorage.getItem('name');
+    function back() {
+      window.location.href = '/match.html';
+    }
     function sign() {
       const token = localStorage.getItem('token');
       if (token) {
@@ -105,14 +110,9 @@
       });
       // 接收對戰data
       socket.on('PKdata', function (playdate, playstock, finishdate, playIds) {
-        var message = '<div class="sysMsg" style="color:grey">' + `當時日期：${playdate}` + '</div>';
+        message = '<div class="sysMsg">' + `配對成功！${playIds[0]} 和 ${playIds[1]} 開始遊戲` + '</div>';
         $('#msglog').append(message);
-        let printStock = JSON.stringify(playstock);
-        message = '<div class="sysMsg" style="color:grey">' + `當時股票：${printStock}` + '</div>';
-        $('#msglog').append(message);
-        message = '<div class="sysMsg">' + `請${playIds[0]}, ${playIds[1]}點擊左上角首頁並開始遊戲` + '</div>';
-        $('#msglog').append(message);
- 
+
 
         if (playIds.indexOf(userName) !== -1) {
           Swal.fire({
@@ -127,20 +127,16 @@
             <br><br>
             將跳轉到「投資組合」開始遊戲！`,
           }).then((result) => {
+            let printStock = JSON.stringify(playstock);
             localStorage.setItem('playDate', playdate);
             localStorage.setItem('playStock', printStock);
             localStorage.setItem('finishDate', finishdate);
             localStorage.removeItem('final_result');
-            
             window.location.href = '/choice.html';
-
           })
 
         }
-
-
       });
-
       // 发送消息
       $('#messageInput').keydown(function (e) {
         if (e.which === 13) {
@@ -151,7 +147,6 @@
           socket.send(msg);  // use message to receive
         }
       });
-
       // 退出房间
       /*
       $('#joinOrLeave').click(function () {
@@ -166,11 +161,10 @@
         }
       });
       */
-
       //發起對戰
       $('#beginPK').click(function () {
         $(this).text('已發起對戰');
-        socket.send(`${userName} begin a battle`);
+        socket.send(`${userName} wants to battle`);
         socket.emit('beginPK', userName);
       });
 
@@ -179,5 +173,6 @@
 
 
   </script>
+
 </body>
 </html>

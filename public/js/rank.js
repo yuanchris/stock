@@ -13,7 +13,13 @@ async function main() {
       <li><a href="./rank.html">排行榜</a></li>
       <li><a href="./resultnews.html">最新新聞</a></li>
       <li><a href="./resultreport.html">最新財報</a></li>
+      <li id='leave'><a onclick= "leave()">結束遊戲</a></li>
+      <li id="member_name"></li>
       <img src="imgs/member.png" onclick = "sign()"/>`;
+    if (name) {
+      const member_name = document.querySelector('#member_name');
+      member_name.innerHTML = name;
+    }
   }
   // get data from sql
   const rank = await fetch('api/1.0/stock/result', {
@@ -35,8 +41,8 @@ async function main() {
 
     const rank_number = document.createElement('td');
     rank_number.innerHTML = i + 1;
-    const name = document.createElement('td');
-    name.innerHTML = rank[i].name;
+    const rank_name = document.createElement('td');
+    rank_name.innerHTML = rank[i].name;
     const totalmoney = document.createElement('td');
     totalmoney.innerHTML = rank[i].totalmoney;
     const total_ratio = document.createElement('td');
@@ -85,10 +91,11 @@ async function main() {
     playdate.innerHTML = rank[i].playdate;
     const finishdate = document.createElement('td');
     finishdate.innerHTML = getDateTime(parseInt(rank[i].finishdate));
-    row.append(rank_number, name, totalmoney, total_ratio,invest_total, invest_ratio,
+    row.append(rank_number, rank_name, totalmoney, total_ratio,invest_total, invest_ratio,
       portfolio, playstock, playdate, finishdate);
     rank_tbody.appendChild(row);
   }
+  highlightKeyword(name);
 }
 
 
@@ -100,4 +107,19 @@ function sign() {
   } else {
     window.location.href = 'sign.html';
   }
+}
+
+// 搜索关键字高亮
+function highlightKeyword(keyword) {
+  // 1.获取要高亮显示的行
+  const rowNode = $('.row');
+  // 2.获取搜索的内容
+  // 3.遍历整行内容，添加高亮颜色
+  rowNode.each(function () {
+    let newHtml = $(this).html();
+    let re = new RegExp(keyword, 'g');
+    newHtml = newHtml.replace(re, `<span style="color:#ff6700">${keyword}</span>`);
+    $(this).html(newHtml);
+  });
+
 }
