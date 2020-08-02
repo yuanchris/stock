@@ -206,7 +206,7 @@ const revenue = async (stock, date) => {
       FROM stock_revenue WHERE stock = ${stock} AND month >=
       '2011/01' AND month < '${dateInput}' `);
     if (result.length === 0) {
-      return { error: 'No news in database' };
+      return { error: 'No data in database' };
     }
 
     return result;
@@ -224,7 +224,7 @@ const per = async (stock, date) => {
       FROM stock_per WHERE stock = ${stock} AND week >=
        '1101' AND week < '${dateInput}'`);
     if (result.length === 0) {
-      return { error: 'No news in database' };
+      return { error: 'No data in database' };
     }
 
     return result;
@@ -233,6 +233,37 @@ const per = async (stock, date) => {
     return { error };
   }
 };
+
+const eps = async (stock, date) => {
+  try {
+    const dateInput = getSeason(date);
+    const result = await dbquery(`SELECT *
+      FROM stock_eps WHERE stock = ${stock} AND season >=
+       '2011Q1' AND  season <= '${dateInput}'`);
+    if (result.length === 0) {
+      return { error: 'No data in database' };
+    }
+
+    return result;
+  } catch (error) {
+    console.log(error);
+    return { error };
+  }
+};
+
+function getSeason(date) {
+  const now_date = new Date(date);
+  const season = Math.ceil((now_date.getMonth() + 1) / 3);
+  let post;
+  if ((season - 2) < 1) {
+    post = `${now_date.getFullYear() - 1}Q${season - 2 + 4}`;
+  } else {
+    post = `${now_date.getFullYear()}Q${season - 2}`;
+  }
+  return post;
+}
+
+
 
 const result = async (name, totalmoney, invest_ratio,
   total_ratio, portfolio, playstock, playdate, finishdate) => {
@@ -300,6 +331,7 @@ function getYearWeek(date) {
 }
 
 
+
 module.exports = {
   info,
   start,
@@ -309,6 +341,7 @@ module.exports = {
   crawlText,
   revenue,
   per,
+  eps,
   result,
   rank,
   validate,

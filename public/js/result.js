@@ -225,7 +225,7 @@ async function show(playDate, playStock, portfolio, insertboolean) {
   }
   const total_ratio = document.querySelector('#totalRatio');
   const total_ratio_value = ((total_money_value - 2000) / 2000 * 100).toFixed(2) * 100 / 100;
-  total_ratio.innerHTML = `總報酬率：${total_ratio_value} %<br><br>`;
+  total_ratio.innerHTML = `總報酬率： ${total_ratio_value} %`;
 
   const invest_Total = document.querySelector('#investTotal');
   invest_Total.vaue = portfolio.total;
@@ -239,6 +239,7 @@ async function show(playDate, playStock, portfolio, insertboolean) {
     insertResult(name, total_money_value, invest_ratio_value, total_ratio_value,
       JSON.stringify(portfolio), JSON.stringify(playStock), playDate);
   }
+  highlightNum();
 }
 
 async function insertResult(name, total_money_value,
@@ -260,14 +261,26 @@ async function insertResult(name, total_money_value,
   }).then((res) => (res.json()));
 }
 
+// 依據數字正負上色
+function highlightNum() {
+  // 1.获取要高亮显示的行
+  let rowNode = $('.ratio,.price, #totalRatio, #investRatio');
+  console.log(rowNode);
+  // 2.获取搜索的内容
+  // 3.遍历整行内容，添加高亮颜色
+  rowNode.each(function () {
+    let newHtml = $(this).html();
+    let number = newHtml.split(' ')[newHtml.split(' ').length - 2];
+    console.log(number);
+    if (number < 0) {
+      newHtml = newHtml.replace(number, `<span style="color:green">${number}</span>`);
+      $(this).html(newHtml);
+    } else if (number > 0) {
+      newHtml = newHtml.replace(number, `<span style="color:red">${number}</span>`);
+      $(this).html(newHtml);
+    }
+  });
 
-function getDate(date) {
-  const fullDate = new Date(date);
-  const yy = fullDate.getFullYear();
-  const mm = fullDate.getMonth() + 1 <= 9 ? `0${fullDate.getMonth() + 1}` : fullDate.getMonth() + 1;
-  const dd = fullDate.getDate() < 10 ? (`0${fullDate.getDate()}`) : fullDate.getDate();
-  const today = `${yy}-${mm}-${dd}`;
-  return today;
 }
 
 

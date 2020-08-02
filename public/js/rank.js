@@ -1,5 +1,5 @@
 const final_result = JSON.parse(localStorage.getItem('final_result'));
-let finishDate = parseInt(localStorage.getItem('finishDate'));
+const finishDate = parseInt(localStorage.getItem('finishDate'));
 main();
 async function main() {
   if (finishDate) {
@@ -50,11 +50,12 @@ async function main() {
 
     const invest_total = document.createElement('td');
     invest_total.innerHTML = (portfolio_json.total / 10).toFixed(3) * 1000 / 1000;
-     
+
     const invest_ratio = document.createElement('td');
     invest_ratio.innerHTML = `${rank[i].invest_ratio} %`;
 
     const portfolio = document.createElement('td');
+    portfolio.setAttribute('class', 'portfolio');
 
     // portfolio.innerHTML = rank[i].portfolio;
     for (let j = 0; j < portfolio_json.list.length; j++) {
@@ -64,7 +65,12 @@ async function main() {
         const ratio = ((portfolio_json.list[j].now_price_value
           - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
           * 100 / 100;
-        portfolio.innerHTML += `報酬率：${ratio} %， `;
+        if (ratio > 0) {
+          portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
+        } else if (ratio < 0) {
+          portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
+        }
+
         const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
         portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
       } else {
@@ -73,7 +79,11 @@ async function main() {
         const ratio = ((portfolio_json.list[j].now_price_value
           - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
           * 100 / 100 * (-1);
-        portfolio.innerHTML += `報酬率：${ratio} %， `;
+        if (ratio > 0) {
+          portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
+        } else if (ratio < 0) {
+          portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
+        }
         const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
         portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
       }
@@ -91,23 +101,13 @@ async function main() {
     playdate.innerHTML = rank[i].playdate;
     const finishdate = document.createElement('td');
     finishdate.innerHTML = getDateTime(parseInt(rank[i].finishdate));
-    row.append(rank_number, rank_name, totalmoney, total_ratio,invest_total, invest_ratio,
+    row.append(rank_number, rank_name, totalmoney, total_ratio, invest_total, invest_ratio,
       portfolio, playstock, playdate, finishdate);
     rank_tbody.appendChild(row);
   }
   highlightKeyword(name);
 }
 
-
-
-function sign() {
-  const token = localStorage.getItem('token');
-  if (token) {
-    window.location.href = 'profile.html';
-  } else {
-    window.location.href = 'sign.html';
-  }
-}
 
 // 搜索关键字高亮
 function highlightKeyword(keyword) {
@@ -117,9 +117,8 @@ function highlightKeyword(keyword) {
   // 3.遍历整行内容，添加高亮颜色
   rowNode.each(function () {
     let newHtml = $(this).html();
-    let re = new RegExp(keyword, 'g');
+    const re = new RegExp(keyword, 'g');
     newHtml = newHtml.replace(re, `<span style="color:#ff6700">${keyword}</span>`);
     $(this).html(newHtml);
   });
-
 }

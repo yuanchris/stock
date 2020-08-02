@@ -20,7 +20,10 @@ main{
   font-size: 1.1em;
 }
 
+#totalRatio{
+  margin-bottom: 20px;
 
+}
 .details {
   /* max-width: 980px; */
   display: flex;

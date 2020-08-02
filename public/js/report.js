@@ -37,7 +37,9 @@ async function get_report(id, stock) {
   const per = await fetch(`api/1.0/stock/per?stock=${id}&date=${playDate}`, {
     method: 'GET',
   }).then((res) => res.json());
-  // console.log(per);
+  const season_eps = await fetch(`api/1.0/stock/eps?stock=${id}&date=${playDate}`, {
+    method: 'GET',
+  }).then((res) => res.json());
 
   // revenue table
   const revenue_table = document.querySelector('.revenue_table');
@@ -111,7 +113,7 @@ async function get_report(id, stock) {
     per_table.innerHTML = ''; // delete old data
   }
   let per_tbody;
-  document.querySelector('#per h2').innerHTML = '本益比河流圖';
+  document.querySelector('#per h2').innerHTML = 'EPS 與 本益比河流圖';
   for (let i = 0; i < per.length; i++) {
     if (i == 0) {
       per_table.appendChild(clone3);
@@ -187,8 +189,99 @@ async function get_report(id, stock) {
   //plot per
   plot_per(weekArr, price_perArr, epsArr, perArr, fourXArr, eightXArr, twelveXArr, 
     sixteenXArr, twentyXArr, twentyfourXArr);
+  //plot eps
+  plot_eps(season_eps);
 }
+async function plot_eps(season_eps) {
+  const seasonArr = [], price_avgArr = [], 
+    epsArr = [];
+  for (let i = 0; i < season_eps.length; i++) {
+    seasonArr[i] = season_eps[i].season;
+    
+    price_avgArr[i] = season_eps[i].price_avg;
+    epsArr[i] = season_eps[i].eps;
+  }
+  Highcharts.chart('container3', {
+    chart: {
+      borderColor: 'black',
+      borderWidth: 2,
+      type: 'line',
+      zoomType: 'xy',
+    },
+    title: {
+      text: '季EPS 和 股價',
+      style: {
+        fontWeight: 'bold',
+      },
+    },
+    // subtitle: {
+    //   text: 'Source: WorldClimate.com'
+    // },
+    xAxis: [{
+      categories: seasonArr,
+      crosshair: true,
+      reversed: true,
+      title: {
+        text: '年/季',
+      },
+    }],
+    yAxis: [{ // Primary yAxis
+      labels: {
+        format: '{value} 元',
+        style: {
+          color: Highcharts.getOptions().colors[1],
+        },
+      },
+      title: {
+        text: '股價',
+        style: {
+          color: Highcharts.getOptions().colors[1],
+        },
+      },
+    }, { // Secondary yAxis
+      title: {
+        text: '季EPS ',
+        style: {
+          color: Highcharts.getOptions().colors[0],
+        },
+      },
+      labels: {
+        format: '{value} 元',
+        style: {
+          color: Highcharts.getOptions().colors[0],
+        },
+      },
+      opposite: true,
+    }],
+    tooltip: {
+      shared: true,
+    },
+    legend: {
+      align: 'left',
+      x:80,
+      verticalAlign: 'top',
+      borderWidth: 0
+    },
+  
+    series: [{
+      name: '季EPS',
+      type: 'column',
+      yAxis: 1,
+      data: epsArr,
+      tooltip: {
+        valueSuffix: ' 元',
+      },
 
+    }, {
+      name: '股價',
+      type: 'spline',
+      data: price_avgArr,
+      tooltip: {
+        valueSuffix: '元',
+      },
+    }],
+  });
+}
 
 // plot per
 async function plot_per(weekArr, price_perArr, epsArr, perArr, 
@@ -196,7 +289,7 @@ async function plot_per(weekArr, price_perArr, epsArr, perArr,
   let colors = Highcharts.getOptions().colors;
   
   // per stream chart
-  Highcharts.chart('container3', {
+  Highcharts.chart('container4', {
     chart: {
       borderColor: 'black',
       borderWidth: 2,
@@ -488,13 +581,4 @@ async function plot_revenue(monArr, priceArr, revenueArr, revenueYearDiffArr) {
       },
     }],
   });
-}
-
-function sign() {
-  const token = localStorage.getItem('token');
-  if (token) {
-    window.location.href = 'profile.html';
-  } else {
-    window.location.href = 'sign.html';
-  }
 }

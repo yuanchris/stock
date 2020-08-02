@@ -87,6 +87,17 @@ const stockPer = async (req, res) => {
   res.status(200).send(result);
 };
 
+const stockEps = async (req, res) => {
+  const { query } = req;
+  // console.log(query);
+  const result = await Stock.eps(query.stock, query.date);
+  if (result.error) {
+    res.status(403).send({ error: result.error });
+    return;
+  }
+  res.status(200).send(result);
+};
+
 const stockResult = async (req, res) => {
   const { body } = req;
   // console.log(body);
@@ -135,6 +146,7 @@ module.exports = {
   stockNews,
   stockRevenue,
   stockPer,
+  stockEps,
   stockResult,
   stockRank,
   stockValidate,

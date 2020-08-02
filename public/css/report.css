@@ -53,6 +53,11 @@ main{
   margin: 5px 10px;
 
 }
+
+.listname{
+  text-align: center;
+
+}
 table{
   display: table;
   width: 550px;

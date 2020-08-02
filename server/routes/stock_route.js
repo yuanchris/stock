@@ -7,6 +7,7 @@ const {
   stockNews,
   stockRevenue,
   stockPer,
+  stockEps,
   stockResult,
   stockRank,
   stockStart,
@@ -37,6 +38,9 @@ router.route('/stock/revenue')
 
 router.route('/stock/per')
   .get(wrapAsync(stockPer));
+
+router.route('/stock/eps')
+  .get(wrapAsync(stockEps));
 
 router.route('/stock/price')
   .post(wrapAsync(stockPrice));
