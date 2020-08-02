@@ -81,6 +81,7 @@ io.on('connection', (socket) => {
       roomPlay[roomID] = [];
     }
     if (roomPlay[roomID].indexOf(user_play) !== -1) {
+      io.to(roomID).emit('sys', `房間內欲對戰的人：${roomPlay[roomID]}`);
       return false;
     }
     roomPlay[roomID].push(user_play);

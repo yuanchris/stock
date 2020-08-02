@@ -122,7 +122,11 @@ async function get_rank() {
           const ratio = ((portfolio_json.list[j].now_price_value
             - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
             * 100 / 100;
-          portfolio.innerHTML += `報酬率：${ratio} %， `;
+          if (ratio > 0) {
+            portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
+          } else if (ratio < 0) {
+            portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
+          }
           const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
           portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
         } else {
@@ -131,7 +135,11 @@ async function get_rank() {
           const ratio = ((portfolio_json.list[j].now_price_value
             - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
             * 100 / 100 * (-1);
-          portfolio.innerHTML += `報酬率：${ratio} %， `;
+          if (ratio > 0) {
+            portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
+          } else if (ratio < 0) {
+            portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
+          }
           const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
           portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
         }
@@ -163,9 +171,7 @@ async function get_pk() {
     method: 'GET',
   }).then((res) => res.json());
 
-  rank = rank.sort(function (a, b) {
-    return b.finishdate - a.finishdate;
-   });
+  rank = rank.sort((a, b) => b.finishdate - a.finishdate);
   console.log(rank);
   const list = document.querySelector('.list');
   list.innerHTML = '';
@@ -223,7 +229,11 @@ async function get_pk() {
           const ratio = ((portfolio_json.list[j].now_price_value
             - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
             * 100 / 100;
-          portfolio.innerHTML += `報酬率：${ratio} %， `;
+          if (ratio > 0) {
+            portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
+          } else if (ratio < 0) {
+            portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
+          }
           const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
           portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
         } else {
@@ -232,7 +242,11 @@ async function get_pk() {
           const ratio = ((portfolio_json.list[j].now_price_value
             - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
             * 100 / 100 * (-1);
-          portfolio.innerHTML += `報酬率：${ratio} %， `;
+          if (ratio > 0) {
+            portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
+          } else if (ratio < 0) {
+            portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
+          }
           const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
           portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
         }
@@ -302,7 +316,11 @@ function addOpponent(k, rank, rank_tbody) {
       const ratio = ((portfolio_json.list[j].now_price_value
         - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
         * 100 / 100;
-      portfolio.innerHTML += `報酬率：${ratio} %， `;
+      if (ratio > 0) {
+        portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
+      } else if (ratio < 0) {
+        portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
+      }
       const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
       portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
     } else {
@@ -311,7 +329,11 @@ function addOpponent(k, rank, rank_tbody) {
       const ratio = ((portfolio_json.list[j].now_price_value
         - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
         * 100 / 100 * (-1);
-      portfolio.innerHTML += `報酬率：${ratio} %， `;
+      if (ratio > 0) {
+        portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
+      } else if (ratio < 0) {
+        portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
+      }
       const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
       portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
     }
