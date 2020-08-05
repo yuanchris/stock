@@ -114,8 +114,6 @@ const stockResult = async (req, res) => {
 };
 
 const stockRank = async (req, res) => {
-  const { query } = req;
-  // console.log(query);
   const result = await Stock.rank();
   if (result.error) {
     res.status(403).send({ error: result.error });

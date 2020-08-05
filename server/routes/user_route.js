@@ -219,39 +219,15 @@ function verifyToken(req, res, next) {
   const bearerHeader = req.headers.authorization;
   // Check if bearer is undefined
   if (typeof bearerHeader !== 'undefined') {
-    // Split at the space
     const bearer = bearerHeader.split(' ');
-    // Get token from array
     const bearerToken = bearer[1];
-    // Set the token
     req.token = bearerToken;
-    // Next middleware
     next();
   } else {
-    // Forbidden
     res.sendStatus(403);
   }
 }
 
-
-// function getJWT(data) {
-//   let header = {
-//     alg: 'HS256',
-//     typ: 'JWT',
-//   };
-//   header = Buffer.from(JSON.stringify(header)).toString('base64');
-//   let payload = data;
-//   // set expired time = 60 mins
-//   data.exp = Date.now() + 3600 * 1000; // ms
-//   payload = header = Buffer.from(JSON.stringify(payload)).toString('base64');
-//   const signature = crypto.createHmac('SHA256', secretKey)
-//       .update(header + '.' + payload)
-//       .digest('base64');
-//   // const hmac = crypto.createHmac('SHA256', secret);
-//   // const updatedHmac = hmac.update(header + '.' + payload)
-//   // const signature = updatedHmac.digest('base64');
-//   return header + '.' + payload + '.' + signature;
-// }
 
 
 module.exports = router;

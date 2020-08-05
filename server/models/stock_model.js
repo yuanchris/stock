@@ -1,13 +1,13 @@
-/* eslint-disable camelcase */
+/* eslint-disable no-use-before-define */
+
 require('dotenv').config();
 const cheerio = require('cheerio');
 const rp = require('request-promise');
-
+const { promisify } = require('util');
 const mysql = require('../../util/mysql_con.js');
 
 const { db } = mysql;
 
-const { promisify } = require('util');
 
 const dbquery = promisify(db.query).bind(db);
 
@@ -25,19 +25,19 @@ const info = async () => {
 
 const start = async (name) => {
   try {
-    let stock_total = 137;
+    const stockTotal = 137;
     const stock = await dbquery('SELECT * FROM stock_info_select');
     if (stock.length == 0) {
       return { error: 'no stock in database' };
     }
-    let randomStock = new Set([Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
-      Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
-      Math.floor(Math.random() * stock_total)]);
+    let randomStock = new Set([randomStockNum(stockTotal), randomStockNum(stockTotal),
+      randomStockNum(stockTotal), randomStockNum(stockTotal),
+      randomStockNum(stockTotal)]);
     randomStock = [...randomStock];
     while (randomStock.length !== 5) {
-      randomStock = new Set([Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
-        Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
-        Math.floor(Math.random() * stock_total)]);
+      randomStock = new Set(randomStockNum(stockTotal), randomStockNum(stockTotal),
+        randomStockNum(stockTotal), randomStockNum(stockTotal),
+        randomStockNum(stockTotal));
       randomStock = [...randomStock];
     }
     randomStock.sort((a, b) => a - b);
@@ -66,19 +66,19 @@ const start = async (name) => {
 
 const pk = async (IdArray) => {
   try {
-    let stock_total = 137;
+    const stockTotal = 137;
     const stock = await dbquery('SELECT * FROM stock_info_select');
     if (stock.length == 0) {
       return { error: 'no stock in database' };
     }
-    let randomStock = new Set([Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
-      Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
-      Math.floor(Math.random() * stock_total)]);
+    let randomStock = new Set([randomStockNum(stockTotal), randomStockNum(stockTotal),
+      randomStockNum(stockTotal), randomStockNum(stockTotal),
+      randomStockNum(stockTotal)]);
     randomStock = [...randomStock];
     while (randomStock.length !== 5) {
-      randomStock = new Set([Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
-        Math.floor(Math.random() * stock_total), Math.floor(Math.random() * stock_total),
-        Math.floor(Math.random() * stock_total)]);
+      randomStock = new Set([randomStockNum(stockTotal), randomStockNum(stockTotal),
+        randomStockNum(stockTotal), randomStockNum(stockTotal),
+        randomStockNum(stockTotal)]);
       randomStock = [...randomStock];
     }
     randomStock.sort((a, b) => a - b);
@@ -106,7 +106,9 @@ const pk = async (IdArray) => {
     return { error };
   }
 };
-
+function randomStockNum(stockTotal) {
+  return Math.floor(Math.random() * stockTotal);
+}
 
 function randomDate() {
   let timestamp = 0;
@@ -152,11 +154,11 @@ const price = async (playDate, playStock) => {
   }
 };
 
-const news = async (stock, start, end) => {
+const news = async (stock, startDate, end) => {
   try {
     const result = await dbquery(`SELECT *
       FROM stock_news_brief WHERE stock = ${stock} 
-      AND date BETWEEN "${start}"  AND "${end}"
+      AND date BETWEEN "${startDate}"  AND "${end}"
       ORDER BY date DESC`);
     // console.log(result);
     if (result.length === 0) {
@@ -176,12 +178,12 @@ const crawlText = async (href) => {
     await rp(href)
       .then((htmlString) => {
         const $2 = cheerio.load(htmlString);
-        const news_item = $2('.text > p').not('.before_ir, .appE1121');
+        const newsItem = $2('.text > p').not('.before_ir, .appE1121');
         // console.log(news_item);
         const text = [];
-        for (let i = 0; i < news_item.length; i++) {
-          if (news_item.eq(i).text() !== '') {
-            text.push(news_item.eq(i).text());
+        for (let i = 0; i < newsItem.length; i++) {
+          if (newsItem.eq(i).text() !== '') {
+            text.push(newsItem.eq(i).text());
             // .filter(function () { return this.nodeType == 3; })
           }
         }
@@ -252,17 +254,16 @@ const eps = async (stock, date) => {
 };
 
 function getSeason(date) {
-  const now_date = new Date(date);
-  const season = Math.ceil((now_date.getMonth() + 1) / 3);
+  const nowDate = new Date(date);
+  const season = Math.ceil((nowDate.getMonth() + 1) / 3);
   let post;
   if ((season - 2) < 1) {
-    post = `${now_date.getFullYear() - 1}Q${season - 2 + 4}`;
+    post = `${nowDate.getFullYear() - 1}Q${season - 2 + 4}`;
   } else {
-    post = `${now_date.getFullYear()}Q${season - 2}`;
+    post = `${nowDate.getFullYear()}Q${season - 2}`;
   }
   return post;
 }
-
 
 
 const result = async (name, totalmoney, invest_ratio,
@@ -295,13 +296,13 @@ const result = async (name, totalmoney, invest_ratio,
 
 const rank = async () => {
   try {
-    const result = await dbquery(`SELECT *
+    const resultSql = await dbquery(`SELECT *
       FROM user_playlist ORDER by totalmoney DESC`);
-    if (result.length === 0) {
+    if (resultSql.length === 0) {
       return { error: 'No result in database' };
     }
 
-    return result;
+    return resultSql;
   } catch (error) {
     console.log(error);
     return { error };
@@ -310,11 +311,11 @@ const rank = async () => {
 
 const validate = async (playdate, name, finishdate, playstock) => {
   try {
-    const result = await dbquery(`SELECT *
+    const resultSql = await dbquery(`SELECT *
       FROM user_playlist WHERE playdate = '${playdate}' AND name = '${name}' 
       AND finishdate = ${finishdate} AND playstock = '${playstock}'`);
 
-    return result;
+    return resultSql;
   } catch (error) {
     console.log(error);
     return { error };
@@ -322,14 +323,13 @@ const validate = async (playdate, name, finishdate, playstock) => {
 };
 
 function getYearWeek(date) {
-  const now_date = new Date(date);
-  const date2 = new Date(now_date.getFullYear(), 0, 1);
-  let d = Math.round((now_date.getTime() - date2.getTime()) / 86400000);
+  const nowDate = new Date(date);
+  const date2 = new Date(nowDate.getFullYear(), 0, 1);
+  let d = Math.round((nowDate.getTime() - date2.getTime()) / 86400000);
   d = Math.ceil(d / 7) < 10 ? (`0${Math.ceil(d / 7)}`) : Math.ceil(d / 7);
   // console.log(`${now_date.getFullYear() % 2000}${Math.ceil(d / 7)}`);
-  return `${now_date.getFullYear() % 2000}${d}`;
+  return `${nowDate.getFullYear() % 2000}${d}`;
 }
-
 
 
 module.exports = {
