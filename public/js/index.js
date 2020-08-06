@@ -102,41 +102,6 @@ async function start() {
 }
 
 
-// pickstock.addEventListener('click', async () => {
-//   playDate = localStorage.getItem('playDate');
-//   playStock = JSON.parse(localStorage.getItem('playStock'));
-//   finishDate = parseInt(localStorage.getItem('finishDate'));
-//   if (!(token && name)) {
-//     swal('please login in first!', '請點擊登入');
-//     return;
-//   }
-//   if (playDate && playStock) {
-//     swal('遊戲已經開始', '請往上點擊投資組合');
-//   } else {
-//     const start = await fetch(`api/1.0/stock/start?name=${name}`, {
-//       method: 'GET',
-//     }).then((res) => res.json());
-//     start.playstock = JSON.parse(start.playstock);
-//     pickstock.innerHTML = `<h3>Your start date is :</h3><p>${start.playdate}</p> <br>\
-//       <h3>Your stocks is :</h3>`;
-
-//     for (let i = 0; i < 5; i++) {
-//       pickstock.innerHTML += `<p>${start.playstock[i].id} ` + `${start.playstock[i].stock} `
-//     + `${start.playstock[i].industry}</p>`;
-//     }
-//     pickstock.innerHTML += '<h3>Have a Good Time!</h3>';
-//     localStorage.setItem('playDate', start.playdate);
-//     localStorage.setItem('playStock', JSON.stringify(start.playstock));
-//     localStorage.setItem('finishDate', start.finishdate);
-//     localStorage.removeItem('final_result');
-//     finishDate = parseInt(localStorage.getItem('finishDate'));
-//     setInterval(countdown, 1000);
-//   }
-// });
-
-
-// function
-
 
 // Wrap every letter in a span
 var textWrapper = document.querySelector('.ml9 .letters');

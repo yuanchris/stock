@@ -96,76 +96,13 @@ async function get_rank() {
         continue;
       }
       const portfolio_json = JSON.parse(rank[i].portfolio);
-      const row = document.createElement('tr');
-      row.setAttribute('class', 'row');
-
-      const rank_number = document.createElement('td');
-      rank_number.innerHTML = i + 1;
-      const username = document.createElement('td');
-      username.innerHTML = rank[i].name;
-      const totalmoney = document.createElement('td');
-      totalmoney.innerHTML = rank[i].totalmoney;
-      const total_ratio = document.createElement('td');
-      total_ratio.innerHTML = `${rank[i].total_ratio} %`;
-
-      const invest_total = document.createElement('td');
-      invest_total.innerHTML = (portfolio_json.total / 10).toFixed(3) * 1000 / 1000;
-      const invest_ratio = document.createElement('td');
-      invest_ratio.innerHTML = `${rank[i].invest_ratio} %`;
-
-      const portfolio = document.createElement('td');
-      // portfolio.innerHTML = rank[i].portfolio;
-      for (let j = 0; j < portfolio_json.list.length; j++) {
-        if (portfolio_json.list[j].buyShort_value == 'buy') {
-          portfolio.innerHTML += `買進 ${portfolio_json.list[j].stock_name} 
-          ${portfolio_json.list[j].qty} 張，成本 ${(portfolio_json.list[j].total_price / 10).toFixed(3) * 1000 / 1000} 萬<br>`;
-          const ratio = ((portfolio_json.list[j].now_price_value
-            - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
-            * 100 / 100;
-          if (ratio > 0) {
-            portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
-          } else if (ratio < 0) {
-            portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
-          }
-          const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
-          portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
-        } else {
-          portfolio.innerHTML += `放空 ${portfolio_json.list[j].stock_name} 
-          ${portfolio_json.list[j].qty} 張，成本 ${(portfolio_json.list[j].total_price / 10).toFixed(3) * 1000 / 1000} 萬<br>`;
-          const ratio = ((portfolio_json.list[j].now_price_value
-            - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
-            * 100 / 100 * (-1);
-          if (ratio > 0) {
-            portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
-          } else if (ratio < 0) {
-            portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
-          }
-          const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
-          portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
-        }
-      }
-
-
-      const playstock = document.createElement('td');
-      const playstock_json = JSON.parse(rank[i].playstock);
-      for (let j = 0; j < playstock_json.length; j++) {
-        playstock.innerHTML += `${playstock_json[j].id} 
-        ${playstock_json[j].stock} <br>`;
-      }
-
-      const playdate = document.createElement('td');
-      playdate.innerHTML = rank[i].playdate;
-      const finishdate = document.createElement('td');
-      finishdate.innerHTML = getDateTime(parseInt(rank[i].finishdate));
-      const opponent = document.createElement('td');
-      opponent.innerHTML = rank[i].opponent;
-
-      row.append(rank_number, username, totalmoney, total_ratio, invest_total, invest_ratio,
-        portfolio, playstock, playdate, finishdate, opponent);
-      rank_tbody.appendChild(row);
+      addTable(rank_tbody, rank, i, portfolio_json);
     }
   }
 }
+
+
+
 async function get_pk() {
   let rank = await fetch('api/1.0/stock/result', {
     method: 'GET',
@@ -203,70 +140,7 @@ async function get_pk() {
         </tr>`;
       const rank_tbody = document.createElement('tbody');
       rank_table.append(rank_thead, rank_tbody);
-      const row = document.createElement('tr');
-      row.setAttribute('class', 'row');
-
-      const username = document.createElement('td');
-      username.innerHTML = rank[i].name;
-      const totalmoney = document.createElement('td');
-      totalmoney.innerHTML = rank[i].totalmoney;
-      const total_ratio = document.createElement('td');
-      total_ratio.innerHTML = `${rank[i].total_ratio} %`;
-
-      const invest_total = document.createElement('td');
-      invest_total.innerHTML = (portfolio_json.total / 10).toFixed(3) * 1000 / 1000;
-      const invest_ratio = document.createElement('td');
-      invest_ratio.innerHTML = `${rank[i].invest_ratio} %`;
-
-      const portfolio = document.createElement('td');
-
-
-      for (let j = 0; j < portfolio_json.list.length; j++) {
-        if (portfolio_json.list[j].buyShort_value == 'buy') {
-          portfolio.innerHTML += `買進 ${portfolio_json.list[j].stock_name} 
-          ${portfolio_json.list[j].qty} 張，成本 ${(portfolio_json.list[j].total_price / 10).toFixed(3) * 1000 / 1000} 萬<br>`;
-          const ratio = ((portfolio_json.list[j].now_price_value
-            - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
-            * 100 / 100;
-          if (ratio > 0) {
-            portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
-          } else if (ratio < 0) {
-            portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
-          }
-          const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
-          portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
-        } else {
-          portfolio.innerHTML += `放空 ${portfolio_json.list[j].stock_name} 
-          ${portfolio_json.list[j].qty} 張，成本 ${(portfolio_json.list[j].total_price / 10).toFixed(3) * 1000 / 1000} 萬<br>`;
-          const ratio = ((portfolio_json.list[j].now_price_value
-            - portfolio_json.list[j].price) / portfolio_json.list[j].price * 100).toFixed(2)
-            * 100 / 100 * (-1);
-          if (ratio > 0) {
-            portfolio.innerHTML += `報酬率：<span style="color:red">${ratio}</span> %， `;
-          } else if (ratio < 0) {
-            portfolio.innerHTML += `報酬率：<span style="color:green">${ratio}</span> %， `;
-          }
-          const earn = (ratio * portfolio_json.list[j].total_price / 1000).toFixed(2) * 100 / 100;
-          portfolio.innerHTML += `獲利： ${earn}  萬 <br>`;
-        }
-      }
-      const playstock = document.createElement('td');
-      const playstock_json = JSON.parse(rank[i].playstock);
-      for (let j = 0; j < playstock_json.length; j++) {
-        playstock.innerHTML += `${playstock_json[j].id} 
-        ${playstock_json[j].stock} <br>`;
-      }
-
-      const playdate = document.createElement('td');
-      playdate.innerHTML = rank[i].playdate;
-      const finishdate = document.createElement('td');
-      finishdate.innerHTML = getDateTime(parseInt(rank[i].finishdate));
-      const opponent = document.createElement('td');
-      opponent.innerHTML = rank[i].opponent;
-
-      row.append(username, totalmoney, total_ratio, invest_total, invest_ratio,
-        portfolio, playstock, playdate, finishdate, opponent);
-      rank_tbody.appendChild(row);
+      addTable(rank_tbody, rank, i, portfolio_json, 'true');
       // search opponent's data
       for (let k = 0; k < rank.length; k++) {
         if (rank[k].name == rank[i].opponent && rank[k].finishdate == rank[i].finishdate) {
@@ -290,24 +164,29 @@ async function get_pk() {
 }
 
 function addOpponent(k, rank, rank_tbody) {
+  const portfolio_json = JSON.parse(rank[k].portfolio);
+  addTable(rank_tbody, rank, k, portfolio_json, 'true');
+}
+
+function addTable(rank_tbody, rank, i, portfolio_json, pkBoolean) {
   const row = document.createElement('tr');
   row.setAttribute('class', 'row');
-  const portfolio_json = JSON.parse(rank[k].portfolio);
-
+  const rank_number = document.createElement('td');
+  rank_number.innerHTML = i + 1;
   const username = document.createElement('td');
-  username.innerHTML = rank[k].name;
+  username.innerHTML = rank[i].name;
   const totalmoney = document.createElement('td');
-  totalmoney.innerHTML = rank[k].totalmoney;
+  totalmoney.innerHTML = rank[i].totalmoney;
   const total_ratio = document.createElement('td');
-  total_ratio.innerHTML = `${rank[k].total_ratio} %`;
+  total_ratio.innerHTML = `${rank[i].total_ratio} %`;
+
   const invest_total = document.createElement('td');
   invest_total.innerHTML = (portfolio_json.total / 10).toFixed(3) * 1000 / 1000;
   const invest_ratio = document.createElement('td');
-  invest_ratio.innerHTML = `${rank[k].invest_ratio} %`;
+  invest_ratio.innerHTML = `${rank[i].invest_ratio} %`;
 
   const portfolio = document.createElement('td');
-
-
+  // portfolio.innerHTML = rank[i].portfolio;
   for (let j = 0; j < portfolio_json.list.length; j++) {
     if (portfolio_json.list[j].buyShort_value == 'buy') {
       portfolio.innerHTML += `買進 ${portfolio_json.list[j].stock_name} 
@@ -338,25 +217,27 @@ function addOpponent(k, rank, rank_tbody) {
     }
   }
   const playstock = document.createElement('td');
-  const playstock_json = JSON.parse(rank[k].playstock);
+  const playstock_json = JSON.parse(rank[i].playstock);
   for (let j = 0; j < playstock_json.length; j++) {
     playstock.innerHTML += `${playstock_json[j].id} 
     ${playstock_json[j].stock} <br>`;
   }
-
   const playdate = document.createElement('td');
-  playdate.innerHTML = rank[k].playdate;
+  playdate.innerHTML = rank[i].playdate;
   const finishdate = document.createElement('td');
-  finishdate.innerHTML = getDateTime(parseInt(rank[k].finishdate));
+  finishdate.innerHTML = getDateTime(parseInt(rank[i].finishdate));
   const opponent = document.createElement('td');
-  opponent.innerHTML = rank[k].opponent;
+  opponent.innerHTML = rank[i].opponent;
+  if (pkBoolean !== 'true') {
+    row.append(rank_number, username, totalmoney, total_ratio, invest_total, invest_ratio,
+      portfolio, playstock, playdate, finishdate, opponent);
+  } else {
+    row.append(username, totalmoney, total_ratio, invest_total, invest_ratio,
+      portfolio, playstock, playdate, finishdate, opponent);
+  }
 
-  row.append(username, totalmoney, total_ratio, invest_total, invest_ratio,
-    portfolio, playstock, playdate, finishdate, opponent);
   rank_tbody.appendChild(row);
 }
-
-
 
 
 
@@ -369,11 +250,4 @@ function logOut() {
   localStorage.removeItem('final_result');
   window.location.href = './sign.html';
 }
-function sign() {
-  const token = localStorage.getItem('token');
-  if (token) {
-    window.location.href = 'profile.html';
-  } else {
-    window.location.href = 'sign.html';
-  }
-}
+

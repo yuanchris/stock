@@ -569,12 +569,3 @@ async function plot_revenue(monArr, priceArr, revenueArr, revenueYearDiffArr) {
     }],
   });
 }
-
-function sign() {
-  const token = localStorage.getItem('token');
-  if (token) {
-    window.location.href = 'profile.html';
-  } else {
-    window.location.href = 'sign.html';
-  }
-}

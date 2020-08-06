@@ -406,17 +406,6 @@ function change_color(td) {
   }
 }
 
-
-function getDate(date) {
-  const fullDate = new Date(date);
-  const yy = fullDate.getFullYear();
-  const mm = fullDate.getMonth() + 1 <= 9 ? `0${fullDate.getMonth() + 1}` : fullDate.getMonth() + 1;
-  const dd = fullDate.getDate() < 10 ? (`0${fullDate.getDate()}`) : fullDate.getDate();
-  const today = `${yy}-${mm}-${dd}`;
-  return today;
-}
-
-
 // plot revenue
 async function plot_revenue(monArr, priceArr, revenueArr, revenueYearDiffArr) {
   Highcharts.chart('container', {

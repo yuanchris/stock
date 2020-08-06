@@ -7,14 +7,6 @@ async function main() {
   }
 }
 
-function sign() {
-  const token = localStorage.getItem('token');
-  if (token) {
-    window.location.href = 'profile.html';
-  } else {
-    window.location.href = 'sign.html';
-  }
-}
 
 $(() => {
   // ---------创建连接-----------
