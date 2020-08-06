@@ -50,7 +50,7 @@ router.route('/stock/result')
   .get(wrapAsync(stockRank));
 
 
-  router.route('/stock/validate')
+router.route('/stock/validate')
   .get(wrapAsync(stockValidate));
 
 module.exports = router;

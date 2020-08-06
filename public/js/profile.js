@@ -172,7 +172,6 @@ async function get_pk() {
   }).then((res) => res.json());
 
   rank = rank.sort((a, b) => b.finishdate - a.finishdate);
-  console.log(rank);
   const list = document.querySelector('.list');
   list.innerHTML = '';
 
@@ -356,6 +355,9 @@ function addOpponent(k, rank, rank_tbody) {
     portfolio, playstock, playdate, finishdate, opponent);
   rank_tbody.appendChild(row);
 }
+
+
+
 
 
 function logOut() {

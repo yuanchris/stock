@@ -21,6 +21,7 @@
     "eslint-config-airbnb": "^18.1.0",
     "express": "^4.17.1",
     "express-hbs": "^2.3.4",
+    "hbs": "^3.1.0",
     "iconv-lite": "^0.6.1",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
@@ -28,14 +29,14 @@
     "mysql": "^2.18.1",
     "mysqldump": "^3.1.0",
     "node-fetch": "^2.6.0",
+    "path": "^0.11.14",
     "puppeteer": "^5.0.0",
     "redis": "^3.0.2",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "socket.io": "^2.3.0",
     "superagent": "^5.3.1",
-    "hbs": "^3.1.0",
-    "path": "^0.11.14"
+    "validator": "^13.1.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
