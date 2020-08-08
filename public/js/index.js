@@ -18,8 +18,33 @@ if (playDate && playStock) {
   pickstock.innerHTML += '<h3>Have a Good Time!</h3>';
   nav_start.setAttribute('style', 'display:none');
   setInterval(countdown, 1000);
+
+}
+main();
+async function main() {
+  const visualArr = document.querySelectorAll('.visual');
+
+  visualArr[1].setAttribute('class', 'visual current');
+  const index = { num: 1 };
+  let show = setInterval(() => {
+    next(index, visualArr);
+  }, 5000);
 }
 
+function next(index, visualArr) {
+  (index.num == visualArr.length - 1) ? index.num = 0 : index.num += 1;
+  change(visualArr, 'visual current', 'visual', index.num);
+}
+
+function change(arr, clsCur, cls, num) {
+  for (let i = 0; i < arr.length; i++) {
+    if (i == num) {
+      arr[i].setAttribute('class', clsCur);
+    } else {
+      arr[i].setAttribute('class', cls);
+    }
+  }
+}
 
 async function start() {
   function abc(e) {
@@ -104,20 +129,20 @@ async function start() {
 
 
 // Wrap every letter in a span
-var textWrapper = document.querySelector('.ml9 .letters');
-textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+// var textWrapper = document.querySelector('.ml9 .letters');
+// textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 
-anime.timeline({loop: true})
-  .add({
-    targets: '.ml9 .letter',
-    scale: [0, 1],
-    duration: 1500,
-    elasticity: 600,
-    delay: (el, i) => 45 * (i+1)
-  }).add({
-    targets: '.ml9',
-    opacity: 0,
-    duration: 1000,
-    easing: "easeOutExpo",
-    delay: 1000
-  });
+// anime.timeline({loop: true})
+//   .add({
+//     targets: '.ml9 .letter',
+//     scale: [0, 1],
+//     duration: 1500,
+//     elasticity: 600,
+//     delay: (el, i) => 45 * (i+1)
+//   }).add({
+//     targets: '.ml9',
+//     opacity: 0,
+//     duration: 1000,
+//     easing: "easeOutExpo",
+//     delay: 1000
+//   });
