@@ -42,6 +42,7 @@ async function main() {
         if (result.status === 403) {
           Swal.fire('Invalid acess, please sign up or sign in!');
           localStorage.removeItem('token');
+          localStorage.removeItem('name');
           // window.location.href = './sign.html';
         } else {
           const hello = document.createElement('p');

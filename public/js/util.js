@@ -1,7 +1,10 @@
 const name = localStorage.getItem('name');
 if (name) {
-  const member_name = document.querySelector('#member_name');
-  member_name.innerHTML = name;
+  const token = localStorage.getItem('token');
+  if (token) {
+    const member_name = document.querySelector('#member_name');
+    member_name.innerHTML = name;
+  }
 }
 
 function leave() {

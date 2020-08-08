@@ -2,7 +2,7 @@
 main{
   display: flex;
   justify-content: space-between;
-  padding-top: 30px;
+  padding-top: 120px; 
 }
 .chat {
   font-size: 1em;
