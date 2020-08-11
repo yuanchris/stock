@@ -75,3 +75,6 @@ uploads/
 #certificate
 certificate/
 .well-known/
+
+#test
+test.js

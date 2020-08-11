@@ -39,11 +39,11 @@ async function main() {
       method: 'GET',
     }).then((res) => res.json())
       .then((result) => {
-        if (result.status === 403) {
-          Swal.fire('Invalid acess, please sign up or sign in!');
+        if (result.error) {
+          Swal.fire(result.error);
           localStorage.removeItem('token');
           localStorage.removeItem('name');
-          // window.location.href = './sign.html';
+          window.location.href = './sign.html';
         } else {
           const hello = document.createElement('p');
           hello.innerHTML = `名稱：${result.data.name}`;

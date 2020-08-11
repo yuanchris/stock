@@ -1,19 +1,15 @@
-
-// ======= env ========
 require('dotenv').config('./');
 
-// =======================
-
 const express = require('express');
-
 const app = express();
 const bodyparser = require('body-parser');
 const fetch = require('node-fetch');
-
-const { PORT, API_VERSION, IP } = process.env;
-
 const path = require('path');
 const hbs = require('express-hbs');
+
+const { PORT, PORT_TEST, NODE_ENV, API_VERSION, IP } = process.env;
+const port = NODE_ENV == 'test' ? PORT_TEST : PORT;
+
 
 app.engine('hbs', hbs.express4({
   partialsDir: `${__dirname}/views/partials`,
@@ -32,8 +28,8 @@ const io = require('socket.io')(http);
 const socket = require('./socket.js');
 
 socket.start(io);
-http.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+http.listen(port, () => {
+  console.log(`Server started on port ${port}`);
 });
 
 // ======= static page =====
