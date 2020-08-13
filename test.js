@@ -17,32 +17,22 @@ const { db } = mysql;
 const dbquery = promisify(db.query).bind(db);
 
 
-const minStartValue = function (nums) {
-  let start = 1;
-  let result = start;
-  let token = 0;
-  while (true) {
-    result = start;
-    for (let i = 0; i < nums.length; i++) {
-      result += nums[i];
-      if (result < 1) {
-        start += 1
-        break;
-      }
-      if (i === nums.length - 1) {
-        token = 1;
-      }
-    }
-    if (token === 1) {
-      break;
-    }
-    console.log(start);
-  }
-  return start;
-};
-async function main() {
-  const nums = [-3, 2, -3, 4, 2];
-  console.log('final: ', minStartValue(nums));
-}
+// const minStartValue = function (nums) {
+  
+// };
+// async function main() {
 
-main();
+// }
+
+// main();
+let func2 = (x) => {
+
+  // 讓他跑 10000000 次
+  if (x === 20000)
+      return x;
+
+  return func2(x + 1);
+};
+
+let ret = func2(0);
+console.log(ret);
