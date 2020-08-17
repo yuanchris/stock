@@ -2,6 +2,8 @@
 
 A stock game for reading stocks information, deciding your stocks portfolio and competing with others.
 
+Website URL : https://stock-arena.chris-hsiao.site/
+
 ## Table of content
 * [Technologies](#technologies)
 * [Structure](#structure)
@@ -46,7 +48,7 @@ A stock game for reading stocks information, deciding your stocks portfolio and 
 
 ## Structure
 
-<img src="./public/imgs/structure.PNG" width="70%" height="70%" title="choice">
+<img src="./public/imgs/demo/structure.PNG" width="70%" title="structure">
 
 - Redirects port requests by **NGINX** after receiving request from clients
 - Constructed Web server on **AWS EC2**, established **MYSQL** on **AWS RDS**
@@ -56,7 +58,7 @@ A stock game for reading stocks information, deciding your stocks portfolio and 
 
 ## Database design
 
-<img src="./public/imgs/db_schema.PNG" width="70%" height="70%" title="choice">
+<img src="./public/imgs/demo/db_schema.PNG" width="70%" title="database">
 
 ## Features and Demonstration
 
