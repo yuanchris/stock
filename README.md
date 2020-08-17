@@ -45,7 +45,7 @@ A stock game for reading stocks information, deciding your stocks portfolio and 
 
 
 ## Structure
-![Structure screenshot](./public/imgs/structure.png)
+![Structure screenshot](./public/imgs/structure.PNG)
 - Redirects port requests by **NGINX** after receiving request from clients
 - Constructed Web server on **AWS EC2**, established **MYSQL** on **AWS RDS**
 - Realtime web application: **Socket**
@@ -53,26 +53,26 @@ A stock game for reading stocks information, deciding your stocks portfolio and 
 
 
 ## Database design
-![db screenshot](./public/imgs/db_schema.png)
+![db screenshot](./public/imgs/db_schema.PNG)
 
 ## Features and Demonstration
 
 
 * Game mode choices:
-[![Demo start](https://chris-aws-s3.s3-ap-northeast-1.amazonaws.com/stock-demo/stock-arena-start.gif)](https://youtu.be/v46aG4scO9k)
+[![Demo start](./public/imgs/demo/stock-arena-start.gif)](https://youtu.be/v46aG4scO9k)
   * Single player game
   * Join website's chat-room to match with other player
 * Stock Information:
-![Demo choice](https://youtu.be/Fuz42HnBtoM)
+[![Demo choice](./public/imgs/demo/stock-arena-choice.gif)](https://youtu.be/Fuz42HnBtoM)
   * Decide stock portfolio 
   * Stock's news
   * Stock's financial report
 * Game result:
-![Demo result](https://youtu.be/a96rtkb69A0)
+[![Demo result](./public/imgs/demo/stock-arena-result.gif)](https://youtu.be/a96rtkb69A0)
   * Calculate stock's return on investment 
   * Check the latest news and financial report
 * Leaderboard and user profile:
-![Demo rank and profile](https://youtu.be/cJHdFKYTf-Q)
+[![Demo rank and profile](./public/imgs/demo/stock-arena-rank.gif)](https://youtu.be/cJHdFKYTf-Q)
   * Game result will be stored into leaderboard
   * Check and compare all others' result in leaderboard
   * Check user's own result and match game result in user profile.
