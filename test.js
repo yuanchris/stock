@@ -18,21 +18,25 @@ const dbquery = promisify(db.query).bind(db);
 
 
 // const minStartValue = function (nums) {
-  
+
 // };
 // async function main() {
 
 // }
 
-// main();
-let func2 = (x) => {
 
-  // 讓他跑 10000000 次
-  if (x === 20000)
-      return x;
-
-  return func2(x + 1);
+const trampoline = (fn) => (...args) => {
+  let result = fn(...args);
+  while (typeof result === 'function') {
+    result = result();
+  }
+  return result;
 };
-
-let ret = func2(0);
-console.log(ret);
+const sumBelowRec = (number, sum = 0) => (
+  number === 0
+    ? sum
+    : () => sumBelowRec(number - 1, sum + number)
+);
+const sumBelow = trampoline(sumBelowRec);
+sumBelow(100000);
+// returns 5000050000 🎉🎉🎉

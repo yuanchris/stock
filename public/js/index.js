@@ -28,7 +28,7 @@ async function main() {
   const index = { num: 1 };
   let show = setInterval(() => {
     next(index, visualArr);
-  }, 5000);
+  }, 4000);
 }
 
 function next(index, visualArr) {
