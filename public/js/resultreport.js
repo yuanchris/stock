@@ -12,7 +12,7 @@ main();
 async function main() {
   if (playDate && playStock) {
     const nowDate = document.querySelector('#nowDate');
-    nowDate.innerHTML = `<h3>當時：${playDate} -> 現在： ${new_date}</h3>`;
+    nowDate.innerHTML = `<h3>當時：${playDate}，現在： ${new_date}</h3>`;
     const stockUl = document.querySelector('.stockUl');
     for (let i = 0; i < playStock.length; i++) {
       const stock_li = document.createElement('li');

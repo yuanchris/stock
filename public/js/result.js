@@ -77,7 +77,7 @@ async function show(playDate, playStock, portfolio, insertboolean) {
   const wait = document.querySelector('#wait');
   wait.innerHTML = '';
   const nowDate = document.querySelector('#nowDate');
-  nowDate.innerHTML = `<h3>當時：${playDate} -> 現在： ${new_date}</h3>`;
+  nowDate.innerHTML = `<h3>當時：${playDate}，現在： ${new_date}</h3>`;
   const earnArr = [];
 
   for (let i = 0; i < playStock.length; i++) {

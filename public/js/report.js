@@ -1,14 +1,14 @@
 /* eslint-disable camelcase */
 const playDate = localStorage.getItem('playDate');
 const playStock = JSON.parse(localStorage.getItem('playStock'));
-let finishDate = parseInt(localStorage.getItem('finishDate'));
+const finishDate = parseInt(localStorage.getItem('finishDate'));
 
 main();
 async function main() {
   if (playDate && playStock) {
     setInterval(countdown, 1000);
     const nowDate = document.querySelector('#nowDate');
-    nowDate.innerHTML = `<h3>Your start date is: ${playDate}</h3>`;
+    nowDate.innerHTML = `<h3>你的開始日期：${playDate}</h3>`;
     const stockUl = document.querySelector('.stockUl');
     for (let i = 0; i < playStock.length; i++) {
       const stock_li = document.createElement('li');
@@ -21,6 +21,9 @@ async function main() {
       stock_li.appendChild(stock_a);
       stockUl.appendChild(stock_li);
     }
+  } else {
+    Swal.fire('你的遊戲還未開始，請點擊「開始遊戲」')
+      .then(() => { window.location.href = '/index.html'; });
   }
 }
 
@@ -30,7 +33,7 @@ async function get_report(id, stock) {
   const fake_date = new Date(playDate);
   const mill = fake_date.getTime();
   const new_fake = getDate(mill - 30 * 1000 * 60 * 60 * 24);
-  //get data from sql
+  // get data from sql
   const revenue = await fetch(`api/1.0/stock/revenue?stock=${id}&date=${new_fake}`, {
     method: 'GET',
   }).then((res) => res.json());
@@ -62,7 +65,7 @@ async function get_report(id, stock) {
       revenue_tbody = document.createElement('tbody');
       revenue_table.appendChild(revenue_tbody);
     }
-    
+
     const row = document.createElement('tr');
     row.setAttribute('class', `row${i}`);
 
@@ -101,10 +104,11 @@ async function get_report(id, stock) {
     revenue_tbody.appendChild(row);
   }
 
-  //per table
-  const weekArr = [], epsArr = [], perArr = [], price_perArr = [],
-    fourXArr = [], eightXArr = [], twelveXArr = [],sixteenXArr = [],
-    twentyXArr = [], twentyfourXArr = [];
+  // per table
+  const weekArr = []; const epsArr = []; const perArr = []; const price_perArr = [];
+  const fourXArr = []; const eightXArr = []; const twelveXArr = []; const sixteenXArr = [];
+  const twentyXArr = []; const
+    twentyfourXArr = [];
 
   const per_table = document.querySelector('.per_table');
   per_table.style.display = '';
@@ -133,7 +137,7 @@ async function get_report(id, stock) {
     const week = document.createElement('td');
     week.innerHTML = per[i].week;
     weekArr[i] = week.innerHTML;
-    weekArr[i] = weekArr[i].slice(0,2) + '/' + weekArr[i].slice(2);
+    weekArr[i] = `${weekArr[i].slice(0, 2)}/${weekArr[i].slice(2)}`;
     const price = document.createElement('td');
     price.innerHTML = per[i].price;
     price_perArr[i] = parseFloat(price.innerHTML);
@@ -150,26 +154,26 @@ async function get_report(id, stock) {
     per_value.innerHTML = per[i].per;
     perArr[i] = parseFloat(per[i].per);
     const fourX = document.createElement('td');
-    fourX.innerHTML = (per[i].eps * 4).toFixed(2)*100/100;
+    fourX.innerHTML = (per[i].eps * 4).toFixed(2) * 100 / 100;
     fourXArr[i] = parseFloat(fourX.innerHTML);
     const eightX = document.createElement('td');
-    eightX.innerHTML = (per[i].eps * 8).toFixed(2)*100/100;
+    eightX.innerHTML = (per[i].eps * 8).toFixed(2) * 100 / 100;
     eightXArr[i] = parseFloat(eightX.innerHTML);
     const twelveX = document.createElement('td');
-    twelveX.innerHTML = (per[i].eps * 12).toFixed(2)*100/100;
+    twelveX.innerHTML = (per[i].eps * 12).toFixed(2) * 100 / 100;
     twelveXArr[i] = parseFloat(twelveX.innerHTML);
     const sixteenX = document.createElement('td');
-    sixteenX.innerHTML = (per[i].eps * 16).toFixed(2)*100/100;
+    sixteenX.innerHTML = (per[i].eps * 16).toFixed(2) * 100 / 100;
     sixteenXArr[i] = parseFloat(sixteenX.innerHTML);
     const twentyX = document.createElement('td');
-    twentyX.innerHTML = (per[i].eps * 20).toFixed(2)*100/100;
+    twentyX.innerHTML = (per[i].eps * 20).toFixed(2) * 100 / 100;
     twentyXArr[i] = parseFloat(twentyX.innerHTML);
     const twentyfourX = document.createElement('td');
-    twentyfourX.innerHTML = (per[i].eps * 24).toFixed(2)*100/100;
+    twentyfourX.innerHTML = (per[i].eps * 24).toFixed(2) * 100 / 100;
     twentyfourX[i] = parseFloat(twentyfourX.innerHTML);
 
     row.append(week, price, diff, diff_percent, eps, per_value,
-     fourX, eightX, twelveX, sixteenX, twentyX, twentyfourX);
+      fourX, eightX, twelveX, sixteenX, twentyX, twentyfourX);
     per_tbody.appendChild(row);
   }
 
@@ -186,18 +190,18 @@ async function get_report(id, stock) {
   }
   plot_revenue(monArr, priceArr, revenueArr, revenueYearDiffArr);
 
-  //plot per
-  plot_per(weekArr, price_perArr, epsArr, perArr, fourXArr, eightXArr, twelveXArr, 
+  // plot per
+  plot_per(weekArr, price_perArr, epsArr, perArr, fourXArr, eightXArr, twelveXArr,
     sixteenXArr, twentyXArr, twentyfourXArr);
-  //plot eps
+  // plot eps
   plot_eps(season_eps);
 }
 async function plot_eps(season_eps) {
-  const seasonArr = [], price_avgArr = [], 
-    epsArr = [];
+  const seasonArr = []; const price_avgArr = [];
+  const epsArr = [];
   for (let i = 0; i < season_eps.length; i++) {
     seasonArr[i] = season_eps[i].season;
-    
+
     price_avgArr[i] = season_eps[i].price_avg;
     epsArr[i] = season_eps[i].eps;
   }
@@ -258,11 +262,11 @@ async function plot_eps(season_eps) {
     },
     legend: {
       align: 'left',
-      x:80,
+      x: 80,
       verticalAlign: 'top',
-      borderWidth: 0
+      borderWidth: 0,
     },
-  
+
     series: [{
       name: '季EPS',
       type: 'column',
@@ -284,10 +288,10 @@ async function plot_eps(season_eps) {
 }
 
 // plot per
-async function plot_per(weekArr, price_perArr, epsArr, perArr, 
+async function plot_per(weekArr, price_perArr, epsArr, perArr,
   fourXArr, eightXArr, twelveXArr, sixteenXArr, twentyXArr, twentyfourXArr) {
-  let colors = Highcharts.getOptions().colors;
-  
+  const { colors } = Highcharts.getOptions();
+
   // per stream chart
   Highcharts.chart('container4', {
     chart: {
@@ -332,9 +336,9 @@ async function plot_per(weekArr, price_perArr, epsArr, perArr,
     },
     legend: {
       align: 'left',
-      x:80,
+      x: 80,
       verticalAlign: 'top',
-      borderWidth: 0
+      borderWidth: 0,
     },
 
     series: [{
@@ -374,7 +378,7 @@ async function plot_per(weekArr, price_perArr, epsArr, perArr,
       dashStyle: 'ShortDot',
       color: colors[6],
     },
-  ],
+    ],
   });
 }
 
@@ -465,11 +469,11 @@ async function plot_revenue(monArr, priceArr, revenueArr, revenueYearDiffArr) {
     },
     legend: {
       align: 'left',
-      x:80,
+      x: 80,
       verticalAlign: 'top',
-      borderWidth: 0
+      borderWidth: 0,
     },
-  
+
     series: [{
       name: '月營收',
       type: 'column',
@@ -547,11 +551,11 @@ async function plot_revenue(monArr, priceArr, revenueArr, revenueYearDiffArr) {
     },
     legend: {
       align: 'left',
-      x:80,
+      x: 80,
       verticalAlign: 'top',
-      borderWidth: 0
+      borderWidth: 0,
     },
-  
+
     series: [{
       name: '月營收年增率',
       type: 'column',

@@ -33,11 +33,11 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v7.0" nonce="0Bqwgro1"></script>
 
     <div class="signin">
-      <h2>Sign in</h2>
-      Email: <input type="email" name="emailIn" placeholder="please enter email" required><br/>
-      Password:<input type="password" name="passwordIn" placeholder="please enter password" required><br/>
-      <input type="submit" id = 'button' name="" value="Sign in" onclick=signIn() >
-      or 
+      <h2>登入</h2>
+      信箱：<input type="email" name="emailIn" placeholder="請輸入信箱" required><br/>
+      密碼：<input type="password" name="passwordIn" placeholder="請輸入密碼" required><br/>
+      <input type="submit" id = 'button' name="" value="登入" onclick=signIn() >
+      <br>或者
       <div class="fb-login-button" data-size="medium" data-button-type="login_with" data-layout="rounded" 
       data-auto-logout-link="false" data-use-continue-as="false" data-width="" scope="public_profile,email"
       onlogin="checkLoginState()">
@@ -50,12 +50,12 @@
     <br>
 
     <div class="signup">
-      <h2>Sign up</h2>
+      <h2>註冊帳號</h2>
     
-      Name:<input type="name" name="nameUp" placeholder="please enter name" required><br/>   
-      Email:<input type="email" name="emailUp" placeholder="please enter email" required><br/>
-      Password:<input type="password" name="passwordUp" placeholder="please enter password" required><br/>
-      <input type="submit" id = 'button' name="" value="Sign up" onclick=signUp()> <br/>
+      名稱：<input type="name" name="nameUp" placeholder="請輸入名稱" required><br/>   
+      信箱：<input type="email" name="emailUp" placeholder="請輸入信箱" required><br/>
+      密碼：<input type="password" name="passwordUp" placeholder="請輸入密碼" required><br/>
+      <input type="submit" id = 'button' name="" value="註冊" onclick=signUp()> <br/>
       <p id="ajaxUp"></p>
     </div>
 

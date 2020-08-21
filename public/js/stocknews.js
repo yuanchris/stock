@@ -8,7 +8,7 @@ async function main() {
   if (playDate && playStock) {
     setInterval(countdown, 1000);
     const nowDate = document.querySelector('#nowDate');
-    nowDate.innerHTML = `<h3>Your start date is: ${playDate}</h3>`;
+    nowDate.innerHTML = `<h3>你的開始日期：${playDate}</h3>`;
     const stockUl = document.querySelector('.stockUl');
     for (let i = 0; i < playStock.length; i++) {
       const stock_li = document.createElement('li');
@@ -21,6 +21,10 @@ async function main() {
       stock_li.appendChild(stock_a);
       stockUl.appendChild(stock_li);
     }
+  } else {
+    Swal.fire('你的遊戲還未開始，請點擊「開始遊戲」')
+    .then(() => { window.location.href = '/index.html'; });
+
   }
 }
 

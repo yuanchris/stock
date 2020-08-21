@@ -9,16 +9,15 @@ const nav_start = document.querySelector('#start');
 let finishDate = parseInt(localStorage.getItem('finishDate'));
 
 if (playDate && playStock) {
-  pickstock.innerHTML = `<h3>Your start date is :</h3><p>${playDate}</p> <br>\
-<h3>Your stocks is :</h3>`;
+  pickstock.innerHTML = `<h3>你的開始日期</h3><p>${playDate}</p> <br>\
+<h3>你的遊戲股票</h3>`;
   for (let i = 0; i < 5; i++) {
     pickstock.innerHTML += `<p>${playStock[i].id} ` + `${playStock[i].stock} `
   + `${playStock[i].industry}</p>`;
   }
-  pickstock.innerHTML += '<h3>Have a Good Time!</h3>';
+  pickstock.innerHTML += '<h3>祝 玩得開心！</h3>';
   nav_start.setAttribute('style', 'display:none');
   setInterval(countdown, 1000);
-
 }
 main();
 async function main() {
@@ -26,7 +25,7 @@ async function main() {
 
   visualArr[1].setAttribute('class', 'visual current');
   const index = { num: 1 };
-  let show = setInterval(() => {
+  const show = setInterval(() => {
     next(index, visualArr);
   }, 4000);
 }
@@ -47,10 +46,10 @@ function change(arr, clsCur, cls, num) {
 }
 
 async function start() {
-  function abc(e) {
-    e.preventDefault();
-    window.location.href = './index.html';
-  }
+  // function abc(e) {
+  //   e.preventDefault();
+  //   window.location.href = './index.html';
+  // }
   Swal.fire({
     title: '開始對戰',
     text: '選擇遊戲方式',
@@ -68,7 +67,7 @@ async function start() {
       finishDate = parseInt(localStorage.getItem('finishDate'));
       if (!(token && name)) {
         Swal.fire('please login in first!', '請點擊登入')
-          .then((res) => { window.location.href = './sign.html';});
+          .then((res) => { window.location.href = './sign.html'; });
         return;
       }
       if (playDate && playStock) {
@@ -92,40 +91,37 @@ async function start() {
         start.playstock = JSON.parse(start.playstock);
         Swal.fire({
           title: '遊戲開始',
-          html: `Your start date is : ${start.playdate} <br><br>
-          Your stocks are :
+          html: `你的開始日期：${start.playdate} <br><br>
+          你的遊戲股票：
           <p>${start.playstock[0].id} ${start.playstock[0].stock} ${start.playstock[0].industry}</p>
           <p>${start.playstock[1].id} ${start.playstock[1].stock} ${start.playstock[1].industry}</p>
           <p>${start.playstock[2].id} ${start.playstock[2].stock} ${start.playstock[2].industry}</p>
           <p>${start.playstock[3].id} ${start.playstock[3].stock} ${start.playstock[3].industry}</p>
           <p>${start.playstock[4].id} ${start.playstock[4].stock} ${start.playstock[4].industry}</p>
           <br><br>
-          請點擊「投資組合」開始遊戲！`,
+          請點擊「投資選擇」開始遊戲！`,
         });
 
-
-        pickstock.innerHTML = `<h3>Your start date is :</h3><p>${start.playdate}</p> <br>\
-          <h3>Your stocks is :</h3>`;
+        pickstock.innerHTML = `<h3>你的開始日期</h3><p>${start.playdate}</p> <br>\
+        <h3>你的遊戲股票</h3>`;
         for (let i = 0; i < 5; i++) {
           pickstock.innerHTML += `<p>${start.playstock[i].id} ` + `${start.playstock[i].stock} `
         + `${start.playstock[i].industry}</p>`;
         }
-        pickstock.innerHTML += '<h3>Have a Good Time!</h3>';
+        pickstock.innerHTML += '<h3>祝 玩得開心！</h3>';
         localStorage.setItem('playDate', start.playdate);
         localStorage.setItem('playStock', JSON.stringify(start.playstock));
         localStorage.setItem('finishDate', start.finishdate);
         localStorage.removeItem('final_result');
         finishDate = parseInt(localStorage.getItem('finishDate'));
         nav_start.setAttribute('style', 'display:none');
-
         setInterval(countdown, 1000);
       }
-    } else if (result.dismiss == 'cancel') {
+    } else if (result.dismiss === 'cancel') {
       window.location.href = './match.html';
     }
   });
 }
-
 
 
 // Wrap every letter in a span

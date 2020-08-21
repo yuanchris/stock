@@ -4,7 +4,7 @@ const list = document.querySelector('#stock-list');
 const playDate = localStorage.getItem('playDate');
 const playStock = JSON.parse(localStorage.getItem('playStock'));
 let portfolio = JSON.parse(localStorage.getItem('portfolio'));
-let finishDate = parseInt(localStorage.getItem('finishDate'));
+const finishDate = parseInt(localStorage.getItem('finishDate'));
 // console.log(portfolio);
 if (!portfolio) {
   portfolio = {};
@@ -16,8 +16,9 @@ main();
 async function main() {
   if (!(playDate && playStock)) {
     const wait = document.querySelector('#wait');
-    wait.innerHTML = '<h2>Your game is not started yet!</h2>';
-    Swal.fire('Your game is not started yet!');
+    wait.innerHTML = '<h2>你的遊戲還未開始</h2>';
+    Swal.fire('你的遊戲還未開始，請點擊「開始遊戲」')
+      .then(() => { window.location.href = '/index.html'; });
   } else {
     setInterval(countdown, 1000);
     const post = { playDate, playStock };
@@ -31,7 +32,7 @@ async function main() {
     const wait = document.querySelector('#wait');
     wait.innerHTML = '';
     const nowDate = document.querySelector('#nowDate');
-    nowDate.innerHTML = `<h3>Your start date is: ${playDate}</h3>`;
+    nowDate.innerHTML = `<h3>你的開始日期： ${playDate}</h3>`;
 
     updateTotal();
 
@@ -222,7 +223,6 @@ function updateTotal() {
   }
   if (portfolio.total / 10 > 2000) {
     Swal.fire('投資金額大於上限(2000萬)', '請修改投資組合');
-    
   }
 }
 
@@ -239,7 +239,7 @@ function result() {
     showCancelButton: true,
   }).then((value) => {
     if (value.value) {
-      window.location.href="/result.html";
+      window.location.href = '/result.html';
     }
   });
   // if (yes) {
