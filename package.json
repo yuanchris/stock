@@ -32,7 +32,7 @@
     "multer-s3": "^2.9.0",
     "mysql": "^2.18.1",
     "mysqldump": "^3.1.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "path": "^0.11.14",
     "puppeteer": "^5.0.0",
     "redis": "^3.0.2",
