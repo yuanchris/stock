@@ -2,7 +2,7 @@
 
 A stock game for reading stocks information, deciding your stocks portfolio and competing with others.
 
-Website URL : https://stock-arena.chris-hsiao.site/ (now is temporary closed owing to the fee)
+Website URL : https://stock-arena.ddns.net/ or http://stock-arena.ddns.net/
 
 ## Table of content
 * [Technologies](#technologies)
