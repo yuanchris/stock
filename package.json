@@ -40,7 +40,7 @@
     "request-promise": "^4.2.5",
     "socket.io": "^2.3.0",
     "superagent": "^5.3.1",
-    "validator": "^13.1.1"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
