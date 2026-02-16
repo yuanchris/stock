@@ -1,7 +1,7 @@
 {
   "name": "stock",
   "version": "1.0.0",
-  "description": "chris\r http://18.182.189.165",
+  "description": "Stock Arena - A stock trading game",
   "main": "sample.js",
   "scripts": {
     "test": "set NODE_ENV=test&&mocha --exit",

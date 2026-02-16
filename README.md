@@ -2,15 +2,24 @@
 
 A stock game for reading stocks information, deciding your stocks portfolio and competing with others.
 
-Website URL : https://stock-arena.ddns.net/ or http://stock-arena.ddns.net/
+Website URL : https://stock-arena.duckdns.org/
 
 ## Table of content
-* [Technologies](#technologies)
-* [Structure](#structure)
-* [Database design](#database-design)
-* [Features and Demonstration](#Features-and-Demonstration)
-* [Guest account](#Guest-account)
-* [Contact](#Contact)
+- [Stock Arena](#stock-arena)
+  - [Table of content](#table-of-content)
+  - [Technologies](#technologies)
+    - [Backend](#backend)
+    - [Frontend](#frontend)
+    - [Realitime Web Application](#realitime-web-application)
+    - [Database](#database)
+    - [Web Crawl](#web-crawl)
+    - [Test](#test)
+    - [Others](#others)
+  - [Structure](#structure)
+  - [Database design](#database-design)
+  - [Features and Demonstration](#features-and-demonstration)
+  - [Guest account](#guest-account)
+  - [Contact](#contact)
 
 
 ## Technologies
@@ -26,8 +35,8 @@ Website URL : https://stock-arena.ddns.net/ or http://stock-arena.ddns.net/
 * CSS
 * JavaScript
 
-### Realitime Web Application 
-* Socket io
+### Realtime Web Application
+* Socket.IO
 
 ### Database
 * MySQL
@@ -42,7 +51,7 @@ Website URL : https://stock-arena.ddns.net/ or http://stock-arena.ddns.net/
 * Chai
 
 ### Others
-* Plot: D3, Hicharts
+* Plot: D3, Highcharts
 * Facebook login API
 
 
@@ -95,5 +104,5 @@ Website URL : https://stock-arena.ddns.net/ or http://stock-arena.ddns.net/
 * Account password: stock1234
 
 ## Contact
-* Authur: Ting-Yuan Hsiao
+* Author: Ting-Yuan Hsiao
 * Email: yuanchris1@gmail.com
