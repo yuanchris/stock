@@ -47,7 +47,7 @@
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.20.2",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.20",
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0"
   }
